@@ -1,8 +1,8 @@
-# Outremonde Card Lab — V0.1.3
+# Outremonde Card Lab — V0.1.4
 
 Prototype mobile du TCG « Les Lueurs de l’Outremonde » (nom de set provisoire).
 
-## Version actuelle : V0.1.3
+## Version actuelle : V0.1.4
 
 **Braise est maintenant terminée et validée : 20/20 cartes.** Cette version intègre aussi le premier noyau de règles verrouillé après l’audit complet de l’affinité.
 
@@ -15,7 +15,7 @@ Prototype mobile du TCG « Les Lueurs de l’Outremonde » (nom de set provisoir
 - 10 communes / 6 peu communes / 3 rares / 1 mythique
 - Les autres affinités restent dans leur état de travail actuel.
 
-## Règles ajoutées / verrouillées en V0.1.3
+## Règles ajoutées / verrouillées en V0.1.4
 
 - Pioche normale et premier joueur sans pioche au tour 1
 - Mulligan unique 7 → nouvelle main de 7 → 1 carte sous le deck → départ à 6
@@ -31,6 +31,18 @@ Prototype mobile du TCG « Les Lueurs de l’Outremonde » (nom de set provisoir
 - Un seul Permanent Spirituel du même nom contrôlé à la fois
 - Rituels joués en Phase principale et envoyés au cimetière après résolution
 - Dégâts des créatures effacés en fin de tour
+
+### Clarification du Plan Spirituel
+
+- Une créature jouée en Spirituel reste sur le Terrain Spirituel, ne combat pas et ne meurt pas au combat.
+- Son **effet Spirituel propre est un effet d’arrivée** : il se résout une seule fois quand la carte est jouée en Spirituel.
+- Il **ne se réactive pas automatiquement** à chaque nouveau tour.
+- Le **Bonus Spirituel d’une même affinité ne se stacke pas** : maximum 1 déclenchement par affinité et par tour.
+- Si sa condition n’est pas remplie, le Bonus ne se déclenche pas et ne consomme pas ce déclenchement.
+- Les **effets Spirituels propres aux différentes cartes continuent de se résoudre** et peuvent se cumuler, sauf indication contraire.
+- Un **Permanent Spirituel** conserve son effet permanent tour après tour tant qu’il reste présent.
+- Un **Rituel Spirituel** résout son effet puis va au cimetière ; il ne reste pas sur le Terrain Spirituel.
+- Les cartes Spirituelles sont hors combat mais pourront être retirées, renvoyées ou affectées par des effets qui le disent explicitement.
 
 ## Fonctionnalités V0.1
 
@@ -83,11 +95,12 @@ Les données du pool sont dans `src/data/cards.ts`.
 
 ## Build APK avec GitHub
 
-Lancez `.github/workflows/build-android.yml` depuis **Actions**. L’artifact généré s’appelle `outremonde-card-lab-v0.1.3-apk`.
+Lancez `.github/workflows/build-android.yml` depuis **Actions**. L’artifact généré s’appelle `outremonde-card-lab-v0.1.4-apk`.
 
 ## Roadmap
 
-- **V0.1.3** : Braise 20/20 validée + noyau de règles verrouillé
+- **V0.1.4** : Braise 20/20 validée + règles Spirituelles clarifiées et verrouillées
+- V0.1.3 : audit Braise + noyau de règles
 - V0.2 : Deck Builder 40 cartes
 - V0.3 : Table de jeu locale
 - V0.4 : Rules Engine

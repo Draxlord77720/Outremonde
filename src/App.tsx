@@ -49,7 +49,7 @@ function App() {
           <div className="eyebrow">TCG · PROTOTYPE</div>
           <h1>OUTREMONDE <span>CARD LAB</span></h1>
         </div>
-        <div className="version">V0.1.3</div>
+        <div className="version">V0.1.4</div>
       </header>
 
       <main>
@@ -160,6 +160,7 @@ function App() {
               {detailTab === 'spiritual' && <>
                 {selected.spiritualBonus && <><div className="effect-title">👻 Bonus Spirituel</div><p>{selected.spiritualBonus}</p></>}
                 {selected.spiritualEffect && <><div className="effect-title secondary">Effet Spirituel</div><p>{selected.spiritualEffect}</p></>}
+                <div className="review-note"><b>Rappel Spirituel</b><br />Le Bonus d’affinité ne se cumule pas : 1 déclenchement maximum par affinité et par tour. L’effet Spirituel propre à cette carte se résout à son arrivée et ne se répète pas aux tours suivants, sauf si le texte indique qu’il s’agit d’un effet permanent.</div>
               </>}
               {detailTab === 'reincarnation' && selected.reincarnation && <><div className="effect-title">💀 Réincarnation</div><p>{selected.reincarnation}</p></>}
             </div>
@@ -181,8 +182,16 @@ function Rules() {
     ['📥 Pioche', 'Piochez 1 carte au début de chacun de vos tours. Le joueur qui commence la partie ne pioche pas lors de son premier tour.'],
     ['💠 Flux', 'Vous disposez de 1 Flux au tour 1, puis votre Flux de base augmente de +1 au début de chacun de vos tours. Le Flux non dépensé est perdu en fin de tour.'],
     ['⚡ Flux supplémentaire', 'Les effets de cartes peuvent générer du Flux temporaire, mais vous ne pouvez gagner que +2 Flux supplémentaires par tour, toutes sources confondues. Le Flux de base gagné normalement au début du tour ne compte pas dans cette limite.'],
-    ['🌐 Deux plans', 'Une créature est jouée soit en Physique, soit en Spirituel et ne change ensuite plus de plan. Une créature Spirituelle ne peut ni attaquer ni bloquer et ne subit pas de dégâts de combat.'],
-    ['👻 Spirituel & Bonus', 'Quand une carte est jouée en Spirituel, elle peut déclencher le Bonus Spirituel de son affinité puis résout son propre effet Spirituel. Le Bonus d’une même affinité ne peut être déclenché qu’une fois par tour ; les effets propres des cartes continuent de se résoudre normalement.'],
+    ['🌐 Choix du plan', 'Lorsqu’une créature est jouée, choisissez définitivement son plan : Physique ou Spirituel. Une créature déjà en jeu ne change pas de plan, sauf si une future carte l’autorise explicitement.'],
+    ['⚔ Plan Physique', 'Une créature Physique peut attaquer et bloquer selon les règles normales. Elle peut subir des dégâts, mourir et déclencher sa Réincarnation.'],
+    ['👻 Plan Spirituel', 'Une créature jouée en Spirituel reste sur le Terrain Spirituel. Elle ne peut ni attaquer ni bloquer, ne subit pas de dégâts de combat et ne meurt donc pas au combat. Elle peut toutefois quitter le Terrain Spirituel si un effet de carte l’indique explicitement.'],
+    ['✨ Effet Spirituel d’arrivée', 'L’effet Spirituel propre à une carte se résout une seule fois, au moment où cette carte est jouée en Spirituel. Il ne se réactive pas automatiquement au début des tours suivants, même si la carte reste sur le Terrain Spirituel.'],
+    ['👻 Bonus Spirituel d’affinité', 'Lorsqu’une carte est jouée en Spirituel, elle peut déclencher le Bonus Spirituel de son affinité. Le Bonus Spirituel d’une même affinité ne se cumule pas et ne peut être déclenché qu’une seule fois par tour.'],
+    ['🚫 Bonus non stackable', 'Jouer plusieurs cartes de la même affinité en Spirituel pendant un même tour ne multiplie jamais le Bonus Spirituel d’affinité. Exemple : deux Braise Spirituelles ne peuvent produire qu’un seul Bonus Spirituel Braise pendant ce tour.'],
+    ['🧩 Effets propres des cartes', 'La limitation du Bonus Spirituel d’affinité ne bloque pas les effets Spirituels propres aux cartes. Chaque carte jouée en Spirituel résout normalement son effet personnel ; ces effets peuvent se cumuler entre eux sauf si leur texte indique le contraire.'],
+    ['✅ Condition du Bonus', 'Si la condition nécessaire au Bonus Spirituel n’est pas remplie au moment où la carte est jouée, le Bonus ne se déclenche pas et ne consomme pas l’unique déclenchement autorisé de cette affinité pour le tour.'],
+    ['🕯 Permanents Spirituels', 'Un Permanent Spirituel reste sur le Terrain Spirituel et son effet permanent s’applique aussi longtemps qu’il est présent. Contrairement à un simple effet Spirituel d’arrivée, un texte explicitement permanent continue donc de fonctionner tour après tour. Vous ne pouvez pas jouer un Permanent Spirituel si vous en contrôlez déjà un du même nom.'],
+    ['📜 Rituels', 'Un Rituel est joué pendant une Phase principale, résout entièrement son effet puis va au cimetière. Un Rituel Spirituel peut déclencher le Bonus Spirituel de son affinité lorsqu’il est joué, mais il ne reste pas sur le Terrain Spirituel après sa résolution. Les cartes ne sont pas jouées pendant la phase d’attaque, sauf si un futur mot-clé l’autorise explicitement.'],
     ['🛌 Arrivée & Ruée', 'Une créature Physique ne peut pas attaquer le tour où elle arrive en jeu, sauf si elle possède Ruée.'],
     ['⚔ Attaque', 'Il y a exactement une phase d’attaque par tour. Tous les attaquants sont déclarés ensemble, puis le joueur attaquant annonce leur ordre de résolution avant que le défenseur ne choisisse ses bloqueurs.'],
     ['🛡 Interposition', 'Un attaquant peut être bloqué par un seul bloqueur et un bloqueur ne peut normalement bloquer qu’une seule attaque. Une attaque déclarée bloquée reste bloquée même si son bloqueur quitte le terrain avant sa résolution.'],
@@ -190,18 +199,16 @@ function Rules() {
     ['🔥 Impact X', 'Si une attaque avec Impact X est bloquée et que ses dégâts détruisent le bloqueur, les dégâts excédentaires peuvent être infligés au joueur adverse, jusqu’à un maximum de X. Si le bloqueur n’est plus présent à la résolution, l’attaque reste bloquée et Impact ne s’applique pas.'],
     ['😴 Épuisement', 'Une créature qui attaque devient Épuisée. Une créature Épuisée ne peut pas bloquer pendant le prochain tour adverse. Au début de votre tour, toutes vos créatures sont redressées.'],
     ['🩸 Blessée', 'Une créature est Blessée si elle a subi au moins 1 dégât pendant le tour et se trouve toujours sur le terrain. Les dégâts sur les créatures sont effacés à la fin du tour.'],
-    ['💀 Mort & Réincarnation', 'Quand une créature Physique meurt, sa Réincarnation se résout puis elle va au cimetière. Entre deux attaques, les morts et Réincarnations sont entièrement résolues avant de passer à l’attaque suivante.'],
+    ['💀 Mort & Réincarnation', 'Quand une créature Physique meurt, sa Réincarnation se résout puis elle va au cimetière. Une carte sur le Plan Spirituel ne déclenche pas de Réincarnation simplement parce qu’elle quitte ce plan, sauf si le texte d’une carte dit explicitement le contraire. Entre deux attaques, les morts et Réincarnations sont entièrement résolues avant de passer à l’attaque suivante.'],
     ['🧩 Résolution des effets', 'Lorsqu’un effet commence à se résoudre, terminez tout son texte avant de traiter les morts et Réincarnations qu’il a provoquées, puis passez à l’action suivante.'],
     ['🔥 Sacrifice', 'Sacrifier une créature Physique la fait mourir volontairement et déclenche normalement sa Réincarnation, sauf indication contraire.'],
-    ['📜 Rituels', 'Un Rituel est joué pendant une Phase principale, résout entièrement son effet puis va au cimetière. Les cartes ne sont pas jouées pendant la phase d’attaque, sauf si un futur mot-clé l’autorise explicitement.'],
-    ['🕯 Permanents Spirituels', 'Un Permanent Spirituel reste sur le Terrain Spirituel et applique son effet tant qu’il est présent. Vous ne pouvez pas jouer un Permanent Spirituel si vous en contrôlez déjà un du même nom.'],
     ['🔄 Tour', 'Ordre : effets de début de tour → redressement → pioche → augmentation du Flux de base → Phase principale 1 → attaque → Phase principale 2 → fin de tour. En fin de tour, les effets « ce tour » expirent, les dégâts des créatures sont effacés et le Flux inutilisé est perdu.'],
   ];
-  return <section className="page-panel"><div className="eyebrow">RÈGLES · V0.1.3 VALIDÉES</div><h2>Fondations actuelles</h2><p className="intro">Cette référence intègre le timing de combat séquentiel, l’Épuisement, Impact, la pioche, le plafond de Flux supplémentaire et les règles nécessaires au bloc Braise validé.</p><div className="rule-list">{rules.map(([title,body]) => <div className="rule-card" key={title}><h3>{title}</h3><p>{body}</p></div>)}</div></section>;
+  return <section className="page-panel"><div className="eyebrow">RÈGLES · V0.1.4 VALIDÉES</div><h2>Fondations actuelles</h2><p className="intro">Cette référence précise désormais complètement le Plan Spirituel : arrivée unique, Bonus d’affinité non cumulable, effets personnels distincts, permanence explicite et interaction future possible par effets de cartes.</p><div className="rule-list">{rules.map(([title,body]) => <div className="rule-card" key={title}><h3>{title}</h3><p>{body}</p></div>)}</div></section>;
 }
 
 function About() {
-  return <section className="page-panel"><div className="eyebrow">CARD LAB · V0.1.3</div><h2>Laboratoire du TCG</h2><p className="intro">Les 20 cartes Braise sont désormais auditées, corrigées et validées : 12 créatures, 4 rituels et 4 permanents spirituels. Les règles nécessaires à leur fonctionnement sont verrouillées dans cette version. Le Deck Builder arrivera en V0.2.</p><div className="roadmap"><div className="done"><b>V0.1</b><span>Collection + fiches + règles</span></div><div><b>V0.2</b><span>Deck Builder 40 cartes</span></div><div><b>V0.3</b><span>Table de jeu locale</span></div><div><b>V0.4</b><span>Moteur de règles</span></div><div><b>V0.5</b><span>Statistiques de playtest</span></div></div></section>;
+  return <section className="page-panel"><div className="eyebrow">CARD LAB · V0.1.4</div><h2>Laboratoire du TCG</h2><p className="intro">Les 20 cartes Braise sont désormais auditées, corrigées et validées : 12 créatures, 4 rituels et 4 permanents spirituels. Les règles nécessaires à leur fonctionnement sont verrouillées dans cette version, avec une clarification complète du Plan Spirituel et du non-cumul des Bonus Spirituels d’affinité. Le Deck Builder arrivera en V0.2.</p><div className="roadmap"><div className="done"><b>V0.1</b><span>Collection + fiches + règles</span></div><div><b>V0.2</b><span>Deck Builder 40 cartes</span></div><div><b>V0.3</b><span>Table de jeu locale</span></div><div><b>V0.4</b><span>Moteur de règles</span></div><div><b>V0.5</b><span>Statistiques de playtest</span></div></div></section>;
 }
 
 export default App;

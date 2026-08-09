@@ -1,5 +1,17 @@
 # Changelog
 
+## V0.1.4 — Règles Spirituelles clarifiées
+- Les 20 cartes Braise restent validées sans changement de statistiques ni d’effets.
+- Clarification : une créature jouée en Spirituel reste sur le Terrain Spirituel et ne participe pas au combat.
+- Clarification : l’effet Spirituel propre d’une carte est un effet d’arrivée et ne se réactive pas automatiquement aux tours suivants.
+- Clarification : le Bonus Spirituel d’une même affinité **ne se cumule pas** et ne peut se déclencher qu’une fois par tour.
+- Si la condition d’un Bonus Spirituel n’est pas remplie, il n’est pas consommé pour le tour.
+- Les effets Spirituels propres aux cartes continuent de se résoudre même si le Bonus d’affinité a déjà été utilisé ; ils peuvent se cumuler sauf texte contraire.
+- Distinction explicite entre effet Spirituel d’arrivée, Permanent Spirituel et Rituel Spirituel.
+- Les cartes du Plan Spirituel ne meurent pas au combat, mais pourront être affectées par des effets de cartes explicites.
+- Ajout d’un rappel Spirituel directement dans la fiche de chaque carte de l’application.
+- Artifact Android renommé `outremonde-card-lab-v0.1.4-apk`.
+
 ## V0.1.3 — Braise validée + règles verrouillées
 - Audit complet et validation des 20 cartes Braise.
 - Écumeur Cendré réduit à 1/1, Ruée, sans Déferlement.

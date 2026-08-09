@@ -8,7 +8,7 @@ const obsidienneBonus = "Une créature Physique que vous contrôlez réduit de 1
 const brumeBonus = "Piochez 1 carte, puis défaussez 1 carte.";
 
 export const cards: Card[] = [
-  // BRAISE 001-020 — AFFINITÉ VALIDÉE V0.1.3
+  // BRAISE 001-020 — AFFINITÉ VALIDÉE V0.1.4
   {id:'B001',setNumber:1,name:'Écumeur Cendré',affinity:'Braise',rarity:'Commune',type:'Créature',cost:0,atk:1,def:1,physical:'Ruée.',spiritualBonus:braiseBonus,spiritualEffect:'Une créature Physique que vous contrôlez gagne +1 ATK jusqu’à la fin du tour.',reincarnation:'S’il meurt pendant une phase d’attaque, infligez 1 dégât au joueur adverse.',keywords:['Ruée'],status:'Validée'},
   {id:'B002',setNumber:2,name:'Fendeur Rouge',affinity:'Braise',rarity:'Commune',type:'Créature',cost:1,atk:3,def:2,physical:'Impact 2 — Lorsque son attaque est bloquée et que ses dégâts détruisent le bloqueur, jusqu’à 2 dégâts excédentaires sont infligés au joueur adverse.',spiritualBonus:braiseBonus,spiritualEffect:'Une créature Physique que vous contrôlez gagne Impact 1 jusqu’à la fin du tour.',reincarnation:'Infligez 1 dégât à une créature ennemie déjà blessée.',keywords:['Impact 2'],status:'Validée'},
   {id:'B003',setNumber:3,name:'Brûle-Terre Déchaîné',affinity:'Braise',rarity:'Commune',type:'Créature',cost:0,atk:1,def:2,physical:'Explosion Défensive — Lorsqu’il bloque, infligez 1 dégât au joueur adverse.',spiritualBonus:braiseBonus,spiritualEffect:'La prochaine créature ennemie qui attaque avant le début de votre prochain tour a -1 ATK pour cette attaque.',reincarnation:'La prochaine créature ennemie qui attaque a -1 ATK pour cette attaque.',status:'Validée'},
