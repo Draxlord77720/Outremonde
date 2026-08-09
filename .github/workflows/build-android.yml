@@ -44,5 +44,5 @@ jobs:
       - name: Publier l'APK
         uses: actions/upload-artifact@v4
         with:
-          name: outremonde-card-lab-v0.1-apk
+          name: outremonde-card-lab-v0.1.1-apk
           path: android/app/build/outputs/apk/debug/app-debug.apk

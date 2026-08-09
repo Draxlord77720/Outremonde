@@ -1,8 +1,12 @@
-# Outremonde Card Lab — V0.1
+# Outremonde Card Lab — V0.1.1
 
 Prototype mobile du TCG « Les Lueurs de l’Outremonde » (nom de set provisoire).
 
-## V0.1
+## Version actuelle : V0.1.1
+
+Correctif technique Capacitor 8 : suppression de l’option obsolète `bundledWebRuntime`.
+
+## Fonctionnalités V0.1
 
 - Collection mobile des cartes actuellement définies
 - Recherche par nom / numéro
@@ -58,10 +62,11 @@ L’interface n’a normalement pas besoin d’être modifiée pour ajouter ou �
 
 ## Build APK avec GitHub
 
-Le workflow `.github/workflows/build-android.yml` peut être lancé depuis l’onglet **Actions** de GitHub. L’APK est ensuite disponible dans les **Artifacts** du run sous le nom `outremonde-card-lab-v0.1-apk`.
+Le workflow `.github/workflows/build-android.yml` peut être lancé depuis l’onglet **Actions** de GitHub. L’APK est ensuite disponible dans les **Artifacts** du run sous le nom `outremonde-card-lab-v0.1.1-apk`.
 
 ## Roadmap
 
+- V0.1.1 : Correctif build Capacitor 8
 - V0.1 : Collection / fiches / règles
 - V0.2 : Deck Builder 40 cartes
 - V0.3 : Table de jeu locale
