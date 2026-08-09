@@ -1,0 +1,9 @@
+{
+  "name": "Outremonde Card Lab",
+  "short_name": "Card Lab",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#0b0d12",
+  "theme_color": "#0b0d12",
+  "lang": "fr"
+}
