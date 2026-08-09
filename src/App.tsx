@@ -49,7 +49,7 @@ function App() {
           <div className="eyebrow">TCG · PROTOTYPE</div>
           <h1>OUTREMONDE <span>CARD LAB</span></h1>
         </div>
-        <div className="version">V0.1.2</div>
+        <div className="version">V0.1.3</div>
       </header>
 
       <main>
@@ -175,25 +175,33 @@ function App() {
 
 function Rules() {
   const rules = [
-    ['🎯 Objectif', 'Réduire les 20 PV adverses à 0. Deck de 40 cartes, maximum 3 exemplaires d’une même carte.'],
-    ['💠 Flux', '1 Flux au tour 1 puis +1 par tour. Le Flux non dépensé est perdu en fin de tour.'],
-    ['🌐 Deux plans', 'Chaque créature est jouée soit en Physique, soit en Spirituel. Elle ne change ensuite plus de plan.'],
-    ['⚔ Physique', 'Peut attaquer et bloquer, subir des dégâts et mourir. Sa mort déclenche sa Réincarnation.'],
-    ['👻 Spirituel', 'Ne combat pas. Quand une carte est jouée en Spirituel, elle déclenche le Bonus Spirituel de son affinité puis son propre effet Spirituel.'],
-    ['🔮 Bonus', 'Le Bonus Spirituel d’une même affinité ne peut se déclencher qu’une fois par tour. Si ce Bonus a déjà été utilisé, la carte jouée en Spirituel résout quand même son propre effet.'],
-    ['🛡 Interposition', 'Un attaquant peut être bloqué par un seul bloqueur. Un bloqueur intercepte normalement une seule attaque.'],
-    ['⚠ Combat', 'Seule la créature ATTAQUANTE inflige des dégâts. Le bloqueur ne riposte jamais.'],
-    ['🃏 Affinités', 'Les affinités peuvent être mélangées librement dans un deck. Brume est l’affinité neutre.'],
-    ['📜 Rituels', 'Les Rituels sont des effets immédiats. Ils peuvent être Physiques ou Spirituels ; un Rituel Spirituel peut déclencher le Bonus Spirituel de son affinité.'],
-    ['🕯 Permanents', 'Les Permanents restent sur le Terrain Spirituel et appliquent leur effet tant qu’ils sont présents. Ils ne combattent pas.'],
-    ['💀 Réincarnation', 'Quand une créature Physique meurt, son effet de Réincarnation se résout puis elle va au cimetière.'],
-    ['🔥 Sacrifice', 'Sacrifier une créature Physique la fait mourir volontairement : sa Réincarnation se déclenche normalement, sauf si une carte précise le contraire.'],
+    ['🎯 Objectif', 'Réduire les 20 PV adverses à 0. Vous perdez aussi si vous devez piocher une carte alors que votre deck est vide.'],
+    ['🃏 Construction', 'Deck de 40 cartes, maximum 3 exemplaires d’une même carte. Les affinités peuvent être mélangées librement ; Brume est neutre.'],
+    ['✋ Main & mulligan', 'Main de départ : 7 cartes. Mulligan unique : remélangez votre main, piochez 7 nouvelles cartes, puis placez 1 carte sous votre deck ; vous commencez donc avec 6 cartes.'],
+    ['📥 Pioche', 'Piochez 1 carte au début de chacun de vos tours. Le joueur qui commence la partie ne pioche pas lors de son premier tour.'],
+    ['💠 Flux', 'Vous disposez de 1 Flux au tour 1, puis votre Flux de base augmente de +1 au début de chacun de vos tours. Le Flux non dépensé est perdu en fin de tour.'],
+    ['⚡ Flux supplémentaire', 'Les effets de cartes peuvent générer du Flux temporaire, mais vous ne pouvez gagner que +2 Flux supplémentaires par tour, toutes sources confondues. Le Flux de base gagné normalement au début du tour ne compte pas dans cette limite.'],
+    ['🌐 Deux plans', 'Une créature est jouée soit en Physique, soit en Spirituel et ne change ensuite plus de plan. Une créature Spirituelle ne peut ni attaquer ni bloquer et ne subit pas de dégâts de combat.'],
+    ['👻 Spirituel & Bonus', 'Quand une carte est jouée en Spirituel, elle peut déclencher le Bonus Spirituel de son affinité puis résout son propre effet Spirituel. Le Bonus d’une même affinité ne peut être déclenché qu’une fois par tour ; les effets propres des cartes continuent de se résoudre normalement.'],
+    ['🛌 Arrivée & Ruée', 'Une créature Physique ne peut pas attaquer le tour où elle arrive en jeu, sauf si elle possède Ruée.'],
+    ['⚔ Attaque', 'Il y a exactement une phase d’attaque par tour. Tous les attaquants sont déclarés ensemble, puis le joueur attaquant annonce leur ordre de résolution avant que le défenseur ne choisisse ses bloqueurs.'],
+    ['🛡 Interposition', 'Un attaquant peut être bloqué par un seul bloqueur et un bloqueur ne peut normalement bloquer qu’une seule attaque. Une attaque déclarée bloquée reste bloquée même si son bloqueur quitte le terrain avant sa résolution.'],
+    ['💥 Combat', 'Les attaques sont résolues une par une dans l’ordre annoncé. Seule la créature ATTAQUANTE inflige des dégâts : le bloqueur ne riposte jamais. Sans bloqueur, l’attaquant inflige son ATK au joueur adverse.'],
+    ['🔥 Impact X', 'Si une attaque avec Impact X est bloquée et que ses dégâts détruisent le bloqueur, les dégâts excédentaires peuvent être infligés au joueur adverse, jusqu’à un maximum de X. Si le bloqueur n’est plus présent à la résolution, l’attaque reste bloquée et Impact ne s’applique pas.'],
+    ['😴 Épuisement', 'Une créature qui attaque devient Épuisée. Une créature Épuisée ne peut pas bloquer pendant le prochain tour adverse. Au début de votre tour, toutes vos créatures sont redressées.'],
+    ['🩸 Blessée', 'Une créature est Blessée si elle a subi au moins 1 dégât pendant le tour et se trouve toujours sur le terrain. Les dégâts sur les créatures sont effacés à la fin du tour.'],
+    ['💀 Mort & Réincarnation', 'Quand une créature Physique meurt, sa Réincarnation se résout puis elle va au cimetière. Entre deux attaques, les morts et Réincarnations sont entièrement résolues avant de passer à l’attaque suivante.'],
+    ['🧩 Résolution des effets', 'Lorsqu’un effet commence à se résoudre, terminez tout son texte avant de traiter les morts et Réincarnations qu’il a provoquées, puis passez à l’action suivante.'],
+    ['🔥 Sacrifice', 'Sacrifier une créature Physique la fait mourir volontairement et déclenche normalement sa Réincarnation, sauf indication contraire.'],
+    ['📜 Rituels', 'Un Rituel est joué pendant une Phase principale, résout entièrement son effet puis va au cimetière. Les cartes ne sont pas jouées pendant la phase d’attaque, sauf si un futur mot-clé l’autorise explicitement.'],
+    ['🕯 Permanents Spirituels', 'Un Permanent Spirituel reste sur le Terrain Spirituel et applique son effet tant qu’il est présent. Vous ne pouvez pas jouer un Permanent Spirituel si vous en contrôlez déjà un du même nom.'],
+    ['🔄 Tour', 'Ordre : effets de début de tour → redressement → pioche → augmentation du Flux de base → Phase principale 1 → attaque → Phase principale 2 → fin de tour. En fin de tour, les effets « ce tour » expirent, les dégâts des créatures sont effacés et le Flux inutilisé est perdu.'],
   ];
-  return <section className="page-panel"><div className="eyebrow">RÈGLES · RÉFÉRENCE RAPIDE</div><h2>Fondations actuelles</h2><p className="intro">Cette V0.1 sert de référence mobile. Les points de timing encore en cours d’audit restent volontairement hors automatisation.</p><div className="rule-list">{rules.map(([title,body]) => <div className="rule-card" key={title}><h3>{title}</h3><p>{body}</p></div>)}</div></section>;
+  return <section className="page-panel"><div className="eyebrow">RÈGLES · V0.1.3 VALIDÉES</div><h2>Fondations actuelles</h2><p className="intro">Cette référence intègre le timing de combat séquentiel, l’Épuisement, Impact, la pioche, le plafond de Flux supplémentaire et les règles nécessaires au bloc Braise validé.</p><div className="rule-list">{rules.map(([title,body]) => <div className="rule-card" key={title}><h3>{title}</h3><p>{body}</p></div>)}</div></section>;
 }
 
 function About() {
-  return <section className="page-panel"><div className="eyebrow">CARD LAB · V0.1.2</div><h2>Laboratoire du TCG</h2><p className="intro">Cette version intègre désormais les 20 cartes Braise : 12 créatures, 4 rituels et 4 permanents spirituels. Aucune partie n’est encore automatisée : le Deck Builder arrivera en V0.2.</p><div className="roadmap"><div className="done"><b>V0.1</b><span>Collection + fiches + règles</span></div><div><b>V0.2</b><span>Deck Builder 40 cartes</span></div><div><b>V0.3</b><span>Table de jeu locale</span></div><div><b>V0.4</b><span>Moteur de règles</span></div><div><b>V0.5</b><span>Statistiques de playtest</span></div></div></section>;
+  return <section className="page-panel"><div className="eyebrow">CARD LAB · V0.1.3</div><h2>Laboratoire du TCG</h2><p className="intro">Les 20 cartes Braise sont désormais auditées, corrigées et validées : 12 créatures, 4 rituels et 4 permanents spirituels. Les règles nécessaires à leur fonctionnement sont verrouillées dans cette version. Le Deck Builder arrivera en V0.2.</p><div className="roadmap"><div className="done"><b>V0.1</b><span>Collection + fiches + règles</span></div><div><b>V0.2</b><span>Deck Builder 40 cartes</span></div><div><b>V0.3</b><span>Table de jeu locale</span></div><div><b>V0.4</b><span>Moteur de règles</span></div><div><b>V0.5</b><span>Statistiques de playtest</span></div></div></section>;
 }
 
 export default App;

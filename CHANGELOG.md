@@ -1,5 +1,23 @@
 # Changelog
 
+## V0.1.3 — Braise validée + règles verrouillées
+- Audit complet et validation des 20 cartes Braise.
+- Écumeur Cendré réduit à 1/1, Ruée, sans Déferlement.
+- Impact X défini officiellement et Fendeur Rouge adapté.
+- Correctifs de timing sur Brûle-Terre, Marcheur de Braises et Ravageur Incandescent.
+- Porte-Braise limité à son premier déclenchement de mort par tour.
+- Maître du Brasier limité à son premier déclenchement de mort par tour.
+- Incendiaire du Cœur-Rouge corrigé pour éviter le double bonus de sacrifice.
+- Pyromane de la Faille-Vive déclenche sa Fièvre après la résolution de son attaque.
+- Réincarnation d’Avalanche de Cendres rendue exploitable sans ambiguïté de timing.
+- Offrande Incandescente exige désormais le sacrifice comme coût supplémentaire.
+- Braise 01–20 passent toutes au statut **Validée**.
+- Ajout de la pioche normale, du mulligan, de l’Épuisement/redressement, de l’ordre séquentiel des attaques et de la résolution complète des effets.
+- Plafond global de +2 Flux supplémentaires par tour.
+- Un seul Permanent Spirituel du même nom peut être contrôlé.
+- Rituels limités aux Phases principales sauf futur mot-clé explicite.
+- Artifact Android renommé `outremonde-card-lab-v0.1.3-apk`.
+
 ## V0.1.2 — Braise 20/20
 - Ajout des Braise 13 à 20.
 - Braise atteint 20 cartes : 12 créatures, 4 rituels, 4 permanents spirituels.
