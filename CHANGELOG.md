@@ -1,5 +1,14 @@
 # Changelog
 
+## V0.1.5 — Braise 01 HD intégrée
+- Intégration de la carte complète HD **Écumeur Cendré (Braise 01)** en deux versions : Plan Physique et Plan Spirituel.
+- Ajout des assets HD dans `public/cards/braise/`.
+- Ajout d’une bascule Physique / Spirituel directement dans la fiche de la carte.
+- La carte HD peut être ouverte en grand écran sur mobile.
+- Ajout d’un badge « Visuel HD » dans la collection pour les cartes disposant d’un visuel final/prototype.
+- Les 20 Braise validées et les règles V0.1.4 restent inchangées.
+- Artifact Android renommé `outremonde-card-lab-v0.1.5-apk`.
+
 ## V0.1.4 — Règles Spirituelles clarifiées
 - Les 20 cartes Braise restent validées sans changement de statistiques ni d’effets.
 - Clarification : une créature jouée en Spirituel reste sur le Terrain Spirituel et ne participe pas au combat.

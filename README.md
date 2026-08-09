@@ -1,10 +1,10 @@
-# Outremonde Card Lab — V0.1.4
+# Outremonde Card Lab — V0.1.5
 
 Prototype mobile du TCG « Les Lueurs de l’Outremonde » (nom de set provisoire).
 
-## Version actuelle : V0.1.4
+## Version actuelle : V0.1.5
 
-**Braise est maintenant terminée et validée : 20/20 cartes.** Cette version intègre aussi le premier noyau de règles verrouillé après l’audit complet de l’affinité.
+**Braise est terminée et validée : 20/20 cartes.** V0.1.5 intègre le premier visuel de carte complet HD : Écumeur Cendré, en Plan Physique et en Plan Spirituel.
 
 ## Contenu validé
 
@@ -15,7 +15,7 @@ Prototype mobile du TCG « Les Lueurs de l’Outremonde » (nom de set provisoir
 - 10 communes / 6 peu communes / 3 rares / 1 mythique
 - Les autres affinités restent dans leur état de travail actuel.
 
-## Règles ajoutées / verrouillées en V0.1.4
+## Règles verrouillées
 
 - Pioche normale et premier joueur sans pioche au tour 1
 - Mulligan unique 7 → nouvelle main de 7 → 1 carte sous le deck → départ à 6
@@ -50,6 +50,7 @@ Prototype mobile du TCG « Les Lueurs de l’Outremonde » (nom de set provisoir
 - Recherche par nom / numéro
 - Filtres d’affinité, rareté et statut
 - Fiche Physique / Spirituel / Réincarnation
+- Premier affichage de carte complète HD avec bascule Physique / Spirituel et vue agrandie
 - Règles de référence rapide
 - Base Capacitor / Android
 - GitHub Action pour produire un APK debug
@@ -95,11 +96,12 @@ Les données du pool sont dans `src/data/cards.ts`.
 
 ## Build APK avec GitHub
 
-Lancez `.github/workflows/build-android.yml` depuis **Actions**. L’artifact généré s’appelle `outremonde-card-lab-v0.1.4-apk`.
+Lancez `.github/workflows/build-android.yml` depuis **Actions**. L’artifact généré s’appelle `outremonde-card-lab-v0.1.5-apk`.
 
 ## Roadmap
 
-- **V0.1.4** : Braise 20/20 validée + règles Spirituelles clarifiées et verrouillées
+- **V0.1.5** : intégration HD de Braise 01 Physique + Spirituel
+- V0.1.4 : Braise 20/20 validée + règles Spirituelles clarifiées et verrouillées
 - V0.1.3 : audit Braise + noyau de règles
 - V0.2 : Deck Builder 40 cartes
 - V0.3 : Table de jeu locale

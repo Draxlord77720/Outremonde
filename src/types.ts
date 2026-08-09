@@ -20,4 +20,8 @@ export interface Card {
   keywords?: string[];
   status: CardStatus;
   note?: string;
+  art?: {
+    physical?: string;
+    spiritual?: string;
+  };
 }

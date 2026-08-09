@@ -23,6 +23,8 @@ function App() {
   const [status, setStatus] = useState<'Tous' | CardStatus>('Tous');
   const [selected, setSelected] = useState<Card | null>(null);
   const [detailTab, setDetailTab] = useState<'physical' | 'spiritual' | 'reincarnation'>('physical');
+  const [artPlan, setArtPlan] = useState<'physical' | 'spiritual'>('physical');
+  const [artFullscreen, setArtFullscreen] = useState(false);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -37,6 +39,9 @@ function App() {
 
   const openCard = (card: Card) => {
     setSelected(card);
+    setArtFullscreen(false);
+    if (card.art?.physical) setArtPlan('physical');
+    else if (card.art?.spiritual) setArtPlan('spiritual');
     if (card.physical) setDetailTab('physical');
     else if (card.spiritualBonus || card.spiritualEffect) setDetailTab('spiritual');
     else setDetailTab('reincarnation');
@@ -49,7 +54,7 @@ function App() {
           <div className="eyebrow">TCG · PROTOTYPE</div>
           <h1>OUTREMONDE <span>CARD LAB</span></h1>
         </div>
-        <div className="version">V0.1.4</div>
+        <div className="version">V0.1.5</div>
       </header>
 
       <main>
@@ -113,6 +118,7 @@ function App() {
                   ) : (
                     <div className="type-badge">{card.type}</div>
                   )}
+                  {card.art && <div className="art-ready">🎨 Visuel HD</div>}
                   <div className={`status status-${card.status.replace('À ','a-').toLowerCase()}`}>{card.status}</div>
                 </button>
               ))}
@@ -149,9 +155,25 @@ function App() {
               <span className={`status status-${selected.status.replace('À ','a-').toLowerCase()}`}>{selected.status}</span>
             </div>
 
+            {selected.art && (
+              <section className="card-art-section">
+                <div className="card-art-heading">
+                  <div><b>Carte complète HD</b><span>Prototype visuel intégré à la fiche</span></div>
+                  <div className="art-plan-toggle">
+                    {selected.art.physical && <button className={artPlan === 'physical' ? 'active' : ''} onClick={() => setArtPlan('physical')}>Physique</button>}
+                    {selected.art.spiritual && <button className={artPlan === 'spiritual' ? 'active' : ''} onClick={() => setArtPlan('spiritual')}>Spirituel</button>}
+                  </div>
+                </div>
+                <button className="card-art-button" onClick={() => setArtFullscreen(true)} aria-label={`Agrandir la carte ${artPlan === 'physical' ? 'Physique' : 'Spirituelle'}`}>
+                  <img src={artPlan === 'physical' ? selected.art.physical : selected.art.spiritual} alt={`${selected.name} — plan ${artPlan === 'physical' ? 'Physique' : 'Spirituel'}`} />
+                </button>
+                <p className="art-hint">Touchez la carte pour l’afficher en grand. Les données de la fiche restent la référence de playtest tant que les visuels sont en phase de production.</p>
+              </section>
+            )}
+
             <div className="segmented">
-              {selected.physical && <button className={detailTab === 'physical' ? 'active' : ''} onClick={() => setDetailTab('physical')}>Physique</button>}
-              {(selected.spiritualBonus || selected.spiritualEffect) && <button className={detailTab === 'spiritual' ? 'active' : ''} onClick={() => setDetailTab('spiritual')}>Spirituel</button>}
+              {selected.physical && <button className={detailTab === 'physical' ? 'active' : ''} onClick={() => { setDetailTab('physical'); if (selected.art?.physical) setArtPlan('physical'); }}>Physique</button>}
+              {(selected.spiritualBonus || selected.spiritualEffect) && <button className={detailTab === 'spiritual' ? 'active' : ''} onClick={() => { setDetailTab('spiritual'); if (selected.art?.spiritual) setArtPlan('spiritual'); }}>Spirituel</button>}
               {selected.reincarnation && <button className={detailTab === 'reincarnation' ? 'active' : ''} onClick={() => setDetailTab('reincarnation')}>Réincarnation</button>}
             </div>
 
@@ -168,6 +190,13 @@ function App() {
             {selected.keywords?.length ? <div className="keyword-row">{selected.keywords.map(k => <span key={k}>{k}</span>)}</div> : null}
             {selected.note && <div className="review-note"><b>Note d’équilibrage</b><br />{selected.note}</div>}
           </article>
+        </div>
+      )}
+      {selected?.art && artFullscreen && (
+        <div className="art-lightbox" onClick={() => setArtFullscreen(false)}>
+          <button className="art-lightbox-close" onClick={() => setArtFullscreen(false)}>×</button>
+          <img onClick={e => e.stopPropagation()} src={artPlan === 'physical' ? selected.art.physical : selected.art.spiritual} alt={`${selected.name} — carte ${artPlan === 'physical' ? 'Physique' : 'Spirituelle'} HD`} />
+          <div className="art-lightbox-caption">{selected.name} · {artPlan === 'physical' ? 'Plan Physique' : 'Plan Spirituel'}</div>
         </div>
       )}
     </div>
@@ -204,11 +233,11 @@ function Rules() {
     ['🔥 Sacrifice', 'Sacrifier une créature Physique la fait mourir volontairement et déclenche normalement sa Réincarnation, sauf indication contraire.'],
     ['🔄 Tour', 'Ordre : effets de début de tour → redressement → pioche → augmentation du Flux de base → Phase principale 1 → attaque → Phase principale 2 → fin de tour. En fin de tour, les effets « ce tour » expirent, les dégâts des créatures sont effacés et le Flux inutilisé est perdu.'],
   ];
-  return <section className="page-panel"><div className="eyebrow">RÈGLES · V0.1.4 VALIDÉES</div><h2>Fondations actuelles</h2><p className="intro">Cette référence précise désormais complètement le Plan Spirituel : arrivée unique, Bonus d’affinité non cumulable, effets personnels distincts, permanence explicite et interaction future possible par effets de cartes.</p><div className="rule-list">{rules.map(([title,body]) => <div className="rule-card" key={title}><h3>{title}</h3><p>{body}</p></div>)}</div></section>;
+  return <section className="page-panel"><div className="eyebrow">RÈGLES · V0.1.5 VALIDÉES</div><h2>Fondations actuelles</h2><p className="intro">Cette référence précise désormais complètement le Plan Spirituel : arrivée unique, Bonus d’affinité non cumulable, effets personnels distincts, permanence explicite et interaction future possible par effets de cartes.</p><div className="rule-list">{rules.map(([title,body]) => <div className="rule-card" key={title}><h3>{title}</h3><p>{body}</p></div>)}</div></section>;
 }
 
 function About() {
-  return <section className="page-panel"><div className="eyebrow">CARD LAB · V0.1.4</div><h2>Laboratoire du TCG</h2><p className="intro">Les 20 cartes Braise sont désormais auditées, corrigées et validées : 12 créatures, 4 rituels et 4 permanents spirituels. Les règles nécessaires à leur fonctionnement sont verrouillées dans cette version, avec une clarification complète du Plan Spirituel et du non-cumul des Bonus Spirituels d’affinité. Le Deck Builder arrivera en V0.2.</p><div className="roadmap"><div className="done"><b>V0.1</b><span>Collection + fiches + règles</span></div><div><b>V0.2</b><span>Deck Builder 40 cartes</span></div><div><b>V0.3</b><span>Table de jeu locale</span></div><div><b>V0.4</b><span>Moteur de règles</span></div><div><b>V0.5</b><span>Statistiques de playtest</span></div></div></section>;
+  return <section className="page-panel"><div className="eyebrow">CARD LAB · V0.1.5</div><h2>Laboratoire du TCG</h2><p className="intro">Les 20 cartes Braise sont auditées, corrigées et validées. Braise 01 — Écumeur Cendré dispose maintenant de ses deux premières cartes complètes HD, Physique et Spirituelle, directement consultables et agrandissables dans l’application. Les règles restent verrouillées et le Deck Builder arrivera en V0.2.</p><div className="roadmap"><div className="done"><b>V0.1</b><span>Collection + fiches + règles</span></div><div><b>V0.2</b><span>Deck Builder 40 cartes</span></div><div><b>V0.3</b><span>Table de jeu locale</span></div><div><b>V0.4</b><span>Moteur de règles</span></div><div><b>V0.5</b><span>Statistiques de playtest</span></div></div></section>;
 }
 
 export default App;
