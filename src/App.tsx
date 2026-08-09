@@ -37,7 +37,9 @@ function App() {
 
   const openCard = (card: Card) => {
     setSelected(card);
-    setDetailTab('physical');
+    if (card.physical) setDetailTab('physical');
+    else if (card.spiritualBonus || card.spiritualEffect) setDetailTab('spiritual');
+    else setDetailTab('reincarnation');
   };
 
   return (
@@ -47,7 +49,7 @@ function App() {
           <div className="eyebrow">TCG · PROTOTYPE</div>
           <h1>OUTREMONDE <span>CARD LAB</span></h1>
         </div>
-        <div className="version">V0.1</div>
+        <div className="version">V0.1.2</div>
       </header>
 
       <main>
@@ -57,7 +59,7 @@ function App() {
               <div>
                 <div className="eyebrow">CORE SET 01 · LABORATOIRE</div>
                 <h2>{cards.length} cartes de travail</h2>
-                <p>Consulte les cartes déjà définies et repère immédiatement celles qui sont validées, à revoir ou encore en draft.</p>
+                <p>Consulte les cartes déjà définies et repère immédiatement celles qui sont validées, à revoir ou encore en draft. Braise est désormais complète : 20/20 cartes.</p>
               </div>
               <div className="hero-stats">
                 <div><strong>{cards.filter(c => c.status === 'Validée').length}</strong><span>validées</span></div>
@@ -106,7 +108,11 @@ function App() {
                   <div className="affinity-line">{affinityMeta[card.affinity].icon} {card.affinity}</div>
                   <h3>{card.name}</h3>
                   <div className="rarity">{card.rarity}</div>
-                  <div className="stats"><span>⚔ {card.atk}</span><span>🛡 {card.def}</span></div>
+                  {card.type === 'Créature' ? (
+                    <div className="stats"><span>⚔ {card.atk}</span><span>🛡 {card.def}</span></div>
+                  ) : (
+                    <div className="type-badge">{card.type}</div>
+                  )}
                   <div className={`status status-${card.status.replace('À ','a-').toLowerCase()}`}>{card.status}</div>
                 </button>
               ))}
@@ -133,25 +139,29 @@ function App() {
               <div>
                 <div className="eyebrow">#{String(selected.setNumber).padStart(3,'0')} · {selected.rarity}</div>
                 <h2>{selected.name}</h2>
-                <p>{selected.affinity} · {affinityMeta[selected.affinity].label}</p>
+                <p>{selected.affinity} · {selected.type} · {affinityMeta[selected.affinity].label}</p>
               </div>
               <div className="modal-cost">{selected.cost}<small>Flux</small></div>
             </div>
-            <div className="modal-stats"><span><b>{selected.atk}</b> ATK</span><span><b>{selected.def}</b> DEF</span><span className={`status status-${selected.status.replace('À ','a-').toLowerCase()}`}>{selected.status}</span></div>
+            <div className="modal-stats">
+              {selected.type === 'Créature' && <><span><b>{selected.atk}</b> ATK</span><span><b>{selected.def}</b> DEF</span></>}
+              <span className="type-badge">{selected.type}</span>
+              <span className={`status status-${selected.status.replace('À ','a-').toLowerCase()}`}>{selected.status}</span>
+            </div>
 
             <div className="segmented">
-              <button className={detailTab === 'physical' ? 'active' : ''} onClick={() => setDetailTab('physical')}>Physique</button>
-              <button className={detailTab === 'spiritual' ? 'active' : ''} onClick={() => setDetailTab('spiritual')}>Spirituel</button>
-              <button className={detailTab === 'reincarnation' ? 'active' : ''} onClick={() => setDetailTab('reincarnation')}>Réincarnation</button>
+              {selected.physical && <button className={detailTab === 'physical' ? 'active' : ''} onClick={() => setDetailTab('physical')}>Physique</button>}
+              {(selected.spiritualBonus || selected.spiritualEffect) && <button className={detailTab === 'spiritual' ? 'active' : ''} onClick={() => setDetailTab('spiritual')}>Spirituel</button>}
+              {selected.reincarnation && <button className={detailTab === 'reincarnation' ? 'active' : ''} onClick={() => setDetailTab('reincarnation')}>Réincarnation</button>}
             </div>
 
             <div className="effect-panel">
-              {detailTab === 'physical' && <><div className="effect-title">⚔ Version Physique</div><p>{selected.physical}</p></>}
+              {detailTab === 'physical' && selected.physical && <><div className="effect-title">⚔ Effet Physique</div><p>{selected.physical}</p></>}
               {detailTab === 'spiritual' && <>
-                <div className="effect-title">👻 Bonus Spirituel</div><p>{selected.spiritualBonus}</p>
+                {selected.spiritualBonus && <><div className="effect-title">👻 Bonus Spirituel</div><p>{selected.spiritualBonus}</p></>}
                 {selected.spiritualEffect && <><div className="effect-title secondary">Effet Spirituel</div><p>{selected.spiritualEffect}</p></>}
               </>}
-              {detailTab === 'reincarnation' && <><div className="effect-title">💀 Réincarnation</div><p>{selected.reincarnation}</p></>}
+              {detailTab === 'reincarnation' && selected.reincarnation && <><div className="effect-title">💀 Réincarnation</div><p>{selected.reincarnation}</p></>}
             </div>
 
             {selected.keywords?.length ? <div className="keyword-row">{selected.keywords.map(k => <span key={k}>{k}</span>)}</div> : null}
@@ -169,18 +179,21 @@ function Rules() {
     ['💠 Flux', '1 Flux au tour 1 puis +1 par tour. Le Flux non dépensé est perdu en fin de tour.'],
     ['🌐 Deux plans', 'Chaque créature est jouée soit en Physique, soit en Spirituel. Elle ne change ensuite plus de plan.'],
     ['⚔ Physique', 'Peut attaquer et bloquer, subir des dégâts et mourir. Sa mort déclenche sa Réincarnation.'],
-    ['👻 Spirituel', 'Ne combat pas. À l’entrée, déclenche le Bonus Spirituel de son affinité puis son effet Spirituel.'],
-    ['🔮 Bonus', 'Le Bonus Spirituel d’une même affinité ne peut se déclencher qu’une fois par tour.'],
+    ['👻 Spirituel', 'Ne combat pas. Quand une carte est jouée en Spirituel, elle déclenche le Bonus Spirituel de son affinité puis son propre effet Spirituel.'],
+    ['🔮 Bonus', 'Le Bonus Spirituel d’une même affinité ne peut se déclencher qu’une fois par tour. Si ce Bonus a déjà été utilisé, la carte jouée en Spirituel résout quand même son propre effet.'],
     ['🛡 Interposition', 'Un attaquant peut être bloqué par un seul bloqueur. Un bloqueur intercepte normalement une seule attaque.'],
     ['⚠ Combat', 'Seule la créature ATTAQUANTE inflige des dégâts. Le bloqueur ne riposte jamais.'],
-    ['🃏 Affinités', 'Les affinités peuvent actuellement être mélangées librement dans un deck. Brume est l’affinité neutre.'],
+    ['🃏 Affinités', 'Les affinités peuvent être mélangées librement dans un deck. Brume est l’affinité neutre.'],
+    ['📜 Rituels', 'Les Rituels sont des effets immédiats. Ils peuvent être Physiques ou Spirituels ; un Rituel Spirituel peut déclencher le Bonus Spirituel de son affinité.'],
+    ['🕯 Permanents', 'Les Permanents restent sur le Terrain Spirituel et appliquent leur effet tant qu’ils sont présents. Ils ne combattent pas.'],
     ['💀 Réincarnation', 'Quand une créature Physique meurt, son effet de Réincarnation se résout puis elle va au cimetière.'],
+    ['🔥 Sacrifice', 'Sacrifier une créature Physique la fait mourir volontairement : sa Réincarnation se déclenche normalement, sauf si une carte précise le contraire.'],
   ];
   return <section className="page-panel"><div className="eyebrow">RÈGLES · RÉFÉRENCE RAPIDE</div><h2>Fondations actuelles</h2><p className="intro">Cette V0.1 sert de référence mobile. Les points de timing encore en cours d’audit restent volontairement hors automatisation.</p><div className="rule-list">{rules.map(([title,body]) => <div className="rule-card" key={title}><h3>{title}</h3><p>{body}</p></div>)}</div></section>;
 }
 
 function About() {
-  return <section className="page-panel"><div className="eyebrow">CARD LAB · V0.1</div><h2>Laboratoire du TCG</h2><p className="intro">Cette première version est volontairement simple : aucune partie automatisée, aucun compte, aucun serveur. Elle devient la base sur laquelle nous ajouterons le Deck Builder puis le mode de test.</p><div className="roadmap"><div className="done"><b>V0.1</b><span>Collection + fiches + règles</span></div><div><b>V0.2</b><span>Deck Builder 40 cartes</span></div><div><b>V0.3</b><span>Table de jeu locale</span></div><div><b>V0.4</b><span>Moteur de règles</span></div><div><b>V0.5</b><span>Statistiques de playtest</span></div></div></section>;
+  return <section className="page-panel"><div className="eyebrow">CARD LAB · V0.1.2</div><h2>Laboratoire du TCG</h2><p className="intro">Cette version intègre désormais les 20 cartes Braise : 12 créatures, 4 rituels et 4 permanents spirituels. Aucune partie n’est encore automatisée : le Deck Builder arrivera en V0.2.</p><div className="roadmap"><div className="done"><b>V0.1</b><span>Collection + fiches + règles</span></div><div><b>V0.2</b><span>Deck Builder 40 cartes</span></div><div><b>V0.3</b><span>Table de jeu locale</span></div><div><b>V0.4</b><span>Moteur de règles</span></div><div><b>V0.5</b><span>Statistiques de playtest</span></div></div></section>;
 }
 
 export default App;
