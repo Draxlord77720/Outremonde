@@ -1,5 +1,17 @@
 # Changelog
 
+## V0.1.14 — Audit intégral Core Set V1 + retrait des visuels
+
+- Audit structurel et sémantique des **120 cartes** du Core Set V1.
+- E023 : wording Spirituel rendu non ambigu (`2 PV si un gain a déjà eu lieu ce tour, sinon 1 PV`).
+- U068 : Réincarnation convertie en augmentation du même événement de dégâts, sans créer une nouvelle source.
+- U079 : déclenchement reformulé sur l’effet Umbra qui empêche réellement un blocage.
+- B003, B008, U063 et O082 : effets « prochaine attaque » corrigés pour fonctionner avec la déclaration simultanée de tous les attaquants et la résolution séquentielle des attaques.
+- Nouvelles clarifications de règles : timing des déclenchements d’attaque/blocage, événements simultanés, déclenchements liés au jeu d’une carte Spirituelle, ATK/DEF et mort, non-cumul d’Impact et Drain, deck presque vide et convention de durée.
+- **Tous les visuels embarqués ont été retirés** : suppression des 10 WebP Braise 001–005 et de leurs références dans les données. Le support `art` reste disponible pour réimporter progressivement les futurs visuels définitifs.
+- Format conservé : **deck de 40 cartes exactement, maximum 3 exemplaires d’une même carte**.
+- Artifact Android : `outremonde-card-lab-core-set-v1-audited-apk`.
+
 ## Core Set V1 / V0.1.13 — 120 cartes complètes
 
 - Injection complète de **Brume 101–120** après audit : 12 créatures, 4 rituels, 4 permanents spirituels ; 10 C / 6 U / 3 R / 1 M.

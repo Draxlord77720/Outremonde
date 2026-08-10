@@ -2,7 +2,7 @@
 
 Prototype mobile du TCG « Les Lueurs de l’Outremonde » (nom de set provisoire).
 
-## Version actuelle : Core Set V1 (V0.1.13)
+## Version actuelle : Core Set V1 audité (V0.1.14)
 
 **Le Core Set V1 est complet : 120/120 cartes validées, soit 20 cartes dans chacune des six affinités.** Cette version injecte Brume 101 à 120 après audit et stress-test final des 63 combinaisons d’affinités. Elle verrouille Intuition X, les effets de remplacement et la définition d’un effet Brume. Les règles de deck restent : **40 cartes exactement, maximum 3 exemplaires d’une même carte**, affinités librement mélangeables.
 
@@ -39,16 +39,18 @@ Prototype mobile du TCG « Les Lueurs de l’Outremonde » (nom de set provisoir
 - Mulligan unique 7 → nouvelle main de 7 → 1 carte sous le deck → départ à 6
 - Une seule phase d’attaque par tour
 - Ordre des attaques annoncé avant les bloqueurs
+- Déclenchements « lorsqu’elle attaque » résolus avant la déclaration des bloqueurs ; déclenchements de blocage résolus avant la première attaque
+- Les événements simultanés et leurs effets suivent un ordre déterministe choisi par leur contrôleur
 - Résolution des attaques une par une
 - Le bloqueur ne riposte jamais
 - Attaquer rend la créature Épuisée jusqu’au prochain redressement
-- Définition officielle d’Impact X
+- Définition officielle d’Impact X ; plusieurs valeurs d’Impact sur une même créature ne se cumulent pas
 - Réincarnations résolues entre deux attaques
 - Sacrifice = mort volontaire + Réincarnation normale
 - Maximum **+2 Flux supplémentaires par tour**, toutes sources de cartes confondues, **Bonus Spirituels compris**
 - Maximum **une carte de coût imprimé 0 Flux jouée par joueur et par tour**, quel que soit son type ou le Plan choisi
 - Les PV commencent à 20, peuvent dépasser 20 et **n’ont aucun plafond**
-- **Drain X** : première fois par tour qu’une créature inflige des dégâts de combat au joueur adverse, son contrôleur gagne X PV
+- **Drain X** : première fois par tour qu’une créature inflige des dégâts de combat au joueur adverse, son contrôleur gagne X PV ; plusieurs valeurs de Drain ne se cumulent pas
 - **Protection X** : la première fois de chaque tour que la créature devrait subir des dégâts, réduisez-les de X ; plusieurs Protections ne se cumulent pas, seule la valeur la plus élevée s’applique
 - **Armure X** : chaque fois que la créature devrait subir des dégâts, réduisez-les de X ; plusieurs Armures ne se cumulent pas
 - Protection et Armure peuvent coexister ; ordre : augmentations → Protection → Armure
@@ -62,6 +64,8 @@ Prototype mobile du TCG « Les Lueurs de l’Outremonde » (nom de set provisoir
 - **Intuition X** : regardez les X cartes du dessus, placez-en éventuellement sous le deck, puis remettez les autres au-dessus dans l’ordre choisi ; Intuition ne fait pas piocher
 - Une défausse remplacée par un placement sous le deck **n’est pas une défausse**
 - Un **effet Brume** provient d’une carte Brume ou du Bonus Spirituel Brume
+- ATK négative traitée comme 0 pour les dégâts ; une créature meurt si sa DEF tombe à 0 ou moins ou si ses dégâts marqués atteignent sa DEF actuelle
+- Les effets qui regardent/meulent plus de cartes que le deck n’en contient font autant que possible ; seule une pioche impossible fait perdre
 - Dégâts des créatures effacés en fin de tour
 
 ### Clarification du Plan Spirituel
@@ -82,14 +86,14 @@ Prototype mobile du TCG « Les Lueurs de l’Outremonde » (nom de set provisoir
 - Recherche par nom / numéro
 - Filtres d’affinité, rareté et statut
 - Fiche Physique / Spirituel / Réincarnation
-- Affichage des cartes complètes HD avec miniature dans la collection, bascule Physique / Spirituel et vue agrandie
+- Support d’import progressif des futurs visuels Physique / Spirituel dans les fiches (aucun visuel embarqué dans V0.1.14)
 - Règles de référence rapide
 - Base Capacitor / Android
 - GitHub Action pour produire un APK debug
 
 ### Images dans l’application
 
-Les cartes HD embarquées dans l’APK utilisent désormais **WebP qualité maximale** à leur résolution native. Cela réduit fortement le poids du dépôt sans changer la mise en page. Les PNG masters peuvent être conservés séparément pour une future impression.
+**V0.1.14 n’embarque aucun visuel de carte.** Les anciens prototypes Braise 001–005 ont été retirés. Le support `art` de l’application est conservé afin de pouvoir ajouter progressivement les futurs visuels Physique / Spirituel définitifs sans reconstruire l’interface.
 
 ## Stack
 
@@ -132,10 +136,11 @@ Les données du pool sont dans `src/data/cards.ts`.
 
 ## Build APK avec GitHub
 
-Lancez `.github/workflows/build-android.yml` depuis **Actions**. L’artifact généré s’appelle `outremonde-card-lab-core-set-v1-apk`.
+Lancez `.github/workflows/build-android.yml` depuis **Actions**. L’artifact généré s’appelle `outremonde-card-lab-core-set-v1-audited-apk`.
 
 ## Roadmap
 
+- **V0.1.14 — Core Set V1 audité** : audit intégral des 120 cartes, corrections de timing E023/U068/U079/B003/B008/U063/O082, règles de simultanéité/statistiques/Drain/Impact/deck presque vide, et retrait de tous les visuels embarqués
 - **Core Set V1 / V0.1.13** : Brume 101–120 complète + Intuition X + règles de remplacement + 120/120 cartes validées
 - V0.1.12 : Obsidienne 81–100 complète + E023/U066 + Armure X + règles dégâts/Protection/Impact
 - V0.1.11 : Umbra 61–80 complet + correction U062 + règle système des cartes à 0 Flux
