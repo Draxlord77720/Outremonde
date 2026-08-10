@@ -1,5 +1,19 @@
 # Changelog
 
+## V0.1.10 — Soléane complet + Protection/Redressement
+
+- Injection complète de Soléane **041 à 060** selon la matrice officielle : 12 créatures, 4 rituels et 4 permanents spirituels.
+- Soléane 041–049 remplacée par la version auditée : suppression des effets de malus ATK trop proches d’Umbra, clarification des timings et recentrage sur DEF / Protection / redressement.
+- **Protection X** formalisée : première prévention de dégâts de chaque tour, non cumulable ; seule la valeur la plus élevée s’applique.
+- **Redressement** formalisé : retire Épuisée sans créer de seconde attaque ; aucun blocage rétroactif après la déclaration des bloqueurs.
+- S044 **Veilleur Rayonnant** passe à 1 Flux et ses redressements sont réservés aux créatures Soléane.
+- S048 **Gardien du Halo Brisé** passe de 1 à 2 Flux.
+- S050 **Bastion du Soleil Voilé** corrigé après stress-test : son effet Spirituel ne peut redresser qu’une créature Soléane choisie.
+- S058 **Cloche des Veilleurs** corrigée : première fois par tour, y compris pendant le tour adverse ; le redressement normal de début de tour ne déclenche pas l’effet.
+- Watchlist conservée sans nerf supplémentaire : S042, S049, S052, S058, S060 ainsi que les interactions multi-affinités.
+- Braise 01–05 conserve ses visuels HD WebP optimisés.
+- Artifact Android renommé `outremonde-card-lab-v0.1.10-apk`.
+
 ## V0.1.9 — Écryme complet + règles PV/Flux
 
 - Injection complète d’Écryme **021 à 040** selon la matrice 20 cartes : 12 créatures, 4 rituels, 4 permanents spirituels.

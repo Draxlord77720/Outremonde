@@ -54,7 +54,7 @@ function App() {
           <div className="eyebrow">TCG · PROTOTYPE</div>
           <h1>OUTREMONDE <span>CARD LAB</span></h1>
         </div>
-        <div className="version">V0.1.9</div>
+        <div className="version">V0.1.10</div>
       </header>
 
       <main>
@@ -233,18 +233,20 @@ function Rules() {
     ['💥 Combat', 'Les attaques sont résolues une par une dans l’ordre annoncé. Seule la créature ATTAQUANTE inflige des dégâts : le bloqueur ne riposte jamais. Sans bloqueur, l’attaquant inflige son ATK au joueur adverse.'],
     ['🔥 Impact X', 'Si une attaque avec Impact X est bloquée et que ses dégâts détruisent le bloqueur, les dégâts excédentaires peuvent être infligés au joueur adverse, jusqu’à un maximum de X. Si le bloqueur n’est plus présent à la résolution, l’attaque reste bloquée et Impact ne s’applique pas.'],
     ['🩸 Drain X', 'La première fois par tour qu’une créature avec Drain X inflige des dégâts de combat au joueur adverse, son contrôleur gagne X PV. Les pertes de PV causées par des effets de cartes ne déclenchent pas Drain.'],
+    ['🌞 Protection X', 'La première fois de chaque tour qu’une créature avec Protection X devrait subir des dégâts, réduisez ces dégâts de X, jusqu’à un minimum de 0. Une même créature ne peut bénéficier de Protection qu’une seule fois par tour, même si elle reçoit de nouveau Protection. Plusieurs valeurs de Protection ne se cumulent pas : seule la valeur la plus élevée s’applique.'],
     ['😴 Épuisement', 'Une créature qui attaque devient Épuisée. Une créature Épuisée ne peut pas bloquer pendant le prochain tour adverse. Au début de votre tour, toutes vos créatures sont redressées.'],
+    ['☀️ Redressement', 'Redresser une créature retire son état Épuisée. Cela ne crée jamais une nouvelle phase d’attaque et ne permet jamais à une créature d’attaquer une seconde fois pendant le même tour. Une créature redressée pendant la phase d’attaque adverse après la déclaration des bloqueurs ne peut pas devenir rétroactivement bloqueuse.'],
     ['🩸 Blessée', 'Une créature est Blessée si elle a subi au moins 1 dégât pendant le tour et se trouve toujours sur le terrain. Les dégâts sur les créatures sont effacés à la fin du tour.'],
     ['💀 Mort & Réincarnation', 'Quand une créature Physique meurt, sa Réincarnation se résout puis elle va au cimetière. Une carte sur le Plan Spirituel ne déclenche pas de Réincarnation simplement parce qu’elle quitte ce plan, sauf si le texte d’une carte dit explicitement le contraire. Entre deux attaques, les morts et Réincarnations sont entièrement résolues avant de passer à l’attaque suivante.'],
     ['🧩 Résolution des effets', 'Lorsqu’un effet commence à se résoudre, terminez tout son texte avant de traiter les morts et Réincarnations qu’il a provoquées, puis passez à l’action suivante.'],
     ['🔥 Sacrifice', 'Sacrifier une créature Physique la fait mourir volontairement et déclenche normalement sa Réincarnation, sauf indication contraire.'],
     ['🔄 Tour', 'Ordre : effets de début de tour → redressement → pioche → augmentation du Flux de base → Phase principale 1 → attaque → Phase principale 2 → fin de tour. En fin de tour, les effets « ce tour » expirent, les dégâts des créatures sont effacés et le Flux inutilisé est perdu.'],
   ];
-  return <section className="page-panel"><div className="eyebrow">RÈGLES · V0.1.9 VALIDÉES</div><h2>Fondations actuelles</h2><p className="intro">Cette référence inclut désormais Écryme 20/20, Drain, les PV sans plafond et la clarification du plafond global de +2 Flux supplémentaires par tour, Bonus Spirituels compris.</p><div className="rule-list">{rules.map(([title,body]) => <div className="rule-card" key={title}><h3>{title}</h3><p>{body}</p></div>)}</div></section>;
+  return <section className="page-panel"><div className="eyebrow">RÈGLES · V0.1.10 VALIDÉES</div><h2>Fondations actuelles</h2><p className="intro">Cette référence inclut désormais Braise, Écryme et Soléane complètes à 20/20. Soléane intègre Protection X, le redressement formalisé et les corrections du stress-test global, tout en conservant les PV sans plafond et le plafond global de +2 Flux supplémentaires par tour, Bonus Spirituels compris.</p><div className="rule-list">{rules.map(([title,body]) => <div className="rule-card" key={title}><h3>{title}</h3><p>{body}</p></div>)}</div></section>;
 }
 
 function About() {
-  return <section className="page-panel"><div className="eyebrow">CARD LAB · V0.1.9</div><h2>Laboratoire du TCG</h2><p className="intro">Braise et Écryme sont désormais complètes et validées à 20/20 cartes chacune. Écryme 21–40 intègre les corrections issues du stress-test Braise + Écryme, dont Acolyte du Relâche-Sang et Dernier Battement. Les règles incluent maintenant les PV sans plafond, Drain et le plafond global de +2 Flux supplémentaires incluant les Bonus Spirituels. Braise 01 à 05 conservent leurs visuels HD intégrés.</p><div className="roadmap"><div className="done"><b>V0.1</b><span>Collection + fiches + règles</span></div><div><b>V0.2</b><span>Deck Builder 40 cartes</span></div><div><b>V0.3</b><span>Table de jeu locale</span></div><div><b>V0.4</b><span>Moteur de règles</span></div><div><b>V0.5</b><span>Statistiques de playtest</span></div></div></section>;
+  return <section className="page-panel"><div className="eyebrow">CARD LAB · V0.1.10</div><h2>Laboratoire du TCG</h2><p className="intro">Braise, Écryme et Soléane sont désormais complètes et validées à 20/20 cartes chacune. Soléane 41–60 intègre les corrections d’audit et de stress-test global, notamment Protection X, le redressement, S050 et S058. Les règles conservent les PV sans plafond et le plafond global de +2 Flux supplémentaires, Bonus Spirituels compris. Braise 01 à 05 conservent leurs visuels HD intégrés.</p><div className="roadmap"><div className="done"><b>V0.1</b><span>Collection + fiches + règles</span></div><div><b>V0.2</b><span>Deck Builder 40 cartes</span></div><div><b>V0.3</b><span>Table de jeu locale</span></div><div><b>V0.4</b><span>Moteur de règles</span></div><div><b>V0.5</b><span>Statistiques de playtest</span></div></div></section>;
 }
 
 export default App;
