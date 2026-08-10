@@ -11,7 +11,7 @@ const affinityMeta: Record<Affinity, { icon: string; label: string }> = {
   Écryme: { icon: '🩸', label: 'Drain & Flux' },
   Soléane: { icon: '🌞', label: 'Protection & défense' },
   Umbra: { icon: '🌑', label: 'Évasion & affaiblissement' },
-  Obsidienne: { icon: '🪨', label: 'Mitigation & endurance' },
+  Obsidienne: { icon: '🪨', label: 'Armure & fracture' },
   Brume: { icon: '☁️', label: 'Neutre & polyvalence' },
 };
 
@@ -54,7 +54,7 @@ function App() {
           <div className="eyebrow">TCG · PROTOTYPE</div>
           <h1>OUTREMONDE <span>CARD LAB</span></h1>
         </div>
-        <div className="version">V0.1.11</div>
+        <div className="version">V0.1.12</div>
       </header>
 
       <main>
@@ -64,7 +64,7 @@ function App() {
               <div>
                 <div className="eyebrow">CORE SET 01 · LABORATOIRE</div>
                 <h2>{cards.length} cartes de travail</h2>
-                <p>Consulte les cartes déjà définies et repère immédiatement celles qui sont validées, à revoir ou encore en draft. Braise et Écryme sont désormais complètes : 20/20 cartes chacune.</p>
+                <p>Consulte les cartes déjà définies et repère immédiatement celles qui sont validées, à revoir ou encore en draft. Braise, Écryme, Soléane, Umbra et Obsidienne sont désormais complètes : 20/20 cartes chacune. Brume reste en pool de travail.</p>
               </div>
               <div className="hero-stats">
                 <div><strong>{cards.filter(c => c.status === 'Validée').length}</strong><span>validées</span></div>
@@ -222,7 +222,7 @@ function Rules() {
     ['⚔ Plan Physique', 'Une créature Physique peut attaquer et bloquer selon les règles normales. Elle peut subir des dégâts, mourir et déclencher sa Réincarnation.'],
     ['👻 Plan Spirituel', 'Une créature jouée en Spirituel reste sur le Terrain Spirituel. Elle ne peut ni attaquer ni bloquer, ne subit pas de dégâts de combat et ne meurt donc pas au combat. Elle peut toutefois quitter le Terrain Spirituel si un effet de carte l’indique explicitement.'],
     ['✨ Effet Spirituel d’arrivée', 'L’effet Spirituel propre à une carte se résout une seule fois, au moment où cette carte est jouée en Spirituel. Il ne se réactive pas automatiquement au début des tours suivants, même si la carte reste sur le Terrain Spirituel.'],
-    ['👻 Bonus Spirituel d’affinité', 'Lorsqu’une carte est jouée en Spirituel, elle peut déclencher le Bonus Spirituel de son affinité. Le Bonus Spirituel d’une même affinité ne se cumule pas et ne peut être déclenché qu’une seule fois par tour. Le Bonus Écryme ne donne +1 Flux que si la carte Écryme jouée en Spirituel a un coût imprimé d’au moins 1 Flux.'],
+    ['👻 Bonus Spirituel d’affinité', 'Lorsqu’une carte est jouée en Spirituel, vérifiez puis résolvez d’abord le Bonus Spirituel de son affinité s’il peut se déclencher ; résolvez ensuite l’effet Spirituel propre de la carte. Le Bonus Spirituel d’une même affinité ne se cumule pas et ne peut être déclenché qu’une seule fois par tour. Le Bonus Écryme ne donne +1 Flux que si la carte Écryme jouée en Spirituel a un coût imprimé d’au moins 1 Flux.'],
     ['🚫 Bonus non stackable', 'Jouer plusieurs cartes de la même affinité en Spirituel pendant un même tour ne multiplie jamais le Bonus Spirituel d’affinité. Exemple : deux Braise Spirituelles ne peuvent produire qu’un seul Bonus Spirituel Braise pendant ce tour.'],
     ['🧩 Effets propres des cartes', 'La limitation du Bonus Spirituel d’affinité ne bloque pas les effets Spirituels propres aux cartes. Chaque carte jouée en Spirituel résout normalement son effet personnel ; ces effets peuvent se cumuler entre eux sauf si leur texte indique le contraire.'],
     ['✅ Condition du Bonus', 'Si la condition nécessaire au Bonus Spirituel n’est pas remplie au moment où la carte est jouée, le Bonus ne se déclenche pas et ne consomme pas l’unique déclenchement autorisé de cette affinité pour le tour.'],
@@ -232,9 +232,12 @@ function Rules() {
     ['⚔ Attaque', 'Il y a exactement une phase d’attaque par tour. Tous les attaquants sont déclarés ensemble, puis le joueur attaquant annonce leur ordre de résolution avant que le défenseur ne choisisse ses bloqueurs.'],
     ['🛡 Interposition', 'Un attaquant peut être bloqué par un seul bloqueur et un bloqueur ne peut normalement bloquer qu’une seule attaque. Une attaque déclarée bloquée reste bloquée même si son bloqueur quitte le terrain avant sa résolution.'],
     ['💥 Combat', 'Les attaques sont résolues une par une dans l’ordre annoncé. Seule la créature ATTAQUANTE inflige des dégâts : le bloqueur ne riposte jamais. Sans bloqueur, l’attaquant inflige son ATK au joueur adverse.'],
-    ['🔥 Impact X', 'Si une attaque avec Impact X est bloquée et que ses dégâts détruisent le bloqueur, les dégâts excédentaires peuvent être infligés au joueur adverse, jusqu’à un maximum de X. Si le bloqueur n’est plus présent à la résolution, l’attaque reste bloquée et Impact ne s’applique pas.'],
+    ['🔥 Impact X', 'Si une attaque avec Impact X est bloquée et que ses dégâts détruisent le bloqueur, les dégâts excédentaires réellement disponibles après les augmentations, Protection, Armure et les dégâts déjà marqués sur ce bloqueur peuvent être infligés au joueur adverse, jusqu’à un maximum de X. Si le bloqueur n’est plus présent à la résolution, l’attaque reste bloquée et Impact ne s’applique pas.'],
     ['🩸 Drain X', 'La première fois par tour qu’une créature avec Drain X inflige des dégâts de combat au joueur adverse, son contrôleur gagne X PV. Les pertes de PV causées par des effets de cartes ne déclenchent pas Drain.'],
     ['🌞 Protection X', 'La première fois de chaque tour qu’une créature avec Protection X devrait subir des dégâts, réduisez ces dégâts de X, jusqu’à un minimum de 0. Une même créature ne peut bénéficier de Protection qu’une seule fois par tour, même si elle reçoit de nouveau Protection. Plusieurs valeurs de Protection ne se cumulent pas : seule la valeur la plus élevée s’applique.'],
+    ['🪨 Armure X', 'Chaque fois qu’une créature avec Armure X devrait subir des dégâts, réduisez ces dégâts de X, jusqu’à un minimum de 0. Plusieurs valeurs d’Armure ne se cumulent pas : seule la valeur la plus élevée s’applique. Le Bonus Spirituel Obsidienne donne Armure 1 jusqu’à votre prochain tour.'],
+    ['🛡️ Protection + Armure', 'Protection et Armure peuvent coexister sur une même créature. Sur la première source de dégâts du tour, Protection s’applique puis Armure. Protection est alors consommée pour ce tour ; Armure continue de s’appliquer aux sources suivantes. Une perte de PV n’est pas un dégât et n’est réduite ni par Protection ni par Armure.'],
+    ['💥 Calcul des dégâts', 'Pour un même événement : dégâts de base → augmentations de dégâts → Protection → Armure → dégâts finaux. Les dégâts supplémentaires augmentent le même événement et conservent la même source : ils ne créent jamais une nouvelle source et ne peuvent pas redéclencher eux-mêmes un effet attendant « la prochaine fois que cette créature subit des dégâts ».'],
     ['😴 Épuisement', 'Une créature qui attaque devient Épuisée. Une créature Épuisée ne peut pas bloquer pendant le prochain tour adverse. Au début de votre tour, toutes vos créatures sont redressées.'],
     ['☀️ Redressement', 'Redresser une créature retire son état Épuisée. Cela ne crée jamais une nouvelle phase d’attaque et ne permet jamais à une créature d’attaquer une seconde fois pendant le même tour. Une créature redressée pendant la phase d’attaque adverse après la déclaration des bloqueurs ne peut pas devenir rétroactivement bloqueuse.'],
     ['🩸 Blessée', 'Une créature est Blessée si elle a subi au moins 1 dégât pendant le tour et se trouve toujours sur le terrain. Les dégâts sur les créatures sont effacés à la fin du tour.'],
@@ -243,11 +246,11 @@ function Rules() {
     ['🔥 Sacrifice', 'Sacrifier une créature Physique la fait mourir volontairement et déclenche normalement sa Réincarnation, sauf indication contraire.'],
     ['🔄 Tour', 'Ordre : effets de début de tour → redressement → pioche → augmentation du Flux de base → Phase principale 1 → attaque → Phase principale 2 → fin de tour. En fin de tour, les effets « ce tour » expirent, les dégâts des créatures sont effacés et le Flux inutilisé est perdu.'],
   ];
-  return <section className="page-panel"><div className="eyebrow">RÈGLES · V0.1.11 VALIDÉES</div><h2>Fondations actuelles</h2><p className="intro">Cette référence inclut désormais Braise, Écryme, Soléane et Umbra complètes à 20/20. Umbra 61–80 intègre les corrections d’audit et de stress-test global, dont U062 liée aux créatures Umbra. La règle système limite désormais à une seule carte de coût imprimé 0 Flux jouée par joueur et par tour.</p><div className="rule-list">{rules.map(([title,body]) => <div className="rule-card" key={title}><h3>{title}</h3><p>{body}</p></div>)}</div></section>;
+  return <section className="page-panel"><div className="eyebrow">RÈGLES · V0.1.12 VALIDÉES</div><h2>Fondations actuelles</h2><p className="intro">Cette référence inclut désormais Braise, Écryme, Soléane, Umbra et Obsidienne complètes à 20/20. V0.1.12 ajoute Armure X, Fracture et les clarifications de résolution nécessaires après l’audit des 100 cartes : ordre Bonus Spirituel → effet propre, dégâts supplémentaires de même source, interaction Protection/Armure et calcul d’Impact après réductions.</p><div className="rule-list">{rules.map(([title,body]) => <div className="rule-card" key={title}><h3>{title}</h3><p>{body}</p></div>)}</div></section>;
 }
 
 function About() {
-  return <section className="page-panel"><div className="eyebrow">CARD LAB · V0.1.11</div><h2>Laboratoire du TCG</h2><p className="intro">Braise, Écryme, Soléane et Umbra sont désormais complètes et validées à 20/20 cartes chacune. Umbra 61–80 intègre les corrections d’audit et du stress-test à 15 configurations, notamment U062 et la nouvelle limite des cartes à coût imprimé 0 Flux. Les PV restent sans plafond et le plafond global de +2 Flux supplémentaires, Bonus Spirituels compris, reste inchangé. Braise 01 à 05 conservent leurs visuels HD intégrés.</p><div className="roadmap"><div className="done"><b>V0.1</b><span>Collection + fiches + règles</span></div><div><b>V0.2</b><span>Deck Builder 40 cartes</span></div><div><b>V0.3</b><span>Table de jeu locale</span></div><div><b>V0.4</b><span>Moteur de règles</span></div><div><b>V0.5</b><span>Statistiques de playtest</span></div></div></section>;
+  return <section className="page-panel"><div className="eyebrow">CARD LAB · V0.1.12</div><h2>Laboratoire du TCG</h2><p className="intro">Les cinq affinités principales Braise, Écryme, Soléane, Umbra et Obsidienne sont désormais complètes et validées à 20/20 cartes chacune. V0.1.12 injecte Obsidienne 81–100, corrige E023 et U066, formalise Armure X et verrouille les interactions dégâts / Protection / Armure / Impact. Brume 101–114 reste volontairement un pool de travail à auditer avant de compléter 101–120. Les visuels HD Braise 01 à 05 restent intégrés.</p><div className="roadmap"><div className="done"><b>V0.1</b><span>Collection + fiches + règles</span></div><div><b>V0.2</b><span>Deck Builder 40 cartes</span></div><div><b>V0.3</b><span>Table de jeu locale</span></div><div><b>V0.4</b><span>Moteur de règles</span></div><div><b>V0.5</b><span>Statistiques de playtest</span></div></div></section>;
 }
 
 export default App;

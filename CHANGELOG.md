@@ -1,5 +1,23 @@
 # Changelog
 
+## V0.1.12 — Obsidienne complète + moteur dégâts/Armure
+
+- Injection complète d’Obsidienne **081 à 100** : 12 créatures, 4 rituels, 4 permanents spirituels ; 10 C / 6 U / 3 R / 1 M.
+- Obsidienne 081–089 remplacée par la version auditée : recentrage sur **Armure / endurance / représailles / Fracture**, suppression des effets trop proches d’Umbra et correction des timings.
+- Ajout de O090–O100 selon la matrice officielle.
+- Bonus Spirituel Obsidienne : une créature Physique gagne **Armure 1 jusqu’au prochain tour**.
+- **Armure X** formalisée : réduction de chaque source de dégâts ; plusieurs Armures ne se cumulent pas.
+- Interaction **Protection + Armure** verrouillée : elles peuvent coexister ; Protection s’applique avant Armure sur la première source.
+- Ordre de calcul verrouillé : dégâts de base → augmentations → Protection → Armure → dégâts finaux.
+- Les dégâts supplémentaires appartiennent au **même événement et à la même source** ; aucune récursion artificielle.
+- **Impact X** clarifié : l’excédent est calculé à partir des dégâts réellement disponibles après modifications/réductions et des dégâts déjà marqués sur le bloqueur.
+- Ordre Spirituel verrouillé : **Bonus d’affinité d’abord, effet Spirituel propre ensuite**.
+- E023 **Rongerêve Spectral** recentré sur le gain de PV Écryme, sans meule.
+- U066 **Traquenuit Profanée** ne fait défausser que lorsqu’elle inflige réellement des dégâts de combat au joueur.
+- O090 précise que son +1 DEF vérifie l’Armure présente avant la résolution de son effet Spirituel propre.
+- Brume 101–114 reste volontairement en pool de travail pour le prochain audit.
+- Artifact Android renommé `outremonde-card-lab-v0.1.12-apk`.
+
 ## V0.1.11 — Umbra complet + règle 0 Flux
 
 - Umbra 61–80 complétée et validée après audit et stress-test global des 15 configurations avec les quatre affinités.

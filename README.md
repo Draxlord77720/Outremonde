@@ -1,10 +1,10 @@
-# Outremonde Card Lab — V0.1.11
+# Outremonde Card Lab — V0.1.12
 
 Prototype mobile du TCG « Les Lueurs de l’Outremonde » (nom de set provisoire).
 
-## Version actuelle : V0.1.11
+## Version actuelle : V0.1.12
 
-**Braise, Écryme, Soléane et Umbra sont terminées et validées : 20/20 cartes chacune.** V0.1.11 injecte Umbra 61 à 80 après audit et stress-test des 15 configurations possibles avec les quatre affinités. U062 est corrigée pour lier son non-blocage aux créatures Umbra, et la nouvelle règle système limite à une seule carte de coût imprimé 0 Flux jouée par joueur et par tour. Les visuels HD Braise 01 à 05 restent intégrés et optimisés en WebP.
+**Braise, Écryme, Soléane, Umbra et Obsidienne sont terminées et validées : 20/20 cartes chacune.** V0.1.12 injecte Obsidienne 81 à 100 après audit global des 100 cartes. Cette version applique aussi les corrections E023 et U066, formalise Armure X, l’ordre de résolution Spirituel, les dégâts supplémentaires de même source, l’interaction Protection + Armure et le calcul d’Impact après réduction. Les visuels HD Braise 01 à 05 restent intégrés et optimisés en WebP.
 
 ## Contenu validé
 
@@ -22,7 +22,11 @@ Prototype mobile du TCG « Les Lueurs de l’Outremonde » (nom de set provisoir
   - 4 rituels
   - 4 permanents spirituels
 - 10 communes / 6 peu communes / 3 rares / 1 mythique
-- Obsidienne et Brume restent dans leur état de travail actuel.
+- Obsidienne : **20/20 cartes validées**
+  - 12 créatures
+  - 4 rituels
+  - 4 permanents spirituels
+- Brume reste dans son pool de travail actuel avant l’audit 101–120.
 
 ## Règles verrouillées
 
@@ -41,6 +45,11 @@ Prototype mobile du TCG « Les Lueurs de l’Outremonde » (nom de set provisoir
 - Les PV commencent à 20, peuvent dépasser 20 et **n’ont aucun plafond**
 - **Drain X** : première fois par tour qu’une créature inflige des dégâts de combat au joueur adverse, son contrôleur gagne X PV
 - **Protection X** : la première fois de chaque tour que la créature devrait subir des dégâts, réduisez-les de X ; plusieurs Protections ne se cumulent pas, seule la valeur la plus élevée s’applique
+- **Armure X** : chaque fois que la créature devrait subir des dégâts, réduisez-les de X ; plusieurs Armures ne se cumulent pas
+- Protection et Armure peuvent coexister ; ordre : augmentations → Protection → Armure
+- Les dégâts supplémentaires restent dans le même événement et conservent la même source
+- En Spirituel, le Bonus d’affinité se résout avant l’effet propre de la carte
+- Impact utilise les dégâts excédentaires réellement disponibles après augmentations/réductions et dégâts déjà marqués
 - **Redressement** : retire Épuisée, sans créer de nouvelle attaque ni permettre un blocage rétroactif après la déclaration des bloqueurs
 - Bonus Spirituel Écryme : +1 Flux uniquement si la carte Écryme jouée en Spirituel a un coût imprimé d’au moins 1 Flux
 - Un seul Permanent Spirituel du même nom contrôlé à la fois
@@ -115,11 +124,12 @@ Les données du pool sont dans `src/data/cards.ts`.
 
 ## Build APK avec GitHub
 
-Lancez `.github/workflows/build-android.yml` depuis **Actions**. L’artifact généré s’appelle `outremonde-card-lab-v0.1.11-apk`.
+Lancez `.github/workflows/build-android.yml` depuis **Actions**. L’artifact généré s’appelle `outremonde-card-lab-v0.1.12-apk`.
 
 ## Roadmap
 
-- **V0.1.11** : Umbra 61–80 complet + correction U062 + règle système des cartes à 0 Flux
+- **V0.1.12** : Obsidienne 81–100 complète + E023/U066 + Armure X + règles dégâts/Protection/Impact
+- V0.1.11 : Umbra 61–80 complet + correction U062 + règle système des cartes à 0 Flux
 - V0.1.10 : Soléane 41–60 complet + corrections audit/stress-test global + Protection X + redressement
 - V0.1.9 : Écryme 21–40 complet + corrections stress-test Braise/Écryme + PV sans plafond + clarification Flux
 - V0.1.8 : intégration HD vérifiée de Braise 01 à 05, Physique + Spirituel
