@@ -1,14 +1,15 @@
-# Outremonde Card Lab — V0.1.8
+# Outremonde Card Lab — V0.1.9
 
 Prototype mobile du TCG « Les Lueurs de l’Outremonde » (nom de set provisoire).
 
-## Version actuelle : V0.1.8
+## Version actuelle : V0.1.9
 
-**Braise est terminée et validée : 20/20 cartes.** V0.1.8 intègre les visuels HD complets de Braise 01 à 05, en Plan Physique et en Plan Spirituel, visibles directement dans la collection et dans chaque fiche.
+**Braise et Écryme sont terminées et validées : 20/20 cartes chacune.** V0.1.9 injecte Écryme 21 à 40 après audit et stress-test Braise + Écryme, avec les corrections d’équilibrage validées. Les visuels HD Braise 01 à 05 restent intégrés et optimisés en WebP.
 
 ## Contenu validé
 
 - Braise : **20/20 cartes validées**
+- Écryme : **20/20 cartes validées**
   - 12 créatures
   - 4 rituels
   - 4 permanents spirituels
@@ -27,7 +28,10 @@ Prototype mobile du TCG « Les Lueurs de l’Outremonde » (nom de set provisoir
 - Définition officielle d’Impact X
 - Réincarnations résolues entre deux attaques
 - Sacrifice = mort volontaire + Réincarnation normale
-- Maximum **+2 Flux supplémentaires par tour**, toutes sources de cartes confondues
+- Maximum **+2 Flux supplémentaires par tour**, toutes sources de cartes confondues, **Bonus Spirituels compris**
+- Les PV commencent à 20, peuvent dépasser 20 et **n’ont aucun plafond**
+- **Drain X** : première fois par tour qu’une créature inflige des dégâts de combat au joueur adverse, son contrôleur gagne X PV
+- Bonus Spirituel Écryme : +1 Flux uniquement si la carte Écryme jouée en Spirituel a un coût imprimé d’au moins 1 Flux
 - Un seul Permanent Spirituel du même nom contrôlé à la fois
 - Rituels joués en Phase principale et envoyés au cimetière après résolution
 - Dégâts des créatures effacés en fin de tour
@@ -100,11 +104,12 @@ Les données du pool sont dans `src/data/cards.ts`.
 
 ## Build APK avec GitHub
 
-Lancez `.github/workflows/build-android.yml` depuis **Actions**. L’artifact généré s’appelle `outremonde-card-lab-v0.1.8-apk`.
+Lancez `.github/workflows/build-android.yml` depuis **Actions**. L’artifact généré s’appelle `outremonde-card-lab-v0.1.9-apk`.
 
 ## Roadmap
 
-- **V0.1.8** : intégration HD vérifiée de Braise 01 à 05, Physique + Spirituel
+- **V0.1.9** : Écryme 21–40 complet + corrections stress-test Braise/Écryme + PV sans plafond + clarification Flux
+- V0.1.8 : intégration HD vérifiée de Braise 01 à 05, Physique + Spirituel
 - V0.1.4 : Braise 20/20 validée + règles Spirituelles clarifiées et verrouillées
 - V0.1.3 : audit Braise + noyau de règles
 - V0.2 : Deck Builder 40 cartes

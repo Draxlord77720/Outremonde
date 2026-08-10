@@ -1,5 +1,17 @@
 # Changelog
 
+## V0.1.9 — Écryme complet + règles PV/Flux
+
+- Injection complète d’Écryme **021 à 040** selon la matrice 20 cartes : 12 créatures, 4 rituels, 4 permanents spirituels.
+- Écryme 029 **Acolyte du Relâche-Sang** corrigé : son moteur ne se déclenche désormais que lorsqu’une autre créature **que vous contrôlez** meurt, et une seule fois par tour.
+- Écryme 035 **Dernier Battement** passe de **1 à 2 Flux** après stress-test Braise + Écryme.
+- Règle PV verrouillée : départ à 20 PV, dépassement autorisé, **aucun plafond de PV**, défaite à 0 PV ou moins.
+- Règle Drain X ajoutée et formalisée.
+- Plafond de Flux clarifié : maximum **+2 Flux supplémentaires par tour**, toutes sources de cartes confondues, **Bonus Spirituels compris**.
+- Bonus Spirituel Écryme sécurisé : +1 Flux seulement si la carte Écryme jouée en Spirituel coûte au moins 1 Flux imprimé.
+- Braise 01–05 conserve ses visuels HD WebP optimisés.
+- Artifact Android renommé `outremonde-card-lab-v0.1.9-apk`.
+
 ## V0.1.8 — Assets HD optimisés pour GitHub
 - Aucun changement de règles, de statistiques ou de direction artistique.
 - Conversion des 10 visuels Braise 01 à 05 de PNG vers WebP qualité maximale pour l’application.
