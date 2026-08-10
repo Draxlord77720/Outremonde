@@ -12,7 +12,7 @@ const affinityMeta: Record<Affinity, { icon: string; label: string }> = {
   Soléane: { icon: '🌞', label: 'Protection & défense' },
   Umbra: { icon: '🌑', label: 'Évasion & affaiblissement' },
   Obsidienne: { icon: '🪨', label: 'Armure & fracture' },
-  Brume: { icon: '☁️', label: 'Neutre & polyvalence' },
+  Brume: { icon: '☁️', label: 'Intuition & polyvalence' },
 };
 
 function App() {
@@ -54,7 +54,7 @@ function App() {
           <div className="eyebrow">TCG · PROTOTYPE</div>
           <h1>OUTREMONDE <span>CARD LAB</span></h1>
         </div>
-        <div className="version">V0.1.12</div>
+        <div className="version">CORE SET V1</div>
       </header>
 
       <main>
@@ -64,7 +64,7 @@ function App() {
               <div>
                 <div className="eyebrow">CORE SET 01 · LABORATOIRE</div>
                 <h2>{cards.length} cartes de travail</h2>
-                <p>Consulte les cartes déjà définies et repère immédiatement celles qui sont validées, à revoir ou encore en draft. Braise, Écryme, Soléane, Umbra et Obsidienne sont désormais complètes : 20/20 cartes chacune. Brume reste en pool de travail.</p>
+                <p>Les 120 cartes du Core Set V1 sont désormais définies et validées : 20 cartes par affinité, avec une matrice identique de raretés et de types pour Braise, Écryme, Soléane, Umbra, Obsidienne et Brume.</p>
               </div>
               <div className="hero-stats">
                 <div><strong>{cards.filter(c => c.status === 'Validée').length}</strong><span>validées</span></div>
@@ -212,7 +212,7 @@ function Rules() {
   const rules = [
     ['🎯 Objectif', 'Chaque joueur commence à 20 PV. Réduisez les PV adverses à 0 ou moins. Vous perdez aussi si vous devez piocher une carte alors que votre deck est vide.'],
     ['❤️ Points de vie', 'Les PV peuvent dépasser les 20 PV de départ et n’ont aucun maximum. Un joueur perd immédiatement s’il atteint 0 PV ou moins.'],
-    ['🃏 Construction', 'Deck de 40 cartes, maximum 3 exemplaires d’une même carte. Les affinités peuvent être mélangées librement ; Brume est neutre.'],
+    ['🃏 Construction', 'Deck de 40 cartes exactement, maximum 3 exemplaires d’une même carte. Les six affinités peuvent être mélangées librement ; Brume est neutre.'],
     ['✋ Main & mulligan', 'Main de départ : 7 cartes. Mulligan unique : remélangez votre main, piochez 7 nouvelles cartes, puis placez 1 carte sous votre deck ; vous commencez donc avec 6 cartes.'],
     ['📥 Pioche', 'Piochez 1 carte au début de chacun de vos tours. Le joueur qui commence la partie ne pioche pas lors de son premier tour.'],
     ['💠 Flux', 'Vous disposez de 1 Flux au tour 1, puis votre Flux de base augmente de +1 au début de chacun de vos tours. Le Flux non dépensé est perdu en fin de tour.'],
@@ -238,6 +238,9 @@ function Rules() {
     ['🪨 Armure X', 'Chaque fois qu’une créature avec Armure X devrait subir des dégâts, réduisez ces dégâts de X, jusqu’à un minimum de 0. Plusieurs valeurs d’Armure ne se cumulent pas : seule la valeur la plus élevée s’applique. Le Bonus Spirituel Obsidienne donne Armure 1 jusqu’à votre prochain tour.'],
     ['🛡️ Protection + Armure', 'Protection et Armure peuvent coexister sur une même créature. Sur la première source de dégâts du tour, Protection s’applique puis Armure. Protection est alors consommée pour ce tour ; Armure continue de s’appliquer aux sources suivantes. Une perte de PV n’est pas un dégât et n’est réduite ni par Protection ni par Armure.'],
     ['💥 Calcul des dégâts', 'Pour un même événement : dégâts de base → augmentations de dégâts → Protection → Armure → dégâts finaux. Les dégâts supplémentaires augmentent le même événement et conservent la même source : ils ne créent jamais une nouvelle source et ne peuvent pas redéclencher eux-mêmes un effet attendant « la prochaine fois que cette créature subit des dégâts ».'],
+    ['☁️ Intuition X', 'Regardez les X cartes du dessus de votre deck. Vous pouvez placer n’importe quel nombre de ces cartes sous votre deck, dans l’ordre de votre choix, puis replacez les autres au-dessus dans l’ordre de votre choix. Si votre deck contient moins de X cartes, regardez toutes les cartes restantes. Intuition ne fait pas piocher et ne provoque donc pas de défaite par impossibilité de piocher.'],
+    ['🔁 Effets de remplacement', 'Si un événement est remplacé par un autre, l’événement initial n’a pas eu lieu. Une défausse remplacée par « placez cette carte sous votre deck » n’est donc pas considérée comme une défausse et ne déclenche pas les effets attendant une défausse.'],
+    ['☁️ Effet Brume', 'Un effet Brume est un effet provenant d’une carte d’affinité Brume ou du Bonus Spirituel Brume. Le Bonus Spirituel Brume fait piocher 1 carte puis défausser 1 carte ; il filtre la main mais ne crée pas d’avantage net de cartes.'],
     ['😴 Épuisement', 'Une créature qui attaque devient Épuisée. Une créature Épuisée ne peut pas bloquer pendant le prochain tour adverse. Au début de votre tour, toutes vos créatures sont redressées.'],
     ['☀️ Redressement', 'Redresser une créature retire son état Épuisée. Cela ne crée jamais une nouvelle phase d’attaque et ne permet jamais à une créature d’attaquer une seconde fois pendant le même tour. Une créature redressée pendant la phase d’attaque adverse après la déclaration des bloqueurs ne peut pas devenir rétroactivement bloqueuse.'],
     ['🩸 Blessée', 'Une créature est Blessée si elle a subi au moins 1 dégât pendant le tour et se trouve toujours sur le terrain. Les dégâts sur les créatures sont effacés à la fin du tour.'],
@@ -246,11 +249,11 @@ function Rules() {
     ['🔥 Sacrifice', 'Sacrifier une créature Physique la fait mourir volontairement et déclenche normalement sa Réincarnation, sauf indication contraire.'],
     ['🔄 Tour', 'Ordre : effets de début de tour → redressement → pioche → augmentation du Flux de base → Phase principale 1 → attaque → Phase principale 2 → fin de tour. En fin de tour, les effets « ce tour » expirent, les dégâts des créatures sont effacés et le Flux inutilisé est perdu.'],
   ];
-  return <section className="page-panel"><div className="eyebrow">RÈGLES · V0.1.12 VALIDÉES</div><h2>Fondations actuelles</h2><p className="intro">Cette référence inclut désormais Braise, Écryme, Soléane, Umbra et Obsidienne complètes à 20/20. V0.1.12 ajoute Armure X, Fracture et les clarifications de résolution nécessaires après l’audit des 100 cartes : ordre Bonus Spirituel → effet propre, dégâts supplémentaires de même source, interaction Protection/Armure et calcul d’Impact après réductions.</p><div className="rule-list">{rules.map(([title,body]) => <div className="rule-card" key={title}><h3>{title}</h3><p>{body}</p></div>)}</div></section>;
+  return <section className="page-panel"><div className="eyebrow">RÈGLES · CORE SET V1</div><h2>Fondations actuelles</h2><p className="intro">Cette référence couvre le Core Set V1 complet : 120 cartes, 20 par affinité. Brume ajoute Intuition, le filtrage et les règles de remplacement. Le stress-test final conserve le mélange libre des six affinités, le deck de 40 cartes exactement et la limite de 3 exemplaires identiques.</p><div className="rule-list">{rules.map(([title,body]) => <div className="rule-card" key={title}><h3>{title}</h3><p>{body}</p></div>)}</div></section>;
 }
 
 function About() {
-  return <section className="page-panel"><div className="eyebrow">CARD LAB · V0.1.12</div><h2>Laboratoire du TCG</h2><p className="intro">Les cinq affinités principales Braise, Écryme, Soléane, Umbra et Obsidienne sont désormais complètes et validées à 20/20 cartes chacune. V0.1.12 injecte Obsidienne 81–100, corrige E023 et U066, formalise Armure X et verrouille les interactions dégâts / Protection / Armure / Impact. Brume 101–114 reste volontairement un pool de travail à auditer avant de compléter 101–120. Les visuels HD Braise 01 à 05 restent intégrés.</p><div className="roadmap"><div className="done"><b>V0.1</b><span>Collection + fiches + règles</span></div><div><b>V0.2</b><span>Deck Builder 40 cartes</span></div><div><b>V0.3</b><span>Table de jeu locale</span></div><div><b>V0.4</b><span>Moteur de règles</span></div><div><b>V0.5</b><span>Statistiques de playtest</span></div></div></section>;
+  return <section className="page-panel"><div className="eyebrow">CARD LAB · CORE SET V1</div><h2>Laboratoire du TCG</h2><p className="intro">Le Core Set V1 est complet et validé à 120 cartes : 20 cartes pour chacune des six affinités. Cette version injecte Brume 101–120 après audit, ajoute Intuition X et les règles de remplacement, et conserve toutes les corrections des cinq blocs précédents. Les visuels HD Braise 01 à 05 restent intégrés.</p><div className="roadmap"><div className="done"><b>V0.1</b><span>Collection + fiches + règles</span></div><div><b>V0.2</b><span>Deck Builder 40 cartes</span></div><div><b>V0.3</b><span>Table de jeu locale</span></div><div><b>V0.4</b><span>Moteur de règles</span></div><div><b>V0.5</b><span>Statistiques de playtest</span></div></div></section>;
 }
 
 export default App;

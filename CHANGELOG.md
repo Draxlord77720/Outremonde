@@ -1,5 +1,17 @@
 # Changelog
 
+## Core Set V1 / V0.1.13 — 120 cartes complètes
+
+- Injection complète de **Brume 101–120** après audit : 12 créatures, 4 rituels, 4 permanents spirituels ; 10 C / 6 U / 3 R / 1 M.
+- Remplacement des anciennes Brume 101–114 par les versions corrigées et ajout de N115–N120.
+- Nouveau mot-clé **Intuition X** et doctrine Brume centrée sur filtrage, adaptation et polyvalence sans pioche nette récurrente.
+- Règle de remplacement formalisée : un événement remplacé n’a pas eu lieu ; une défausse remplacée n’est pas une défausse.
+- Définition officielle d’un **effet Brume** : effet provenant d’une carte Brume ou du Bonus Spirituel Brume.
+- Stress-test final des **63 combinaisons d’affinités** sans boucle infinie ni hard-lock théorique détecté.
+- Construction verrouillée : **deck de 40 cartes exactement, maximum 3 exemplaires d’une même carte**, affinités librement mélangeables.
+- Core Set V1 : **120/120 cartes validées**, 20 par affinité.
+- Artifact Android : `outremonde-card-lab-core-set-v1-apk`.
+
 ## V0.1.12 — Obsidienne complète + moteur dégâts/Armure
 
 - Injection complète d’Obsidienne **081 à 100** : 12 créatures, 4 rituels, 4 permanents spirituels ; 10 C / 6 U / 3 R / 1 M.

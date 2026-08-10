@@ -1,10 +1,10 @@
-# Outremonde Card Lab — V0.1.12
+# Outremonde Card Lab — Core Set V1
 
 Prototype mobile du TCG « Les Lueurs de l’Outremonde » (nom de set provisoire).
 
-## Version actuelle : V0.1.12
+## Version actuelle : Core Set V1 (V0.1.13)
 
-**Braise, Écryme, Soléane, Umbra et Obsidienne sont terminées et validées : 20/20 cartes chacune.** V0.1.12 injecte Obsidienne 81 à 100 après audit global des 100 cartes. Cette version applique aussi les corrections E023 et U066, formalise Armure X, l’ordre de résolution Spirituel, les dégâts supplémentaires de même source, l’interaction Protection + Armure et le calcul d’Impact après réduction. Les visuels HD Braise 01 à 05 restent intégrés et optimisés en WebP.
+**Le Core Set V1 est complet : 120/120 cartes validées, soit 20 cartes dans chacune des six affinités.** Cette version injecte Brume 101 à 120 après audit et stress-test final des 63 combinaisons d’affinités. Elle verrouille Intuition X, les effets de remplacement et la définition d’un effet Brume. Les règles de deck restent : **40 cartes exactement, maximum 3 exemplaires d’une même carte**, affinités librement mélangeables.
 
 ## Contenu validé
 
@@ -26,10 +26,15 @@ Prototype mobile du TCG « Les Lueurs de l’Outremonde » (nom de set provisoir
   - 12 créatures
   - 4 rituels
   - 4 permanents spirituels
-- Brume reste dans son pool de travail actuel avant l’audit 101–120.
+- Brume : **20/20 cartes validées**
+  - 12 créatures
+  - 4 rituels
+  - 4 permanents spirituels
+- Chaque affinité suit la matrice **10 communes / 6 peu communes / 3 rares / 1 mythique**.
 
 ## Règles verrouillées
 
+- Deck de **40 cartes exactement**, maximum **3 exemplaires d’une même carte**
 - Pioche normale et premier joueur sans pioche au tour 1
 - Mulligan unique 7 → nouvelle main de 7 → 1 carte sous le deck → départ à 6
 - Une seule phase d’attaque par tour
@@ -54,6 +59,9 @@ Prototype mobile du TCG « Les Lueurs de l’Outremonde » (nom de set provisoir
 - Bonus Spirituel Écryme : +1 Flux uniquement si la carte Écryme jouée en Spirituel a un coût imprimé d’au moins 1 Flux
 - Un seul Permanent Spirituel du même nom contrôlé à la fois
 - Rituels joués en Phase principale et envoyés au cimetière après résolution
+- **Intuition X** : regardez les X cartes du dessus, placez-en éventuellement sous le deck, puis remettez les autres au-dessus dans l’ordre choisi ; Intuition ne fait pas piocher
+- Une défausse remplacée par un placement sous le deck **n’est pas une défausse**
+- Un **effet Brume** provient d’une carte Brume ou du Bonus Spirituel Brume
 - Dégâts des créatures effacés en fin de tour
 
 ### Clarification du Plan Spirituel
@@ -124,11 +132,12 @@ Les données du pool sont dans `src/data/cards.ts`.
 
 ## Build APK avec GitHub
 
-Lancez `.github/workflows/build-android.yml` depuis **Actions**. L’artifact généré s’appelle `outremonde-card-lab-v0.1.12-apk`.
+Lancez `.github/workflows/build-android.yml` depuis **Actions**. L’artifact généré s’appelle `outremonde-card-lab-core-set-v1-apk`.
 
 ## Roadmap
 
-- **V0.1.12** : Obsidienne 81–100 complète + E023/U066 + Armure X + règles dégâts/Protection/Impact
+- **Core Set V1 / V0.1.13** : Brume 101–120 complète + Intuition X + règles de remplacement + 120/120 cartes validées
+- V0.1.12 : Obsidienne 81–100 complète + E023/U066 + Armure X + règles dégâts/Protection/Impact
 - V0.1.11 : Umbra 61–80 complet + correction U062 + règle système des cartes à 0 Flux
 - V0.1.10 : Soléane 41–60 complet + corrections audit/stress-test global + Protection X + redressement
 - V0.1.9 : Écryme 21–40 complet + corrections stress-test Braise/Écryme + PV sans plafond + clarification Flux
