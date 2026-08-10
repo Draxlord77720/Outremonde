@@ -1,5 +1,21 @@
 # Changelog
 
+## V0.1.8 — Assets HD optimisés pour GitHub
+- Aucun changement de règles, de statistiques ou de direction artistique.
+- Conversion des 10 visuels Braise 01 à 05 de PNG vers WebP qualité maximale pour l’application.
+- Résolution native conservée ; les masters PNG restent destinés à l’archivage/impression et ne sont plus embarqués dans le package mobile.
+- Le ZIP de mise à jour repasse sous la limite d’upload navigateur de GitHub.
+- Artifact Android renommé `outremonde-card-lab-v0.1.8-apk`.
+
+## V0.1.8 — Correctif intégration visuelle Braise 02–05
+- Réintégration propre des 8 visuels HD de Braise 02 à 05 dans `public/cards/braise/`.
+- Ajout explicite des références `art.physical` et `art.spiritual` aux fiches B002, B003, B004 et B005.
+- Les visuels HD sont maintenant **visibles directement dans la collection**, pas seulement dans la fenêtre détaillée.
+- La fenêtre détaillée conserve la bascule Physique / Spirituel et l’agrandissement plein écran.
+- Les textes de gameplay restent ceux de la base V0.1.5 validée : ce correctif ne modifie pas l’équilibrage des 20 Braise.
+- Tous les libellés de version de l’interface passent en V0.1.8.
+- Artifact Android : `outremonde-card-lab-v0.1.8-apk`.
+
 ## V0.1.5 — Braise 01 HD intégrée
 - Intégration de la carte complète HD **Écumeur Cendré (Braise 01)** en deux versions : Plan Physique et Plan Spirituel.
 - Ajout des assets HD dans `public/cards/braise/`.

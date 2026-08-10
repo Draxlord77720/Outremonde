@@ -1,10 +1,10 @@
-# Outremonde Card Lab — V0.1.5
+# Outremonde Card Lab — V0.1.8
 
 Prototype mobile du TCG « Les Lueurs de l’Outremonde » (nom de set provisoire).
 
-## Version actuelle : V0.1.5
+## Version actuelle : V0.1.8
 
-**Braise est terminée et validée : 20/20 cartes.** V0.1.5 intègre le premier visuel de carte complet HD : Écumeur Cendré, en Plan Physique et en Plan Spirituel.
+**Braise est terminée et validée : 20/20 cartes.** V0.1.8 intègre les visuels HD complets de Braise 01 à 05, en Plan Physique et en Plan Spirituel, visibles directement dans la collection et dans chaque fiche.
 
 ## Contenu validé
 
@@ -50,10 +50,14 @@ Prototype mobile du TCG « Les Lueurs de l’Outremonde » (nom de set provisoir
 - Recherche par nom / numéro
 - Filtres d’affinité, rareté et statut
 - Fiche Physique / Spirituel / Réincarnation
-- Premier affichage de carte complète HD avec bascule Physique / Spirituel et vue agrandie
+- Affichage des cartes complètes HD avec miniature dans la collection, bascule Physique / Spirituel et vue agrandie
 - Règles de référence rapide
 - Base Capacitor / Android
 - GitHub Action pour produire un APK debug
+
+### Images dans l’application
+
+Les cartes HD embarquées dans l’APK utilisent désormais **WebP qualité maximale** à leur résolution native. Cela réduit fortement le poids du dépôt sans changer la mise en page. Les PNG masters peuvent être conservés séparément pour une future impression.
 
 ## Stack
 
@@ -96,11 +100,11 @@ Les données du pool sont dans `src/data/cards.ts`.
 
 ## Build APK avec GitHub
 
-Lancez `.github/workflows/build-android.yml` depuis **Actions**. L’artifact généré s’appelle `outremonde-card-lab-v0.1.5-apk`.
+Lancez `.github/workflows/build-android.yml` depuis **Actions**. L’artifact généré s’appelle `outremonde-card-lab-v0.1.8-apk`.
 
 ## Roadmap
 
-- **V0.1.5** : intégration HD de Braise 01 Physique + Spirituel
+- **V0.1.8** : intégration HD vérifiée de Braise 01 à 05, Physique + Spirituel
 - V0.1.4 : Braise 20/20 validée + règles Spirituelles clarifiées et verrouillées
 - V0.1.3 : audit Braise + noyau de règles
 - V0.2 : Deck Builder 40 cartes

@@ -121,7 +121,30 @@ select { width: 100%; margin-top: 6px; padding: 11px 12px; border-radius: 12px; 
 }
 
 
-/* V0.1.5 — premier visuel de carte HD */
+
+/* V0.1.7 — visuels HD visibles directement dans la collection */
+.card-tile:has(.card-tile-art) { min-height: 420px; }
+.card-tile-art {
+  width: 100%;
+  margin: 10px 0 10px;
+  overflow: hidden;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,.10);
+  background: #05070a;
+  aspect-ratio: 63 / 88;
+}
+.card-tile-art img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #05070a;
+}
+.card-tile:has(.card-tile-art) .affinity-line { margin-top: 8px; }
+.card-tile:has(.card-tile-art) h3 { min-height: 0; margin-right: 0; }
+.card-tile:has(.card-tile-art) .stats { position: static; margin-top: 10px; padding-bottom: 34px; }
+
+/* V0.1.7 — cartes HD */
 .art-ready {
   position: absolute;
   right: 12px;
@@ -185,7 +208,7 @@ select { width: 100%; margin-top: 6px; padding: 11px 12px; border-radius: 12px; 
   display: block;
   width: 100%;
   height: auto;
-  aspect-ratio: 1061 / 1482;
+  aspect-ratio: 63 / 88;
   object-fit: contain;
 }
 .art-hint {

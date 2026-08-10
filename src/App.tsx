@@ -54,7 +54,7 @@ function App() {
           <div className="eyebrow">TCG · PROTOTYPE</div>
           <h1>OUTREMONDE <span>CARD LAB</span></h1>
         </div>
-        <div className="version">V0.1.5</div>
+        <div className="version">V0.1.8</div>
       </header>
 
       <main>
@@ -110,6 +110,11 @@ function App() {
                     <div className="number">#{String(card.setNumber).padStart(3,'0')}</div>
                     <div className="cost">{card.cost}<small>Flux</small></div>
                   </div>
+                  {card.art?.physical && (
+                    <div className="card-tile-art">
+                      <img src={card.art.physical} alt={`${card.name} — visuel Physique HD`} loading="lazy" />
+                    </div>
+                  )}
                   <div className="affinity-line">{affinityMeta[card.affinity].icon} {card.affinity}</div>
                   <h3>{card.name}</h3>
                   <div className="rarity">{card.rarity}</div>
@@ -233,11 +238,11 @@ function Rules() {
     ['🔥 Sacrifice', 'Sacrifier une créature Physique la fait mourir volontairement et déclenche normalement sa Réincarnation, sauf indication contraire.'],
     ['🔄 Tour', 'Ordre : effets de début de tour → redressement → pioche → augmentation du Flux de base → Phase principale 1 → attaque → Phase principale 2 → fin de tour. En fin de tour, les effets « ce tour » expirent, les dégâts des créatures sont effacés et le Flux inutilisé est perdu.'],
   ];
-  return <section className="page-panel"><div className="eyebrow">RÈGLES · V0.1.5 VALIDÉES</div><h2>Fondations actuelles</h2><p className="intro">Cette référence précise désormais complètement le Plan Spirituel : arrivée unique, Bonus d’affinité non cumulable, effets personnels distincts, permanence explicite et interaction future possible par effets de cartes.</p><div className="rule-list">{rules.map(([title,body]) => <div className="rule-card" key={title}><h3>{title}</h3><p>{body}</p></div>)}</div></section>;
+  return <section className="page-panel"><div className="eyebrow">RÈGLES · V0.1.8 VALIDÉES</div><h2>Fondations actuelles</h2><p className="intro">Cette référence précise désormais complètement le Plan Spirituel : arrivée unique, Bonus d’affinité non cumulable, effets personnels distincts, permanence explicite et interaction future possible par effets de cartes.</p><div className="rule-list">{rules.map(([title,body]) => <div className="rule-card" key={title}><h3>{title}</h3><p>{body}</p></div>)}</div></section>;
 }
 
 function About() {
-  return <section className="page-panel"><div className="eyebrow">CARD LAB · V0.1.5</div><h2>Laboratoire du TCG</h2><p className="intro">Les 20 cartes Braise sont auditées, corrigées et validées. Braise 01 — Écumeur Cendré dispose maintenant de ses deux premières cartes complètes HD, Physique et Spirituelle, directement consultables et agrandissables dans l’application. Les règles restent verrouillées et le Deck Builder arrivera en V0.2.</p><div className="roadmap"><div className="done"><b>V0.1</b><span>Collection + fiches + règles</span></div><div><b>V0.2</b><span>Deck Builder 40 cartes</span></div><div><b>V0.3</b><span>Table de jeu locale</span></div><div><b>V0.4</b><span>Moteur de règles</span></div><div><b>V0.5</b><span>Statistiques de playtest</span></div></div></section>;
+  return <section className="page-panel"><div className="eyebrow">CARD LAB · V0.1.8</div><h2>Laboratoire du TCG</h2><p className="intro">Les 20 cartes Braise sont auditées, corrigées et validées. Braise 01 à 05 disposent maintenant chacune de leurs deux cartes complètes HD, Physique et Spirituelle, directement visibles dans la collection, consultables et agrandissables dans l’application. Les règles restent verrouillées et le Deck Builder arrivera en V0.2.</p><div className="roadmap"><div className="done"><b>V0.1</b><span>Collection + fiches + règles</span></div><div><b>V0.2</b><span>Deck Builder 40 cartes</span></div><div><b>V0.3</b><span>Table de jeu locale</span></div><div><b>V0.4</b><span>Moteur de règles</span></div><div><b>V0.5</b><span>Statistiques de playtest</span></div></div></section>;
 }
 
 export default App;
