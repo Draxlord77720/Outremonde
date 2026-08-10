@@ -1,10 +1,10 @@
-# Outremonde Card Lab — V0.1.10
+# Outremonde Card Lab — V0.1.11
 
 Prototype mobile du TCG « Les Lueurs de l’Outremonde » (nom de set provisoire).
 
-## Version actuelle : V0.1.10
+## Version actuelle : V0.1.11
 
-**Braise, Écryme et Soléane sont terminées et validées : 20/20 cartes chacune.** V0.1.10 injecte Soléane 41 à 60 après audit et stress-test global, avec Protection X, le redressement formalisé et les corrections S050/S058. Les visuels HD Braise 01 à 05 restent intégrés et optimisés en WebP.
+**Braise, Écryme, Soléane et Umbra sont terminées et validées : 20/20 cartes chacune.** V0.1.11 injecte Umbra 61 à 80 après audit et stress-test des 15 configurations possibles avec les quatre affinités. U062 est corrigée pour lier son non-blocage aux créatures Umbra, et la nouvelle règle système limite à une seule carte de coût imprimé 0 Flux jouée par joueur et par tour. Les visuels HD Braise 01 à 05 restent intégrés et optimisés en WebP.
 
 ## Contenu validé
 
@@ -17,8 +17,12 @@ Prototype mobile du TCG « Les Lueurs de l’Outremonde » (nom de set provisoir
   - 12 créatures
   - 4 rituels
   - 4 permanents spirituels
+- Umbra : **20/20 cartes validées**
+  - 12 créatures
+  - 4 rituels
+  - 4 permanents spirituels
 - 10 communes / 6 peu communes / 3 rares / 1 mythique
-- Les autres affinités restent dans leur état de travail actuel.
+- Obsidienne et Brume restent dans leur état de travail actuel.
 
 ## Règles verrouillées
 
@@ -33,6 +37,7 @@ Prototype mobile du TCG « Les Lueurs de l’Outremonde » (nom de set provisoir
 - Réincarnations résolues entre deux attaques
 - Sacrifice = mort volontaire + Réincarnation normale
 - Maximum **+2 Flux supplémentaires par tour**, toutes sources de cartes confondues, **Bonus Spirituels compris**
+- Maximum **une carte de coût imprimé 0 Flux jouée par joueur et par tour**, quel que soit son type ou le Plan choisi
 - Les PV commencent à 20, peuvent dépasser 20 et **n’ont aucun plafond**
 - **Drain X** : première fois par tour qu’une créature inflige des dégâts de combat au joueur adverse, son contrôleur gagne X PV
 - **Protection X** : la première fois de chaque tour que la créature devrait subir des dégâts, réduisez-les de X ; plusieurs Protections ne se cumulent pas, seule la valeur la plus élevée s’applique
@@ -110,11 +115,12 @@ Les données du pool sont dans `src/data/cards.ts`.
 
 ## Build APK avec GitHub
 
-Lancez `.github/workflows/build-android.yml` depuis **Actions**. L’artifact généré s’appelle `outremonde-card-lab-v0.1.10-apk`.
+Lancez `.github/workflows/build-android.yml` depuis **Actions**. L’artifact généré s’appelle `outremonde-card-lab-v0.1.11-apk`.
 
 ## Roadmap
 
-- **V0.1.10** : Soléane 41–60 complet + corrections audit/stress-test global + Protection X + redressement
+- **V0.1.11** : Umbra 61–80 complet + correction U062 + règle système des cartes à 0 Flux
+- V0.1.10 : Soléane 41–60 complet + corrections audit/stress-test global + Protection X + redressement
 - V0.1.9 : Écryme 21–40 complet + corrections stress-test Braise/Écryme + PV sans plafond + clarification Flux
 - V0.1.8 : intégration HD vérifiée de Braise 01 à 05, Physique + Spirituel
 - V0.1.4 : Braise 20/20 validée + règles Spirituelles clarifiées et verrouillées

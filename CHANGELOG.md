@@ -1,5 +1,16 @@
 # Changelog
 
+## V0.1.11 — Umbra complet + règle 0 Flux
+
+- Umbra 61–80 complétée et validée après audit et stress-test global des 15 configurations avec les quatre affinités.
+- U061–U069 corrigées selon l’audit : évasion, affaiblissement, manipulation des bloqueurs et du dessus du deck.
+- U070–U080 ajoutées selon la matrice officielle : 12 créatures, 4 rituels, 4 permanents spirituels ; 10 C / 6 U / 3 R / 1 M.
+- U062 corrigée après stress-test : ses effets Spirituel et Réincarnation de non-blocage sont liés à une créature Umbra Physique.
+- Nouvelle règle verrouillée : un joueur ne peut jouer qu’une seule carte dont le coût imprimé est 0 Flux par tour, quel que soit son type ou le Plan choisi.
+- Les règles PV sans plafond et +2 Flux supplémentaires maximum par tour restent inchangées.
+- Watchlist Umbra : U068, U070, U071, U072, U076 et U080.
+- Artifact Android renommé `outremonde-card-lab-v0.1.11-apk`.
+
 ## V0.1.10 — Soléane complet + Protection/Redressement
 
 - Injection complète de Soléane **041 à 060** selon la matrice officielle : 12 créatures, 4 rituels et 4 permanents spirituels.
