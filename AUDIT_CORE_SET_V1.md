@@ -29,6 +29,14 @@ Audit réalisé sur les 120 cartes et les règles intégrées à l'application.
 
 Les 10 anciens WebP Braise 001–005 ont été supprimés. Le champ optionnel `art` et l'interface d'affichage restent disponibles pour réimporter les futurs visuels définitifs au fur et à mesure.
 
+## Patch règles V0.1.17 — Résolution du combat
+
+- Si un bloqueur n’est plus sur le Terrain Physique au moment où l’attaque qu’il bloquait doit se résoudre, cette attaque devient **non bloquée** et l’attaquant inflige normalement son ATK au joueur adverse.
+- Si l’attaquant n’est plus sur le Terrain Physique au moment où son attaque doit se résoudre, cette attaque **ne se résout pas**.
+- Impact ne s’applique pas lorsqu’un bloqueur a disparu avant la résolution ; dans ce cas l’attaque est simplement devenue non bloquée.
+- **O089 — Titan Ébène Veine-Noire** : suppression de la phrase qui maintenait artificiellement son attaque bloquée lorsque sa bloqueuse mourait avant la résolution.
+- **Aucune autre carte Core n’est modifiée. Gaellix est inchangée.**
+
 ## Patch Promo V0.1.16 — Gaellix
 
 - Les 120 cartes numérotées du Core Set V1 audité restent inchangées.

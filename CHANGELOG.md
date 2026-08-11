@@ -1,5 +1,13 @@
 # Changelog
 
+## V0.1.17 — Patch résolution du combat
+
+- **Interposition** : si le bloqueur n’est plus sur le Terrain Physique au moment où l’attaque doit se résoudre, cette attaque devient **non bloquée** et l’attaquant inflige normalement son ATK au joueur adverse.
+- **Attaquant disparu** : si l’attaquant n’est plus sur le Terrain Physique au moment où son attaque doit se résoudre, cette attaque **ne se résout pas**.
+- **Impact X** : si le bloqueur a disparu avant la résolution, l’attaque est non bloquée et Impact ne s’applique pas ; Impact ne produit des dégâts excédentaires que si le bloqueur est encore présent et est détruit par les dégâts de l’attaque.
+- **O089 — Titan Ébène Veine-Noire** : suppression de la phrase contradictoire « Si elle meurt ainsi, l’attaque du Titan reste bloquée. » ; son effet conserve uniquement le dégât immédiat à une bloqueuse Blessée.
+- **Aucune autre carte du Core Set V1 ni Gaellix n’est modifiée.** Le Core reste **120/120** cartes numérotées, plus Gaellix Promo hors-série.
+
 ## V0.1.16 — Patch Gaellix : durée Spirituel / Réincarnation
 
 - **Effet Spirituel Gaellix** : une créature Physique que vous contrôlez gagne désormais **+1 ATK et +1 DEF jusqu’à la fin de votre prochain tour**, puis vous effectuez **Intuition 2**.

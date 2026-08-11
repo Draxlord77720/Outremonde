@@ -2,9 +2,9 @@
 
 Prototype mobile du TCG « Les Lueurs de l’Outremonde » (nom de set provisoire).
 
-## Version actuelle : Core Set V1 audité + Gaellix Promo (V0.1.16)
+## Version actuelle : Core Set V1 audité + Gaellix Promo (V0.1.17)
 
-**Le Core Set V1 reste complet : 120/120 cartes numérotées et validées, soit 20 cartes dans chacune des six affinités.** Gaellix reste une carte **Promo hors-série non numérotée**, ajoutée en V0.1.15 puis patchée en V0.1.16, sans modifier la numérotation 001–120. Elle compte normalement parmi les **40 cartes exactement** du deck et peut être jouée en **maximum 3 exemplaires**, comme toute carte du pool légal.
+**Le Core Set V1 reste complet : 120/120 cartes numérotées et validées, soit 20 cartes dans chacune des six affinités.** Gaellix reste une carte **Promo hors-série non numérotée**, ajoutée en V0.1.15 puis patchée en V0.1.16. V0.1.17 ne modifie pas Gaellix et conserve la numérotation Core 001–120. Elle compte normalement parmi les **40 cartes exactement** du deck et peut être jouée en **maximum 3 exemplaires**, comme toute carte du pool légal.
 
 ## Contenu validé
 
@@ -42,6 +42,8 @@ Prototype mobile du TCG « Les Lueurs de l’Outremonde » (nom de set provisoir
 - Déclenchements « lorsqu’elle attaque » résolus avant la déclaration des bloqueurs ; déclenchements de blocage résolus avant la première attaque
 - Les événements simultanés et leurs effets suivent un ordre déterministe choisi par leur contrôleur
 - Résolution des attaques une par une
+- Si un bloqueur quitte le Terrain Physique avant la résolution de l’attaque qu’il bloquait, cette attaque devient non bloquée et frappe normalement le joueur adverse
+- Si l’attaquant quitte le Terrain Physique avant le moment où son attaque doit se résoudre, cette attaque ne se résout pas
 - Le bloqueur ne riposte jamais
 - Attaquer rend la créature Épuisée jusqu’au prochain redressement
 - Définition officielle d’Impact X ; plusieurs valeurs d’Impact sur une même créature ne se cumulent pas
@@ -56,7 +58,7 @@ Prototype mobile du TCG « Les Lueurs de l’Outremonde » (nom de set provisoir
 - Protection et Armure peuvent coexister ; ordre : augmentations → Protection → Armure
 - Les dégâts supplémentaires restent dans le même événement et conservent la même source
 - En Spirituel, le Bonus d’affinité se résout avant l’effet propre de la carte
-- Impact utilise les dégâts excédentaires réellement disponibles après augmentations/réductions et dégâts déjà marqués
+- Impact utilise les dégâts excédentaires réellement disponibles après augmentations/réductions et dégâts déjà marqués ; il ne s’applique que si le bloqueur est encore présent à la résolution et est détruit par les dégâts de cette attaque
 - **Redressement** : retire Épuisée, sans créer de nouvelle attaque ni permettre un blocage rétroactif après la déclaration des bloqueurs
 - Bonus Spirituel Écryme : +1 Flux uniquement si la carte Écryme jouée en Spirituel a un coût imprimé d’au moins 1 Flux
 - Un seul Permanent Spirituel du même nom contrôlé à la fois
@@ -86,14 +88,14 @@ Prototype mobile du TCG « Les Lueurs de l’Outremonde » (nom de set provisoir
 - Recherche par nom / numéro
 - Filtres d’affinité, rareté et statut
 - Fiche Physique / Spirituel / Réincarnation
-- Support d’import progressif des futurs visuels Physique / Spirituel dans les fiches (aucun visuel embarqué dans V0.1.16)
+- Support d’import progressif des futurs visuels Physique / Spirituel dans les fiches (aucun visuel embarqué dans V0.1.17)
 - Règles de référence rapide
 - Base Capacitor / Android
 - GitHub Action pour produire un APK debug
 
 ### Images dans l’application
 
-**V0.1.16 n’embarque aucun visuel de carte.** Les anciens prototypes Braise 001–005 ont été retirés. Le support `art` de l’application est conservé afin de pouvoir ajouter progressivement les futurs visuels Physique / Spirituel définitifs sans reconstruire l’interface.
+**V0.1.17 n’embarque aucun visuel de carte.** Les anciens prototypes Braise 001–005 ont été retirés. Le support `art` de l’application est conservé afin de pouvoir ajouter progressivement les futurs visuels Physique / Spirituel définitifs sans reconstruire l’interface.
 
 ## Stack
 
@@ -140,6 +142,7 @@ Lancez `.github/workflows/build-android.yml` depuis **Actions**. L’artifact g�
 
 ## Roadmap
 
+- **V0.1.17 — Patch résolution du combat** : un bloqueur disparu avant sa résolution ouvre l’attaque vers le joueur ; un attaquant disparu ne résout pas son attaque ; Impact aligné sur cette règle ; O089 mis en conformité. Aucune autre carte modifiée.
 - **V0.1.16 — Patch Gaellix** : Effet Spirituel = +1 ATK/+1 DEF jusqu’à la fin de votre prochain tour + Intuition 2 ; Réincarnation = +1 ATK/+1 DEF jusqu’à la fin de votre prochain tour ; Core 120/120 inchangé
 - **V0.1.15 — Gaellix Promo** : ajout de Gaellix en Promo hors-série non numérotée, Brume Mythique / Édition Légendaire, 4 Flux, 4/4 ; le Core Set reste 120/120 et la Promo est légale jusqu’à 3 exemplaires dans un deck de 40 cartes
 - **V0.1.14 — Core Set V1 audité** : audit intégral des 120 cartes, corrections de timing E023/U068/U079/B003/B008/U063/O082, règles de simultanéité/statistiques/Drain/Impact/deck presque vide, et retrait de tous les visuels embarqués
