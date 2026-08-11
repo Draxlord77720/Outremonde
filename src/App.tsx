@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { cards } from './data/cards';
 import { rules } from './data/rules';
 import type { Affinity, Card, CardStatus, CardType, Rarity } from './types';
@@ -8,6 +8,43 @@ type DetailTab = 'physical' | 'spiritual' | 'reincarnation';
 type ArtPlan = 'physical' | 'spiritual';
 type CollectionView = 'grid' | 'list';
 type SortMode = 'number' | 'name' | 'cost';
+
+type DeckItem = { cardId: string; quantity: number };
+type Deck = { id: string; name: string; items: DeckItem[]; createdAt: string; updatedAt: string };
+
+const DECK_STORAGE_KEY = 'outremonde.deckbuilder.v1';
+const ACTIVE_DECK_KEY = 'outremonde.deckbuilder.active';
+
+const createDeckId = () => globalThis.crypto?.randomUUID?.() ?? `deck-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+const deckTotal = (deck: Deck) => deck.items.reduce((sum, item) => sum + item.quantity, 0);
+
+function loadDecks(): Deck[] {
+  try {
+    const raw = localStorage.getItem(DECK_STORAGE_KEY);
+    if (!raw) return [];
+    const parsed = JSON.parse(raw);
+    if (!Array.isArray(parsed)) return [];
+    return parsed.map((deck: Partial<Deck>) => ({
+      id: typeof deck.id === 'string' ? deck.id : createDeckId(),
+      name: typeof deck.name === 'string' && deck.name.trim() ? deck.name.trim() : 'Deck sans nom',
+      createdAt: typeof deck.createdAt === 'string' ? deck.createdAt : new Date().toISOString(),
+      updatedAt: typeof deck.updatedAt === 'string' ? deck.updatedAt : new Date().toISOString(),
+      items: Array.isArray(deck.items) ? deck.items
+        .filter((item): item is DeckItem => !!item && typeof item.cardId === 'string' && typeof item.quantity === 'number' && cards.some(card => card.id === item.cardId))
+        .map(item => ({ cardId: item.cardId, quantity: Math.max(1, Math.min(3, Math.floor(item.quantity))) })) : [],
+    }));
+  } catch {
+    return [];
+  }
+}
+
+function downloadText(filename: string, text: string) {
+  const blob = new Blob([text], { type: 'application/json;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const anchor = document.createElement('a');
+  anchor.href = url; anchor.download = filename; anchor.click();
+  setTimeout(() => URL.revokeObjectURL(url), 500);
+}
 
 type IconName = AppTab | 'search' | 'filter' | 'close' | 'sword' | 'shield' | 'spark' | 'chevron' | 'cards' | 'status' | 'arrow';
 
@@ -28,7 +65,7 @@ const affinityMeta: Record<Affinity, { sigil: string; short: string; label: stri
 const navItems: Array<{ id: AppTab; label: string; kicker: string }> = [
   { id: 'home', label: 'Accueil', kicker: 'Vue d’ensemble' },
   { id: 'collection', label: 'Collection', kicker: '121 cartes jouables' },
-  { id: 'decks', label: 'Decks', kicker: 'Architecture prête' },
+  { id: 'decks', label: 'Decks', kicker: 'Constructeur actif' },
   { id: 'play', label: 'Jouer', kicker: 'Table de jeu à venir' },
   { id: 'rules', label: 'Règles', kicker: 'Référence V0.1.17' },
 ];
@@ -146,7 +183,7 @@ function App() {
         </nav>
         <div className="rail-status">
           <span className="pulse-dot" />
-          <div><b>Core Set V1</b><small>V0.1.19 · Readability</small></div>
+          <div><b>Core Set V1</b><small>V0.1.20 · Deck Builder</small></div>
         </div>
       </aside>
 
@@ -158,7 +195,7 @@ function App() {
             <h1>{navItems.find(item => item.id === tab)?.label}</h1>
           </div>
           <div className="topbar-actions">
-            <button className="version-pill" onClick={() => navigate('rules')}><span className="pulse-dot" />V0.1.19</button>
+            <button className="version-pill" onClick={() => navigate('rules')}><span className="pulse-dot" />V0.1.20</button>
           </div>
         </header>
 
@@ -177,7 +214,7 @@ function App() {
               resetFilters={resetFilters} openCard={openCard}
             />
           )}
-          {tab === 'decks' && <DecksPreview onNavigate={navigate} />}
+          {tab === 'decks' && <DeckBuilder onNavigate={navigate} openCard={openCard} />}
           {tab === 'play' && <PlayPreview onNavigate={navigate} />}
           {tab === 'rules' && <RulesPage />}
         </main>
@@ -217,7 +254,7 @@ function Home({ onNavigate, onOpenCard, coreCount, promoCount, validatedCount, g
       <div className="hero-copy">
         <span className="section-kicker">CORE SET V1 · FORGE ACTIVE</span>
         <h2>Le laboratoire devient<br /><em>un vrai client Outremonde.</em></h2>
-        <p>Une interface reconstruite pour la collection, le futur Deck Builder et la table de jeu. Les données du Core restent intactes ; seule l’expérience évolue.</p>
+        <p>Une interface reconstruite pour la collection, le Deck Builder actif et la future table de jeu. Les données du Core restent intactes ; seule l’expérience évolue.</p>
         <div className="hero-actions">
           <button className="primary-cta" onClick={() => onNavigate('collection')}>Explorer la collection <Icon name="arrow" size={17} /></button>
           <button className="secondary-cta" onClick={() => onNavigate('play')}>Aperçu du terrain</button>
@@ -266,8 +303,8 @@ function Home({ onNavigate, onOpenCard, coreCount, promoCount, validatedCount, g
     <section className="surface roadmap-strip">
       <SectionHeading kicker="FEUILLE DE ROUTE" title="Du laboratoire au jeu" />
       <div className="roadmap-steps">
-        <RoadmapStep index="01" title="Interface" text="Refonte premium et architecture mobile" state="active" />
-        <RoadmapStep index="02" title="Deck Builder" text="40 cartes, max 3 exemplaires" />
+        <RoadmapStep index="01" title="Interface" text="Refonte premium et architecture mobile" />
+        <RoadmapStep index="02" title="Deck Builder" text="40 cartes, max 3 exemplaires" state="active" />
         <RoadmapStep index="03" title="Playtest" text="Main, mulligan, Flux et tirages" />
         <RoadmapStep index="04" title="Table" text="Terrain Physique & Spirituel" />
       </div>
@@ -414,17 +451,207 @@ function EffectBlock({ label, body, secondary = false }: { label: string; body: 
   return <div className={`effect-block ${secondary ? 'secondary' : ''}`}><span>{label}</span><p>{body}</p></div>;
 }
 
-function DecksPreview({ onNavigate }: { onNavigate: (tab: AppTab) => void }) {
-  return <div className="page-stack future-page">
-    <section className="future-hero surface panel-glow">
-      <div><span className="section-kicker">PROCHAINE FORGE · V0.1.20</span><h2>Deck Builder</h2><p>La nouvelle interface est déjà structurée pour accueillir le constructeur de decks sans refaire l’UX une seconde fois.</p></div>
-      <div className="future-badge"><Icon name="decks" size={34} /><span>40</span><small>cartes exactes</small></div>
+function DeckBuilder({ onNavigate, openCard }: { onNavigate: (tab: AppTab) => void; openCard: (card: Card) => void }) {
+  const [decks, setDecks] = useState<Deck[]>(loadDecks);
+  const [activeDeckId, setActiveDeckId] = useState<string | null>(() => { try { return localStorage.getItem(ACTIVE_DECK_KEY); } catch { return null; } });
+  const [query, setQuery] = useState('');
+  const [affinity, setAffinity] = useState<'Toutes' | Affinity>('Toutes');
+  const [type, setType] = useState<'Tous' | CardType>('Tous');
+  const [toast, setToast] = useState('');
+  const importInput = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(DECK_STORAGE_KEY, JSON.stringify(decks));
+      if (activeDeckId) localStorage.setItem(ACTIVE_DECK_KEY, activeDeckId);
+      else localStorage.removeItem(ACTIVE_DECK_KEY);
+    } catch { /* stockage indisponible : l'UI reste utilisable pour la session */ }
+  }, [decks, activeDeckId]);
+
+  useEffect(() => {
+    if (decks.length === 0) { setActiveDeckId(null); return; }
+    if (!activeDeckId || !decks.some(deck => deck.id === activeDeckId)) setActiveDeckId(decks[0].id);
+  }, [decks, activeDeckId]);
+
+  useEffect(() => {
+    if (!toast) return;
+    const timer = window.setTimeout(() => setToast(''), 2200);
+    return () => window.clearTimeout(timer);
+  }, [toast]);
+
+  const activeDeck = decks.find(deck => deck.id === activeDeckId) ?? null;
+  const quantities = useMemo(() => new Map((activeDeck?.items ?? []).map(item => [item.cardId, item.quantity])), [activeDeck]);
+  const total = activeDeck ? deckTotal(activeDeck) : 0;
+  const valid = !!activeDeck && total === 40 && activeDeck.items.every(item => item.quantity >= 1 && item.quantity <= 3);
+
+  const filteredCards = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    return cards.filter(card => {
+      const haystack = `${card.name} ${card.id} ${card.promoCode ?? ''} ${card.affinity} ${card.type} ${card.rarity} ${(card.keywords ?? []).join(' ')}`.toLowerCase();
+      return (!q || haystack.includes(q)) && (affinity === 'Toutes' || card.affinity === affinity) && (type === 'Tous' || card.type === type);
+    }).sort((a, b) => a.cost - b.cost || (a.setNumber ?? 999) - (b.setNumber ?? 999));
+  }, [query, affinity, type]);
+
+  const deckCards = useMemo(() => (activeDeck?.items ?? []).map(item => ({ ...item, card: cards.find(card => card.id === item.cardId)! })).filter(entry => entry.card), [activeDeck]);
+  const affinityCounts = useMemo(() => {
+    const result = Object.fromEntries((Object.keys(affinityMeta) as Affinity[]).map(a => [a, 0])) as Record<Affinity, number>;
+    deckCards.forEach(({ card, quantity }) => { result[card.affinity] += quantity; });
+    return result;
+  }, [deckCards]);
+  const typeCounts = useMemo(() => {
+    const result: Record<string, number> = {};
+    deckCards.forEach(({ card, quantity }) => { result[card.type] = (result[card.type] ?? 0) + quantity; });
+    return result;
+  }, [deckCards]);
+  const costCounts = useMemo(() => {
+    const maxCost = Math.max(5, ...deckCards.map(({ card }) => card.cost));
+    return Array.from({ length: maxCost + 1 }, (_, cost) => ({ cost, count: deckCards.filter(({ card }) => card.cost === cost).reduce((sum, entry) => sum + entry.quantity, 0) }));
+  }, [deckCards]);
+
+  const patchActive = (updater: (deck: Deck) => Deck) => {
+    if (!activeDeckId) return;
+    setDecks(current => current.map(deck => deck.id === activeDeckId ? { ...updater(deck), updatedAt: new Date().toISOString() } : deck));
+  };
+
+  const createDeck = () => {
+    const now = new Date().toISOString();
+    const deck: Deck = { id: createDeckId(), name: `Deck ${decks.length + 1}`, items: [], createdAt: now, updatedAt: now };
+    setDecks(current => [...current, deck]); setActiveDeckId(deck.id); setToast('Nouveau deck créé');
+  };
+
+  const changeQuantity = (cardId: string, delta: number) => {
+    if (!activeDeck) return;
+    const currentQty = quantities.get(cardId) ?? 0;
+    const nextQty = currentQty + delta;
+    if (delta > 0 && (currentQty >= 3 || total >= 40)) return;
+    patchActive(deck => {
+      const items = deck.items.filter(item => item.cardId !== cardId);
+      if (nextQty > 0) items.push({ cardId, quantity: Math.min(3, nextQty) });
+      return { ...deck, items };
+    });
+  };
+
+  const duplicateDeck = () => {
+    if (!activeDeck) return;
+    const now = new Date().toISOString();
+    const duplicate: Deck = { ...activeDeck, id: createDeckId(), name: `${activeDeck.name} — copie`, items: activeDeck.items.map(item => ({ ...item })), createdAt: now, updatedAt: now };
+    setDecks(current => [...current, duplicate]); setActiveDeckId(duplicate.id); setToast('Deck dupliqué');
+  };
+
+  const deleteDeck = () => {
+    if (!activeDeck || !window.confirm(`Supprimer « ${activeDeck.name} » ?`)) return;
+    setDecks(current => current.filter(deck => deck.id !== activeDeck.id)); setToast('Deck supprimé');
+  };
+
+  const exportDeck = () => {
+    if (!activeDeck) return;
+    const payload = { format: 'outremonde-deck-v1', appVersion: '0.1.20', name: activeDeck.name, items: activeDeck.items };
+    const safe = activeDeck.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-zA-Z0-9-_]+/g, '-').replace(/^-|-$/g, '').toLowerCase() || 'deck';
+    downloadText(`${safe}.outremonde.json`, JSON.stringify(payload, null, 2));
+    setToast('Deck exporté');
+  };
+
+  const copyDeck = async () => {
+    if (!activeDeck) return;
+    const payload = JSON.stringify({ format: 'outremonde-deck-v1', name: activeDeck.name, items: activeDeck.items });
+    try { await navigator.clipboard.writeText(payload); setToast('Code du deck copié'); }
+    catch { setToast('Copie indisponible sur cet appareil'); }
+  };
+
+  const installImportedDeck = (parsed: { format?: string; name?: string; items?: unknown[] }) => {
+    if (!parsed || parsed.format !== 'outremonde-deck-v1' || !Array.isArray(parsed.items)) throw new Error('format');
+    const merged = new Map<string, number>();
+    for (const raw of parsed.items) {
+      const item = raw as Partial<DeckItem>;
+      const cardId = String(item.cardId ?? '');
+      const quantity = Number(item.quantity);
+      if (!cards.some(card => card.id === cardId) || !Number.isInteger(quantity) || quantity < 1 || quantity > 3) throw new Error('cards');
+      const next = (merged.get(cardId) ?? 0) + quantity;
+      if (next > 3) throw new Error('copies');
+      merged.set(cardId, next);
+    }
+    const items: DeckItem[] = Array.from(merged, ([cardId, quantity]) => ({ cardId, quantity }));
+    if (items.reduce((sum, item) => sum + item.quantity, 0) > 40) throw new Error('total');
+    const now = new Date().toISOString();
+    const deck: Deck = { id: createDeckId(), name: typeof parsed.name === 'string' && parsed.name.trim() ? parsed.name.trim() : 'Deck importé', items, createdAt: now, updatedAt: now };
+    setDecks(current => [...current, deck]); setActiveDeckId(deck.id); setToast('Deck importé');
+  };
+
+  const importDeck = async (file: File) => {
+    try { installImportedDeck(JSON.parse(await file.text())); }
+    catch { window.alert('Import impossible : fichier Outremonde invalide, carte inconnue, plus de 3 exemplaires ou plus de 40 cartes.'); }
+    finally { if (importInput.current) importInput.current.value = ''; }
+  };
+
+  const importDeckCode = () => {
+    const code = window.prompt('Collez le code JSON du deck Outremonde :');
+    if (!code) return;
+    try { installImportedDeck(JSON.parse(code)); }
+    catch { window.alert('Code de deck invalide ou non conforme aux limites du Deck Builder.'); }
+  };
+
+  return <div className="page-stack deck-builder-page">
+    <section className="deck-builder-intro">
+      <div><span className="section-kicker">V0.1.20 · FORGE DE DECK</span><h2>Deck Builder</h2><p>Construisez vos listes avec la base injectée : 40 cartes exactement, 3 exemplaires maximum par carte, sauvegarde automatique locale et export/import.</p></div>
+      <div className={`deck-validity ${valid ? 'valid' : ''}`}><strong>{total}<span>/40</span></strong><small>{valid ? 'Deck valide' : activeDeck ? `${40 - total} carte${40 - total > 1 ? 's' : ''} restante${40 - total > 1 ? 's' : ''}` : 'Aucun deck'}</small></div>
     </section>
-    <section className="deck-shell-preview surface">
-      <div className="preview-toolbar"><div><span>MES DECKS</span><b>Aucun deck créé</b></div><button disabled>+ Nouveau deck</button></div>
-      <div className="deck-preview-grid"><div className="deck-empty"><span>＋</span><b>Emplacement de deck</b><small>Création, renommage, suppression et sauvegarde locale dans V0.1.20.</small></div><div className="deck-specs"><Spec title="Validation" text="40 cartes exactement · max 3 exemplaires" /><Spec title="Analyse" text="Affinités · types · coûts · courbe Flux" /><Spec title="Collection" text="Recherche et filtres directement intégrés" /><Spec title="Promo" text="Gaellix autorisée jusqu’à 3 exemplaires" /></div></div>
+
+    <section className="deck-builder-shell surface">
+      <aside className="deck-library">
+        <div className="deck-library-head"><div><span>MES DECKS</span><b>{decks.length} sauvegardé{decks.length > 1 ? 's' : ''}</b></div><button onClick={createDeck}>＋</button></div>
+        <div className="deck-list">
+          {decks.map(deck => <button key={deck.id} className={deck.id === activeDeckId ? 'active' : ''} onClick={() => setActiveDeckId(deck.id)}><span className="deck-list-glyph"><Icon name="decks" size={17} /></span><span><b>{deck.name}</b><small>{deckTotal(deck)}/40 · {deck.items.length} cartes uniques</small></span><i className={deckTotal(deck) === 40 ? 'ready' : ''} /></button>)}
+          {decks.length === 0 && <div className="deck-list-empty"><Icon name="decks" size={24} /><b>Aucun deck</b><small>Créez votre première liste.</small></div>}
+        </div>
+        <button className="new-deck-button" onClick={createDeck}>＋ Nouveau deck</button>
+        <div className="local-save-note"><span className="pulse-dot" /><div><b>Sauvegarde auto</b><small>Stockage local de l’appareil</small></div></div>
+      </aside>
+
+      <div className="deck-workspace">
+        {!activeDeck ? <div className="deck-first-state"><span className="empty-rune">＋</span><h3>Créez votre premier deck</h3><p>Le constructeur sauvegarde automatiquement chaque modification sur cet appareil.</p><button className="primary-cta" onClick={createDeck}>Créer un deck</button></div> : <>
+          <div className="deck-editor-head">
+            <div className="deck-name-field"><span>NOM DU DECK</span><input value={activeDeck.name} maxLength={48} onChange={e => patchActive(deck => ({ ...deck, name: e.target.value }))} /></div>
+            <div className="deck-actions"><button onClick={duplicateDeck}>Dupliquer</button><button onClick={copyDeck}>Copier code</button><button onClick={importDeckCode}>Coller code</button><button onClick={exportDeck}>Exporter</button><button onClick={() => importInput.current?.click()}>Importer</button><button className="danger" onClick={deleteDeck}>Supprimer</button><input ref={importInput} hidden type="file" accept=".json,.outremonde.json,application/json" onChange={e => e.target.files?.[0] && importDeck(e.target.files[0])} /></div>
+          </div>
+
+          <div className="deck-summary-row">
+            <div className={`deck-progress-card ${valid ? 'valid' : ''}`}><div><span>CONSTRUCTION</span><b>{total} / 40</b></div><div className="deck-progress-track"><i style={{ width: `${Math.min(100, total / 40 * 100)}%` }} /></div><small>{valid ? '✓ Prêt à jouer' : `Il reste ${Math.max(0, 40 - total)} emplacement${40 - total === 1 ? '' : 's'}`}</small></div>
+            <div className="deck-rule-card"><span>RÈGLE</span><b>3× maximum</b><small>Par carte, Gaellix comprise</small></div>
+            <div className="deck-rule-card"><span>AFFINITÉS</span><b>Libre mélange</b><small>Aucune restriction de couleur</small></div>
+          </div>
+
+          <div className="deck-columns">
+            <section className="deck-card-pool">
+              <div className="deck-section-head"><div><span>COLLECTION</span><h3>Ajouter des cartes</h3></div><small>{filteredCards.length} résultats</small></div>
+              <div className="deck-pool-tools"><div className="search-field"><Icon name="search" size={17} /><input value={query} onChange={e => setQuery(e.target.value)} placeholder="Rechercher une carte…" />{query && <button onClick={() => setQuery('')}><Icon name="close" size={14} /></button>}</div><select value={affinity} onChange={e => setAffinity(e.target.value as typeof affinity)}>{affinities.map(value => <option key={value}>{value}</option>)}</select><select value={type} onChange={e => setType(e.target.value as typeof type)}>{types.map(value => <option key={value}>{value}</option>)}</select></div>
+              <div className="deck-pool-list">
+                {filteredCards.map(card => { const qty = quantities.get(card.id) ?? 0; const addDisabled = qty >= 3 || total >= 40; return <div key={card.id} className={`deck-pool-card ${affinityClass(card.affinity)} ${qty ? 'included' : ''}`}>
+                  <button className="deck-card-info" onClick={() => openCard(card)}><AffinitySigil affinity={card.affinity} compact /><span><small>{cardReference(card)} · {card.rarity}</small><b>{card.name}</b><em>{card.type}</em></span><span className="deck-cost">{card.cost}<small>Flux</small></span></button>
+                  <div className="quantity-control"><button disabled={qty === 0} onClick={() => changeQuantity(card.id, -1)}>−</button><strong>{qty}<span>/3</span></strong><button disabled={addDisabled} onClick={() => changeQuantity(card.id, 1)}>＋</button></div>
+                </div>; })}
+              </div>
+            </section>
+
+            <section className="deck-current-list">
+              <div className="deck-section-head"><div><span>LISTE ACTIVE</span><h3>{activeDeck.name || 'Deck sans nom'}</h3></div><small>{activeDeck.items.length} cartes uniques</small></div>
+              {deckCards.length ? <div className="deck-selected-cards">{deckCards.slice().sort((a,b) => a.card.cost - b.card.cost || a.card.name.localeCompare(b.card.name, 'fr')).map(({ card, quantity }) => <div key={card.id} className={`deck-selected-row ${affinityClass(card.affinity)}`}><button onClick={() => openCard(card)}><AffinitySigil affinity={card.affinity} compact /><span><b>{card.name}</b><small>{card.cost} Flux · {card.type}</small></span></button><div><button onClick={() => changeQuantity(card.id, -1)}>−</button><strong>{quantity}</strong><button disabled={quantity >= 3 || total >= 40} onClick={() => changeQuantity(card.id, 1)}>＋</button></div></div>)}</div> : <div className="deck-list-empty large"><span className="empty-rune">∅</span><b>Liste vide</b><small>Ajoutez des cartes depuis la collection.</small></div>}
+            </section>
+          </div>
+
+          <section className="deck-analysis">
+            <div className="deck-section-head"><div><span>ANALYSE</span><h3>Profil du deck</h3></div><small>{valid ? 'Deck légal' : 'Construction en cours'}</small></div>
+            <div className="analysis-grid">
+              <div className="analysis-panel"><b>Affinités</b><div className="affinity-analysis">{(Object.keys(affinityMeta) as Affinity[]).map(a => <div key={a} className={affinityClass(a)}><span><i style={{ background: 'var(--aff)' }} />{a}</span><strong>{affinityCounts[a]}</strong></div>)}</div></div>
+              <div className="analysis-panel"><b>Types</b><div className="type-analysis">{Object.entries(typeCounts).length ? Object.entries(typeCounts).map(([name,count]) => <div key={name}><span>{name}</span><strong>{count}</strong></div>) : <small>Aucune carte</small>}</div></div>
+              <div className="analysis-panel curve-panel"><b>Courbe de Flux</b><div className="flux-curve">{costCounts.map(({ cost, count }) => { const max = Math.max(1, ...costCounts.map(item => item.count)); return <div key={cost}><span className="curve-bar"><i style={{ height: `${Math.max(count ? 12 : 2, count / max * 100)}%` }} /></span><strong>{count}</strong><small>{cost}</small></div>; })}</div></div>
+            </div>
+          </section>
+        </>}
+      </div>
     </section>
-    <button className="wide-cta standalone" onClick={() => onNavigate('collection')}>Préparer la collection <Icon name="arrow" size={16} /></button>
+
+    <div className="deck-footer-actions"><button className="secondary-cta" onClick={() => onNavigate('collection')}>Ouvrir la collection</button><button className="primary-cta" onClick={() => onNavigate('play')} disabled={!valid}>Préparer le playtest <Icon name="arrow" size={16} /></button></div>
+    {toast && <div className="app-toast"><span>✓</span>{toast}</div>}
   </div>;
 }
 
@@ -432,7 +659,7 @@ function Spec({ title, text }: { title: string; text: string }) { return <div cl
 
 function PlayPreview({ onNavigate }: { onNavigate: (tab: AppTab) => void }) {
   return <div className="page-stack future-page">
-    <section className="future-hero surface panel-glow"><div><span className="section-kicker">ARCHITECTURE DE JEU</span><h2>Table Outremonde</h2><p>Le langage visuel prévoit déjà les deux Plans, le Flux, les PV, la main et la séquence d’attaque. Le moteur de jeu viendra après le Deck Builder et les outils de playtest.</p></div><div className="future-badge play"><Icon name="play" size={34} /><span>2</span><small>Plans</small></div></section>
+    <section className="future-hero surface panel-glow"><div><span className="section-kicker">ARCHITECTURE DE JEU</span><h2>Table Outremonde</h2><p>Le langage visuel prévoit déjà les deux Plans, le Flux, les PV, la main et la séquence d’attaque. Le moteur de jeu viendra après la forge de decks et les outils de playtest.</p></div><div className="future-badge play"><Icon name="play" size={34} /><span>2</span><small>Plans</small></div></section>
     <section className="game-board-preview surface">
       <div className="player-strip opponent"><span className="avatar-orb">II</span><div><b>Adversaire</b><small>20 PV · Flux 3/3</small></div><span className="life-orb">20</span></div>
       <BoardZone label="Terrain Spirituel adverse" ghost cards={2} />
@@ -469,7 +696,7 @@ function RulesPage() {
   }, [filtered]);
 
   return <div className="page-stack rules-page">
-    <section className="rules-intro"><div><span className="section-kicker">RÉFÉRENCE DE JEU</span><h2>Règles du Core Set V1</h2><p>Texte de règles conservé depuis la V0.1.17. Le patch lisibilité V0.1.19 ne change aucune mécanique.</p></div><span className="rule-count"><b>{rules.length}</b><small>entrées</small></span></section>
+    <section className="rules-intro"><div><span className="section-kicker">RÉFÉRENCE DE JEU</span><h2>Règles du Core Set V1</h2><p>Texte de règles conservé depuis la V0.1.17. Le Deck Builder V0.1.20 ne change aucune mécanique.</p></div><span className="rule-count"><b>{rules.length}</b><small>entrées</small></span></section>
     <div className="rules-search surface"><Icon name="search" size={18} /><input value={query} onChange={e => setQuery(e.target.value)} placeholder="Rechercher : Impact, blocage, Flux, Intuition…" />{query && <button onClick={() => setQuery('')}><Icon name="close" size={15} /></button>}</div>
     <div className="rules-groups">
       {groups.map(([group, entries]) => <section key={group} className="rule-group"><div className="rule-group-title"><span>{group}</span><small>{entries.length}</small></div><div className="rule-accordion">{entries.map(([title, body]) => <button key={title} className={openRule === title ? 'open' : ''} onClick={() => setOpenRule(openRule === title ? null : title)}><span className="rule-heading"><b>{title}</b><Icon name="chevron" size={16} /></span>{openRule === title && <p>{body}</p>}</button>)}</div></section>)}

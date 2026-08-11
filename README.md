@@ -2,9 +2,9 @@
 
 Prototype mobile du TCG « Les Lueurs de l’Outremonde » (nom de set provisoire).
 
-## Version actuelle : Core Set V1 audité + Gaellix Promo — UI Readability (V0.1.19)
+## Version actuelle : Core Set V1 audité + Gaellix Promo — Deck Builder (V0.1.20)
 
-**Le Core Set V1 reste complet : 120/120 cartes numérotées et validées, soit 20 cartes dans chacune des six affinités.** Gaellix reste une carte **Promo hors-série non numérotée**, ajoutée en V0.1.15 puis patchée en V0.1.16. V0.1.19 ne modifie ni Gaellix, ni les 120 cartes, ni les règles V0.1.17 ; elle améliore uniquement la lisibilité de l’interface et conserve la numérotation Core 001–120. Elle compte normalement parmi les **40 cartes exactement** du deck et peut être jouée en **maximum 3 exemplaires**, comme toute carte du pool légal.
+**Le Core Set V1 reste complet : 120/120 cartes numérotées et validées, soit 20 cartes dans chacune des six affinités.** Gaellix reste une carte **Promo hors-série non numérotée**, ajoutée en V0.1.15 puis patchée en V0.1.16. V0.1.20 ne modifie ni Gaellix, ni les 120 cartes, ni les règles V0.1.17 ; elle ajoute le Deck Builder fonctionnel au-dessus de la base V0.1.19 et conserve la numérotation Core 001–120. Elle compte normalement parmi les **40 cartes exactement** du deck et peut être jouée en **maximum 3 exemplaires**, comme toute carte du pool légal.
 
 ## Contenu validé
 
@@ -81,6 +81,21 @@ Prototype mobile du TCG « Les Lueurs de l’Outremonde » (nom de set provisoir
 - Un **Permanent Spirituel** conserve son effet permanent tour après tour tant qu’il reste présent.
 - Un **Rituel Spirituel** résout son effet puis va au cimetière ; il ne reste pas sur le Terrain Spirituel.
 - Les cartes Spirituelles sont hors combat mais pourront être retirées, renvoyées ou affectées par des effets qui le disent explicitement.
+
+## Deck Builder V0.1.20
+
+- Création, renommage, duplication et suppression de decks
+- Sauvegarde automatique locale sur l’appareil / navigateur
+- Restauration automatique des decks au lancement
+- Deck légal à **40 cartes exactement**
+- Maximum **3 exemplaires d’une même carte**, Gaellix comprise
+- Recherche et filtres Affinité / Type pendant la construction
+- Analyse en temps réel : répartition par affinité, type et courbe de Flux
+- Export en fichier `.outremonde.json`
+- Import de fichier ou de code JSON Outremonde
+- Les exports refusent / imports rejettent les cartes inconnues, les quantités >3 et les listes >40
+
+> La sauvegarde locale survit aux fermetures et mises à jour normales de l’app, mais peut être perdue si l’utilisateur désinstalle l’application ou efface ses données. L’export permet de conserver une copie portable.
 
 ## Fonctionnalités V0.1
 

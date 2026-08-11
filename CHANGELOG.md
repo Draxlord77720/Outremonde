@@ -1,3 +1,14 @@
+# V0.1.20 — Deck Builder
+
+- Deck Builder fonctionnel intégré à la nouvelle UI Outremonde.
+- Création, renommage, duplication et suppression de decks.
+- Validation automatique : **40 cartes exactement**, **maximum 3 exemplaires par carte**, Gaellix comprise.
+- Ajout/retrait depuis la collection complète avec recherche et filtres Affinité / Type.
+- Compteurs et analyse du deck : affinités, types et courbe de coût en Flux.
+- Sauvegarde automatique locale et restauration à l’ouverture.
+- Export/import de fichiers JSON Outremonde + partage/import par code JSON.
+- Les données du **Core Set V1 (120 cartes), Gaellix Promo et les règles V0.1.17 sont strictement inchangées**.
+
 # V0.1.19 — UI Readability
 
 - Patch de lisibilité de la V0.1.18 sans modification des cartes, règles ou mécaniques.
