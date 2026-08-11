@@ -29,6 +29,13 @@ Audit réalisé sur les 120 cartes et les règles intégrées à l'application.
 
 Les 10 anciens WebP Braise 001–005 ont été supprimés. Le champ optionnel `art` et l'interface d'affichage restent disponibles pour réimporter les futurs visuels définitifs au fur et à mesure.
 
+## Patch Promo V0.1.16 — Gaellix
+
+- Les 120 cartes numérotées du Core Set V1 audité restent inchangées.
+- Effet Spirituel Gaellix : **+1 ATK et +1 DEF jusqu’à la fin de votre prochain tour**, puis **Intuition 2**.
+- Réincarnation Gaellix : **+1 ATK et +1 DEF jusqu’à la fin de votre prochain tour**.
+- Aucun autre champ de Gaellix n’est modifié.
+
 ## Extension Promo V0.1.15 — Gaellix
 
 - Le Core Set V1 audité reste inchangé : **120 cartes numérotées 001 à 120**.

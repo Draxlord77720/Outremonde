@@ -1,5 +1,12 @@
 # Changelog
 
+## V0.1.16 — Patch Gaellix : durée Spirituel / Réincarnation
+
+- **Effet Spirituel Gaellix** : une créature Physique que vous contrôlez gagne désormais **+1 ATK et +1 DEF jusqu’à la fin de votre prochain tour**, puis vous effectuez **Intuition 2**.
+- **Réincarnation Gaellix** : une créature Physique que vous contrôlez gagne désormais **+1 ATK et +1 DEF jusqu’à la fin de votre prochain tour**.
+- Le Physique, le Bonus Spirituel, le coût **4**, les statistiques **4/4**, l’affinité **Brume**, la rareté **Mythique / Édition Légendaire** et le statut Promo hors-série restent inchangés.
+- Les **120 cartes numérotées du Core Set V1 audité restent strictement inchangées**.
+
 ## V0.1.15 — Gaellix Promo hors-série
 
 - Ajout de **Gaellix** comme carte Promo jouable hors numérotation ; le Core Set V1 reste strictement **120/120** cartes numérotées.

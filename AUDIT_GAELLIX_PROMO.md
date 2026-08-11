@@ -1,6 +1,6 @@
-# Audit Gaellix Promo — V0.1.15
+# Audit Gaellix Promo — V0.1.16
 
-Source : Core Set V1 audité V0.1.14, étendu sans modification des 120 cartes Core.
+Source : Core Set V1 audité V0.1.14, étendu par Gaellix en V0.1.15 puis patché en V0.1.16 sans modification des 120 cartes Core.
 
 ## Identité
 
@@ -24,10 +24,10 @@ La première fois à chacun de vos tours que vous jouez une autre carte, effectu
 Piochez 1 carte, puis défaussez 1 carte.
 
 **Effet Spirituel**  
-Une créature Physique que vous contrôlez gagne +1 ATK jusqu’à la fin du tour et +1 DEF jusqu’à votre prochain tour. Effectuez ensuite Intuition 2.
+Une créature Physique que vous contrôlez gagne +1 ATK et +1 DEF jusqu’à la fin de votre prochain tour. Effectuez ensuite Intuition 2.
 
 **Réincarnation**  
-Une créature Physique que vous contrôlez gagne +1 DEF jusqu’à votre prochain tour et +1 ATK pour sa prochaine attaque avant la fin de votre prochain tour.
+Une créature Physique que vous contrôlez gagne +1 ATK et +1 DEF jusqu’à la fin de votre prochain tour.
 
 ## Contrôles
 
@@ -39,4 +39,5 @@ Une créature Physique que vous contrôlez gagne +1 DEF jusqu’à votre prochai
 - Aucun effet ne génère de Flux supplémentaire.
 - Intuition respecte la définition verrouillée du Core Set V1.
 - Le Bonus Spirituel est exactement le Bonus Brume existant.
+- Le patch V0.1.16 ne modifie que l’Effet Spirituel et la Réincarnation de Gaellix.
 - Aucun visuel de carte complet n’est embarqué dans cette injection.
