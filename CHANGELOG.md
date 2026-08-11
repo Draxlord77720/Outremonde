@@ -1,5 +1,14 @@
 # Changelog
 
+## V0.1.15 — Gaellix Promo hors-série
+
+- Ajout de **Gaellix** comme carte Promo jouable hors numérotation ; le Core Set V1 reste strictement **120/120** cartes numérotées.
+- Gaellix : **Brume · Créature · Mythique · Édition Légendaire · 4 Flux · 4/4**.
+- Statut de deck : Gaellix compte parmi les **40 cartes exactement** et suit la limite standard de **3 exemplaires identiques**.
+- Support applicatif des cartes Promo non numérotées : affichage `PROMO · GAELLIX` au lieu d’un faux numéro 121.
+- Aucun visuel embarqué : les illustrations générées restent séparées jusqu’à la création des cartes complètes définitives.
+- Les **120 objets Core existants n’ont pas été modifiés**.
+
 ## V0.1.14 — Audit intégral Core Set V1 + retrait des visuels
 
 - Audit structurel et sémantique des **120 cartes** du Core Set V1.

@@ -5,7 +5,10 @@ export type CardType = 'Créature' | 'Rituel Physique' | 'Rituel Spirituel' | 'P
 
 export interface Card {
   id: string;
-  setNumber: number;
+  setNumber?: number;
+  isPromo?: boolean;
+  promoCode?: string;
+  edition?: string;
   name: string;
   affinity: Affinity;
   rarity: Rarity;

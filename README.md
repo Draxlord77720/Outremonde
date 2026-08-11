@@ -2,9 +2,9 @@
 
 Prototype mobile du TCG « Les Lueurs de l’Outremonde » (nom de set provisoire).
 
-## Version actuelle : Core Set V1 audité (V0.1.14)
+## Version actuelle : Core Set V1 audité + Gaellix Promo (V0.1.15)
 
-**Le Core Set V1 est complet : 120/120 cartes validées, soit 20 cartes dans chacune des six affinités.** Cette version injecte Brume 101 à 120 après audit et stress-test final des 63 combinaisons d’affinités. Elle verrouille Intuition X, les effets de remplacement et la définition d’un effet Brume. Les règles de deck restent : **40 cartes exactement, maximum 3 exemplaires d’une même carte**, affinités librement mélangeables.
+**Le Core Set V1 reste complet : 120/120 cartes numérotées et validées, soit 20 cartes dans chacune des six affinités.** V0.1.15 ajoute **Gaellix** comme carte **Promo hors-série non numérotée**, jouable sans modifier la numérotation 001–120. Elle compte normalement parmi les **40 cartes exactement** du deck et peut être jouée en **maximum 3 exemplaires**, comme toute carte du pool légal.
 
 ## Contenu validé
 
@@ -34,7 +34,7 @@ Prototype mobile du TCG « Les Lueurs de l’Outremonde » (nom de set provisoir
 
 ## Règles verrouillées
 
-- Deck de **40 cartes exactement**, maximum **3 exemplaires d’une même carte**
+- Deck de **40 cartes exactement**, maximum **3 exemplaires d’une même carte**, cartes Promo comprises
 - Pioche normale et premier joueur sans pioche au tour 1
 - Mulligan unique 7 → nouvelle main de 7 → 1 carte sous le deck → départ à 6
 - Une seule phase d’attaque par tour
@@ -82,18 +82,18 @@ Prototype mobile du TCG « Les Lueurs de l’Outremonde » (nom de set provisoir
 
 ## Fonctionnalités V0.1
 
-- Collection mobile des cartes actuellement définies
+- Collection mobile des **120 cartes du Core Set V1 + les cartes Promo jouables**
 - Recherche par nom / numéro
 - Filtres d’affinité, rareté et statut
 - Fiche Physique / Spirituel / Réincarnation
-- Support d’import progressif des futurs visuels Physique / Spirituel dans les fiches (aucun visuel embarqué dans V0.1.14)
+- Support d’import progressif des futurs visuels Physique / Spirituel dans les fiches (aucun visuel embarqué dans V0.1.15)
 - Règles de référence rapide
 - Base Capacitor / Android
 - GitHub Action pour produire un APK debug
 
 ### Images dans l’application
 
-**V0.1.14 n’embarque aucun visuel de carte.** Les anciens prototypes Braise 001–005 ont été retirés. Le support `art` de l’application est conservé afin de pouvoir ajouter progressivement les futurs visuels Physique / Spirituel définitifs sans reconstruire l’interface.
+**V0.1.15 n’embarque aucun visuel de carte.** Les anciens prototypes Braise 001–005 ont été retirés. Le support `art` de l’application est conservé afin de pouvoir ajouter progressivement les futurs visuels Physique / Spirituel définitifs sans reconstruire l’interface.
 
 ## Stack
 
@@ -140,6 +140,7 @@ Lancez `.github/workflows/build-android.yml` depuis **Actions**. L’artifact g�
 
 ## Roadmap
 
+- **V0.1.15 — Gaellix Promo** : ajout de Gaellix en Promo hors-série non numérotée, Brume Mythique / Édition Légendaire, 4 Flux, 4/4 ; le Core Set reste 120/120 et la Promo est légale jusqu’à 3 exemplaires dans un deck de 40 cartes
 - **V0.1.14 — Core Set V1 audité** : audit intégral des 120 cartes, corrections de timing E023/U068/U079/B003/B008/U063/O082, règles de simultanéité/statistiques/Drain/Impact/deck presque vide, et retrait de tous les visuels embarqués
 - **Core Set V1 / V0.1.13** : Brume 101–120 complète + Intuition X + règles de remplacement + 120/120 cartes validées
 - V0.1.12 : Obsidienne 81–100 complète + E023/U066 + Armure X + règles dégâts/Protection/Impact

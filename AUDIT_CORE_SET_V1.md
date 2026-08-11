@@ -28,3 +28,13 @@ Audit réalisé sur les 120 cartes et les règles intégrées à l'application.
 ## Visuels
 
 Les 10 anciens WebP Braise 001–005 ont été supprimés. Le champ optionnel `art` et l'interface d'affichage restent disponibles pour réimporter les futurs visuels définitifs au fur et à mesure.
+
+## Extension Promo V0.1.15 — Gaellix
+
+- Le Core Set V1 audité reste inchangé : **120 cartes numérotées 001 à 120**.
+- Une carte hors-série est ajoutée au pool jouable : **Gaellix** (`P-GAELLIX`), sans `setNumber`.
+- Gaellix est **Brume / Créature / Mythique / Édition Légendaire / 4 Flux / 4 ATK / 4 DEF**.
+- Elle possède un effet Physique, le Bonus Spirituel Brume, un Effet Spirituel et une Réincarnation.
+- Elle est légale jusqu’à **3 exemplaires** et compte normalement parmi les **40 cartes exactement** du deck.
+- Aucun numéro 121 n’est créé ; l’application l’affiche comme `PROMO · GAELLIX`.
+- Aucun visuel n’est embarqué avec cette injection.

@@ -6,6 +6,8 @@ const affinities: Array<'Toutes' | Affinity> = ['Toutes','Braise','Écryme','Sol
 const rarities: Array<'Toutes' | Rarity> = ['Toutes','Commune','Peu Commune','Rare','Mythique'];
 const statuses: Array<'Tous' | CardStatus> = ['Tous','Validée','À revoir','Draft'];
 
+const cardReference = (card: Card) => card.isPromo ? `PROMO · ${card.promoCode ?? card.id}` : `#${String(card.setNumber).padStart(3,'0')}`;
+
 const affinityMeta: Record<Affinity, { icon: string; label: string }> = {
   Braise: { icon: '🔥', label: 'Aggression & burst' },
   Écryme: { icon: '🩸', label: 'Drain & Flux' },
@@ -29,7 +31,7 @@ function App() {
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
     return cards.filter((card) => {
-      const matchesQuery = !q || `${card.name} ${card.id} ${card.setNumber}`.toLowerCase().includes(q);
+      const matchesQuery = !q || `${card.name} ${card.id} ${card.setNumber ?? ''} ${card.promoCode ?? ''} ${card.isPromo ? 'promo' : ''}`.toLowerCase().includes(q);
       const matchesAffinity = affinity === 'Toutes' || card.affinity === affinity;
       const matchesRarity = rarity === 'Toutes' || card.rarity === rarity;
       const matchesStatus = status === 'Tous' || card.status === status;
@@ -63,8 +65,8 @@ function App() {
             <section className="hero-panel">
               <div>
                 <div className="eyebrow">CORE SET 01 · LABORATOIRE</div>
-                <h2>{cards.length} cartes de travail</h2>
-                <p>Les 120 cartes du Core Set V1 sont désormais définies et validées : 20 cartes par affinité, avec une matrice identique de raretés et de types pour Braise, Écryme, Soléane, Umbra, Obsidienne et Brume.</p>
+                <h2>120 cartes Core + 1 promo jouable</h2>
+                <p>Le Core Set V1 reste strictement composé de 120 cartes numérotées, 20 par affinité. Gaellix est ajoutée comme carte Promo hors-série non numérotée, jouable normalement et soumise à la même limite de 3 exemplaires par deck.</p>
               </div>
               <div className="hero-stats">
                 <div><strong>{cards.filter(c => c.status === 'Validée').length}</strong><span>validées</span></div>
@@ -107,7 +109,7 @@ function App() {
               {filtered.map(card => (
                 <button className={`card-tile affinity-${card.affinity.toLowerCase().replace('é','e')}`} key={card.id} onClick={() => openCard(card)}>
                   <div className="card-head">
-                    <div className="number">#{String(card.setNumber).padStart(3,'0')}</div>
+                    <div className="number">{cardReference(card)}</div>
                     <div className="cost">{card.cost}<small>Flux</small></div>
                   </div>
                   {card.art?.physical && (
@@ -117,7 +119,7 @@ function App() {
                   )}
                   <div className="affinity-line">{affinityMeta[card.affinity].icon} {card.affinity}</div>
                   <h3>{card.name}</h3>
-                  <div className="rarity">{card.rarity}</div>
+                  <div className="rarity">{card.rarity}{card.edition ? ` · ${card.edition}` : ''}</div>
                   {card.type === 'Créature' ? (
                     <div className="stats"><span>⚔ {card.atk}</span><span>🛡 {card.def}</span></div>
                   ) : (
@@ -148,7 +150,7 @@ function App() {
             <div className="modal-top">
               <div className="big-icon">{affinityMeta[selected.affinity].icon}</div>
               <div>
-                <div className="eyebrow">#{String(selected.setNumber).padStart(3,'0')} · {selected.rarity}</div>
+                <div className="eyebrow">{cardReference(selected)} · {selected.rarity}{selected.edition ? ` · ${selected.edition}` : ''}</div>
                 <h2>{selected.name}</h2>
                 <p>{selected.affinity} · {selected.type} · {affinityMeta[selected.affinity].label}</p>
               </div>
@@ -257,11 +259,11 @@ function Rules() {
     ['⌛ Durées', '« Jusqu’à votre prochain tour » expire au début de votre prochain tour. Pour les effets disant « jusqu’à la fin du prochain tour adverse », le tour adverse en cours compte comme le prochain s’il est déjà en cours au moment où l’effet est créé ; sinon, l’effet dure jusqu’à la fin du prochain tour de l’adversaire.'],
     ['🔄 Tour', 'Ordre : effets de début de tour → redressement → pioche → augmentation du Flux de base → Phase principale 1 → attaque → Phase principale 2 → fin de tour. En fin de tour, les effets « ce tour » expirent, les dégâts des créatures sont effacés et le Flux inutilisé est perdu.'],
   ];
-  return <section className="page-panel"><div className="eyebrow">RÈGLES · CORE SET V1</div><h2>Fondations actuelles</h2><p className="intro">Cette référence couvre le Core Set V1 complet : 120 cartes, 20 par affinité. Brume ajoute Intuition, le filtrage et les règles de remplacement. Le stress-test final conserve le mélange libre des six affinités, le deck de 40 cartes exactement et la limite de 3 exemplaires identiques.</p><div className="rule-list">{rules.map(([title,body]) => <div className="rule-card" key={title}><h3>{title}</h3><p>{body}</p></div>)}</div></section>;
+  return <section className="page-panel"><div className="eyebrow">RÈGLES · CORE SET V1</div><h2>Fondations actuelles</h2><p className="intro">Cette référence couvre le Core Set V1 complet : 120 cartes numérotées, 20 par affinité, plus Gaellix en Promo hors-série jouable. Brume ajoute Intuition, le filtrage et les règles de remplacement. Le deck contient 40 cartes exactement et la limite de 3 exemplaires identiques s’applique aussi aux cartes Promo.</p><div className="rule-list">{rules.map(([title,body]) => <div className="rule-card" key={title}><h3>{title}</h3><p>{body}</p></div>)}</div></section>;
 }
 
 function About() {
-  return <section className="page-panel"><div className="eyebrow">CARD LAB · CORE SET V1</div><h2>Laboratoire du TCG</h2><p className="intro">Le Core Set V1 est complet et validé à 120 cartes : 20 cartes pour chacune des six affinités. Cette version injecte Brume 101–120 après audit, ajoute Intuition X et les règles de remplacement, et conserve toutes les corrections des cinq blocs précédents. Aucun visuel de carte n’est embarqué dans cette version : les visuels seront réintégrés progressivement à partir des fichiers définitifs fournis pour chaque carte.</p><div className="roadmap"><div className="done"><b>V0.1</b><span>Collection + fiches + règles</span></div><div><b>V0.2</b><span>Deck Builder 40 cartes</span></div><div><b>V0.3</b><span>Table de jeu locale</span></div><div><b>V0.4</b><span>Moteur de règles</span></div><div><b>V0.5</b><span>Statistiques de playtest</span></div></div></section>;
+  return <section className="page-panel"><div className="eyebrow">CARD LAB · CORE SET V1</div><h2>Laboratoire du TCG</h2><p className="intro">Le Core Set V1 reste complet et validé à 120 cartes numérotées : 20 cartes pour chacune des six affinités. Cette version ajoute Gaellix comme Promo hors-série non numérotée et jouable, sans modifier la matrice ni la numérotation du Core. Aucun visuel de carte n’est embarqué : les visuels seront réintégrés progressivement à partir des cartes définitives.</p><div className="roadmap"><div className="done"><b>V0.1</b><span>Collection + fiches + règles</span></div><div><b>V0.2</b><span>Deck Builder 40 cartes</span></div><div><b>V0.3</b><span>Table de jeu locale</span></div><div><b>V0.4</b><span>Moteur de règles</span></div><div><b>V0.5</b><span>Statistiques de playtest</span></div></div></section>;
 }
 
 export default App;
