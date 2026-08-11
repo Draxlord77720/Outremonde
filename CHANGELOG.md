@@ -1,3 +1,15 @@
+# V0.1.18 — UI Forge
+
+- Refonte complète de l’interface sans modification des cartes ni des règles.
+- Nouvelle navigation Accueil / Collection / Decks / Jouer / Règles.
+- Accueil premium Outremonde, identité des six affinités et mise en avant Gaellix Promo.
+- Collection reconstruite : recherche enrichie, filtres affinité/rareté/type/statut, tri, vues grille et liste.
+- Fiche carte responsive repensée avec plans Physique/Spirituel/Réincarnation et support des visuels HD.
+- Écrans de préparation Deck Builder et Table de jeu afin de verrouiller l’architecture UX avant V0.1.19.
+- Règles présentées en accordéon avec recherche, sans changement du texte de référence V0.1.17.
+- Responsive mobile/desktop, navigation basse mobile, micro-transitions et composants visuels communs.
+- Core Set V1 (120 cartes), Gaellix Promo et mécanique de combat V0.1.17 inchangés.
+
 # Changelog
 
 ## V0.1.17 — Patch résolution du combat

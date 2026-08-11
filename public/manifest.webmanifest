@@ -3,7 +3,7 @@
   "short_name": "Card Lab",
   "start_url": "./",
   "display": "standalone",
-  "background_color": "#0b0d12",
-  "theme_color": "#0b0d12",
+  "background_color": "#07090f",
+  "theme_color": "#07090f",
   "lang": "fr"
 }
