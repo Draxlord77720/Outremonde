@@ -1,3 +1,12 @@
+# V0.1.19 — UI Readability
+
+- Patch de lisibilité de la V0.1.18 sans modification des cartes, règles ou mécaniques.
+- Augmentation des textes fonctionnels : navigation, labels, boutons, filtres, cartes, fiche détaillée et règles.
+- Corps de lecture principal porté à environ 13–14 px ; micro-labels conservés plus compacts mais lisibles.
+- Contrôles et zones tactiles légèrement agrandis pour accompagner la nouvelle typographie.
+- Ajustements responsive sur mobile et petits écrans afin de préserver la grille et la navigation basse.
+- Core Set V1 (120 cartes), Gaellix Promo et règles de combat V0.1.17 strictement inchangés.
+
 # V0.1.18 — UI Forge
 
 - Refonte complète de l’interface sans modification des cartes ni des règles.

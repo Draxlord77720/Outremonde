@@ -146,7 +146,7 @@ function App() {
         </nav>
         <div className="rail-status">
           <span className="pulse-dot" />
-          <div><b>Core Set V1</b><small>V0.1.18 · UI Forge</small></div>
+          <div><b>Core Set V1</b><small>V0.1.19 · Readability</small></div>
         </div>
       </aside>
 
@@ -158,7 +158,7 @@ function App() {
             <h1>{navItems.find(item => item.id === tab)?.label}</h1>
           </div>
           <div className="topbar-actions">
-            <button className="version-pill" onClick={() => navigate('rules')}><span className="pulse-dot" />V0.1.18</button>
+            <button className="version-pill" onClick={() => navigate('rules')}><span className="pulse-dot" />V0.1.19</button>
           </div>
         </header>
 
@@ -417,12 +417,12 @@ function EffectBlock({ label, body, secondary = false }: { label: string; body: 
 function DecksPreview({ onNavigate }: { onNavigate: (tab: AppTab) => void }) {
   return <div className="page-stack future-page">
     <section className="future-hero surface panel-glow">
-      <div><span className="section-kicker">PROCHAINE FORGE · V0.1.19</span><h2>Deck Builder</h2><p>La nouvelle interface est déjà structurée pour accueillir le constructeur de decks sans refaire l’UX une seconde fois.</p></div>
+      <div><span className="section-kicker">PROCHAINE FORGE · V0.1.20</span><h2>Deck Builder</h2><p>La nouvelle interface est déjà structurée pour accueillir le constructeur de decks sans refaire l’UX une seconde fois.</p></div>
       <div className="future-badge"><Icon name="decks" size={34} /><span>40</span><small>cartes exactes</small></div>
     </section>
     <section className="deck-shell-preview surface">
       <div className="preview-toolbar"><div><span>MES DECKS</span><b>Aucun deck créé</b></div><button disabled>+ Nouveau deck</button></div>
-      <div className="deck-preview-grid"><div className="deck-empty"><span>＋</span><b>Emplacement de deck</b><small>Création, renommage, suppression et sauvegarde locale dans V0.1.19.</small></div><div className="deck-specs"><Spec title="Validation" text="40 cartes exactement · max 3 exemplaires" /><Spec title="Analyse" text="Affinités · types · coûts · courbe Flux" /><Spec title="Collection" text="Recherche et filtres directement intégrés" /><Spec title="Promo" text="Gaellix autorisée jusqu’à 3 exemplaires" /></div></div>
+      <div className="deck-preview-grid"><div className="deck-empty"><span>＋</span><b>Emplacement de deck</b><small>Création, renommage, suppression et sauvegarde locale dans V0.1.20.</small></div><div className="deck-specs"><Spec title="Validation" text="40 cartes exactement · max 3 exemplaires" /><Spec title="Analyse" text="Affinités · types · coûts · courbe Flux" /><Spec title="Collection" text="Recherche et filtres directement intégrés" /><Spec title="Promo" text="Gaellix autorisée jusqu’à 3 exemplaires" /></div></div>
     </section>
     <button className="wide-cta standalone" onClick={() => onNavigate('collection')}>Préparer la collection <Icon name="arrow" size={16} /></button>
   </div>;
@@ -469,7 +469,7 @@ function RulesPage() {
   }, [filtered]);
 
   return <div className="page-stack rules-page">
-    <section className="rules-intro"><div><span className="section-kicker">RÉFÉRENCE DE JEU</span><h2>Règles du Core Set V1</h2><p>Texte de règles conservé depuis la V0.1.17. La refonte V0.1.18 ne change aucune mécanique.</p></div><span className="rule-count"><b>{rules.length}</b><small>entrées</small></span></section>
+    <section className="rules-intro"><div><span className="section-kicker">RÉFÉRENCE DE JEU</span><h2>Règles du Core Set V1</h2><p>Texte de règles conservé depuis la V0.1.17. Le patch lisibilité V0.1.19 ne change aucune mécanique.</p></div><span className="rule-count"><b>{rules.length}</b><small>entrées</small></span></section>
     <div className="rules-search surface"><Icon name="search" size={18} /><input value={query} onChange={e => setQuery(e.target.value)} placeholder="Rechercher : Impact, blocage, Flux, Intuition…" />{query && <button onClick={() => setQuery('')}><Icon name="close" size={15} /></button>}</div>
     <div className="rules-groups">
       {groups.map(([group, entries]) => <section key={group} className="rule-group"><div className="rule-group-title"><span>{group}</span><small>{entries.length}</small></div><div className="rule-accordion">{entries.map(([title, body]) => <button key={title} className={openRule === title ? 'open' : ''} onClick={() => setOpenRule(openRule === title ? null : title)}><span className="rule-heading"><b>{title}</b><Icon name="chevron" size={16} /></span>{openRule === title && <p>{body}</p>}</button>)}</div></section>)}

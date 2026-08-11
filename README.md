@@ -2,9 +2,9 @@
 
 Prototype mobile du TCG « Les Lueurs de l’Outremonde » (nom de set provisoire).
 
-## Version actuelle : Core Set V1 audité + Gaellix Promo — UI Forge (V0.1.18)
+## Version actuelle : Core Set V1 audité + Gaellix Promo — UI Readability (V0.1.19)
 
-**Le Core Set V1 reste complet : 120/120 cartes numérotées et validées, soit 20 cartes dans chacune des six affinités.** Gaellix reste une carte **Promo hors-série non numérotée**, ajoutée en V0.1.15 puis patchée en V0.1.16. V0.1.18 ne modifie ni Gaellix, ni les 120 cartes, ni les règles V0.1.17 ; elle remplace uniquement l’interface et conserve la numérotation Core 001–120. Elle compte normalement parmi les **40 cartes exactement** du deck et peut être jouée en **maximum 3 exemplaires**, comme toute carte du pool légal.
+**Le Core Set V1 reste complet : 120/120 cartes numérotées et validées, soit 20 cartes dans chacune des six affinités.** Gaellix reste une carte **Promo hors-série non numérotée**, ajoutée en V0.1.15 puis patchée en V0.1.16. V0.1.19 ne modifie ni Gaellix, ni les 120 cartes, ni les règles V0.1.17 ; elle améliore uniquement la lisibilité de l’interface et conserve la numérotation Core 001–120. Elle compte normalement parmi les **40 cartes exactement** du deck et peut être jouée en **maximum 3 exemplaires**, comme toute carte du pool légal.
 
 ## Contenu validé
 
@@ -88,14 +88,14 @@ Prototype mobile du TCG « Les Lueurs de l’Outremonde » (nom de set provisoir
 - Recherche par nom / numéro
 - Filtres d’affinité, rareté et statut
 - Fiche Physique / Spirituel / Réincarnation
-- Support d’import progressif des futurs visuels Physique / Spirituel dans les fiches (aucun visuel embarqué dans V0.1.18)
+- Support d’import progressif des futurs visuels Physique / Spirituel dans les fiches (aucun visuel embarqué dans V0.1.19)
 - Règles de référence rapide
 - Base Capacitor / Android
 - GitHub Action pour produire un APK debug
 
 ### Images dans l’application
 
-**V0.1.18 n’embarque aucun visuel de carte.** Les anciens prototypes Braise 001–005 ont été retirés. Le support `art` de l’application est conservé afin de pouvoir ajouter progressivement les futurs visuels Physique / Spirituel définitifs sans reconstruire l’interface.
+**V0.1.19 n’embarque aucun visuel de carte.** Les anciens prototypes Braise 001–005 ont été retirés. Le support `art` de l’application est conservé afin de pouvoir ajouter progressivement les futurs visuels Physique / Spirituel définitifs sans reconstruire l’interface.
 
 ## Stack
 
@@ -142,6 +142,7 @@ Lancez `.github/workflows/build-android.yml` depuis **Actions**. L’artifact g�
 
 ## Roadmap
 
+- **V0.1.19 — UI Readability** : typographie et contrôles agrandis, lisibilité desktop/mobile renforcée, sans modification des cartes ni des règles.
 - **V0.1.18 — UI Forge** : refonte complète UI/UX, navigation Accueil / Collection / Decks / Jouer / Règles, collection enrichie, fiche carte responsive, recherche de règles, prévisualisations du Deck Builder et de la table. Aucune donnée de carte ni règle modifiée.
 - **V0.1.17 — Patch résolution du combat** : un bloqueur disparu avant sa résolution ouvre l’attaque vers le joueur ; un attaquant disparu ne résout pas son attaque ; Impact aligné sur cette règle ; O089 mis en conformité. Aucune autre carte modifiée.
 - **V0.1.16 — Patch Gaellix** : Effet Spirituel = +1 ATK/+1 DEF jusqu’à la fin de votre prochain tour + Intuition 2 ; Réincarnation = +1 ATK/+1 DEF jusqu’à la fin de votre prochain tour ; Core 120/120 inchangé
@@ -155,7 +156,7 @@ Lancez `.github/workflows/build-android.yml` depuis **Actions**. L’artifact g�
 - V0.1.8 : intégration HD vérifiée de Braise 01 à 05, Physique + Spirituel
 - V0.1.4 : Braise 20/20 validée + règles Spirituelles clarifiées et verrouillées
 - V0.1.3 : audit Braise + noyau de règles
-- V0.1.19 : Deck Builder 40 cartes
+- V0.1.20 : Deck Builder 40 cartes
 - V0.1.20 : Outils de playtest (main, mulligan, Flux), puis Table de jeu locale
 - V0.4 : Rules Engine
 - V0.5 : Statistiques de playtest

@@ -126,3 +126,123 @@ button:focus-visible, input:focus-visible, select:focus-visible { outline: 2px s
 @media (max-width: 390px) {
   .main-content{padding-inline:10px}.cards-layout.grid{gap:6px}.tile-copy h3{font-size:12px}.tile-affinity .affinity-sigil{display:none}.tile-affinity>span:last-child{font-size:6px}.mini-stats{gap:3px}.mini-stats span{font-size:8px}.flux-orb.small{width:31px;height:31px}.hero-copy h2{font-size:31px}.future-badge{display:none}
 }
+
+/* V0.1.19 — UI Readability
+   Readability pass only: no card data or rules are changed. */
+body { font-size: 14px; line-height: 1.45; }
+
+/* Navigation & global chrome */
+.brand-copy small { font-size: 10px; }
+.side-nav b { font-size: 13px; }
+.side-nav small { font-size: 11px; line-height: 1.35; }
+.side-nav button { min-height: 52px; }
+.rail-status b { font-size: 12px; }
+.rail-status small { font-size: 10px; line-height: 1.35; }
+.page-title .eyebrow { font-size: 10px; }
+.version-pill { font-size: 11px; }
+.section-kicker { font-size: 11px; }
+.primary-cta, .secondary-cta, .wide-cta { min-height: 46px; padding-inline: 17px; font-size: 13px; }
+
+/* Home */
+.hero-copy p { font-size: 14px; }
+.metric { min-height: 112px; }
+.metric span { font-size: 13px; }
+.metric small { font-size: 11px; }
+.section-heading > div > span { font-size: 10px; }
+.section-heading button { font-size: 12px; }
+.affinity-row { min-height: 56px; }
+.affinity-row b { font-size: 13px; }
+.affinity-row small { font-size: 11px; }
+.affinity-row strong { font-size: 13px; }
+.spotlight-copy > span { font-size: 11px; }
+.spotlight-copy p { font-size: 13px; }
+.roadmap-step b { font-size: 12px; }
+.roadmap-step small { font-size: 11px; }
+
+/* Collection & filters */
+.collection-intro p, .rules-intro p, .future-hero p { font-size: 14px; }
+.collection-count span, .rule-count small { font-size: 10px; }
+.collection-tools { padding: 11px; }
+.search-field, .rules-search { min-height: 48px; }
+.search-field input, .rules-search input { font-size: 14px; }
+.filter-button { min-height: 48px; font-size: 13px; }
+.filter-button > span { font-size: 10px; }
+.filter-drawer label > span { font-size: 10px; }
+.filter-drawer select { height: 42px; font-size: 13px; }
+.reset-button { min-height: 40px; font-size: 12px; }
+.affinity-chips button { min-height: 38px; padding-inline: 13px; font-size: 12px; }
+
+/* Card tiles and list */
+.tile-topline { min-height: 37px; height: auto; font-size: 10px; }
+.legendary-crown { font-size: 7px; }
+.tile-affinity > span:last-child { font-size: 11px; }
+.tile-affinity .affinity-sigil { font-size: 8px; }
+.tile-copy { padding: 13px; }
+.tile-copy > p { font-size: 11px; line-height: 1.5; }
+.mini-stats span { font-size: 12px; }
+.flux-orb small { font-size: 8px; }
+.flux-orb.small small { font-size: 7px; }
+.type-pill { font-size: 9px; }
+.card-list-row { min-height: 74px; }
+.list-main small { font-size: 10px; }
+.list-main em { font-size: 11px; }
+.list-stats i { font-size: 11px; }
+.empty-state p { font-size: 13px; }
+.empty-state button { font-size: 12px; }
+
+/* Card detail */
+.plan-toggle button { font-size: 12px; }
+.detail-reference { font-size: 10px; }
+.detail-affinity { font-size: 11px; }
+.detail-title-row p { font-size: 14px; }
+.detail-stats b { font-size: 14px; }
+.detail-stats small { font-size: 9px; }
+.effect-tabs button { font-size: 11px; }
+.effect-block > span { font-size: 11px; }
+.effect-block p { font-size: 14px; line-height: 1.68; }
+.rules-reminder { font-size: 12px; line-height: 1.55; }
+.keyword-row span { font-size: 11px; }
+.note-panel span { font-size: 10px; }
+.note-panel p { font-size: 12px; line-height: 1.55; }
+.lightbox-caption small { font-size: 11px; }
+
+/* Deck / play previews */
+.future-badge small { font-size: 9px; }
+.preview-toolbar span { font-size: 10px; }
+.preview-toolbar button { font-size: 11px; }
+.deck-empty small { font-size: 12px; }
+.spec b { font-size: 12px; }
+.spec small { font-size: 11px; }
+.player-strip b { font-size: 12px; }
+.player-strip small { font-size: 10px; }
+.avatar-orb, .life-orb { font-size: 12px; }
+.zone-label { font-size: 9px; }
+.board-cards i { font-size: 8px; }
+.attack-lane span { font-size: 9px; }
+
+/* Rules */
+.rule-group-title span { font-size: 11px; }
+.rule-group-title small { font-size: 9px; }
+.rule-heading { min-height: 52px; }
+.rule-heading b { font-size: 13px; }
+.rule-accordion p { font-size: 14px; line-height: 1.7; }
+
+@media (max-width: 820px) {
+  .bottom-nav { min-height: 66px; height: 66px; }
+  .bottom-nav button { font-size: 10px; }
+}
+
+@media (max-width: 560px) {
+  .topbar-actions .version-pill { font-size: 10px; }
+  .hero-copy p, .collection-intro p, .rules-intro p, .future-hero p { font-size: 13px; }
+  .search-field input, .rules-search input { font-size: 14px; }
+  .filter-button > span { font-size: 10px; }
+  .bottom-nav button span { font-size: 10px; }
+  .rule-accordion p { font-size: 13px; }
+}
+
+@media (max-width: 390px) {
+  .tile-copy h3 { font-size: 13px; }
+  .tile-affinity > span:last-child { font-size: 10px; }
+  .mini-stats span { font-size: 11px; }
+}
