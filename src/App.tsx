@@ -183,7 +183,7 @@ function App() {
         </nav>
         <div className="rail-status">
           <span className="pulse-dot" />
-          <div><b>Core Set V1</b><small>V0.1.20 · Deck Builder</small></div>
+          <div><b>Core Set V1</b><small>V0.1.21 · Deck Builder</small></div>
         </div>
       </aside>
 
@@ -520,15 +520,20 @@ function DeckBuilder({ onNavigate, openCard }: { onNavigate: (tab: AppTab) => vo
   };
 
   const changeQuantity = (cardId: string, delta: number) => {
-    if (!activeDeck) return;
-    const currentQty = quantities.get(cardId) ?? 0;
-    const nextQty = currentQty + delta;
-    if (delta > 0 && (currentQty >= 3 || total >= 40)) return;
-    patchActive(deck => {
+    if (!activeDeckId || delta === 0) return;
+    setDecks(current => current.map(deck => {
+      if (deck.id !== activeDeckId) return deck;
+      const currentQty = deck.items.find(item => item.cardId === cardId)?.quantity ?? 0;
+      const currentTotal = deckTotal(deck);
+      if (delta > 0 && (currentQty >= 3 || currentTotal >= 40)) return deck;
+
+      const nextQty = Math.max(0, Math.min(3, currentQty + delta));
+      if (nextQty === currentQty) return deck;
+
       const items = deck.items.filter(item => item.cardId !== cardId);
-      if (nextQty > 0) items.push({ cardId, quantity: Math.min(3, nextQty) });
-      return { ...deck, items };
-    });
+      if (nextQty > 0) items.push({ cardId, quantity: nextQty });
+      return { ...deck, items, updatedAt: new Date().toISOString() };
+    }));
   };
 
   const duplicateDeck = () => {
@@ -545,7 +550,7 @@ function DeckBuilder({ onNavigate, openCard }: { onNavigate: (tab: AppTab) => vo
 
   const exportDeck = () => {
     if (!activeDeck) return;
-    const payload = { format: 'outremonde-deck-v1', appVersion: '0.1.20', name: activeDeck.name, items: activeDeck.items };
+    const payload = { format: 'outremonde-deck-v1', appVersion: '0.1.21', name: activeDeck.name, items: activeDeck.items };
     const safe = activeDeck.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-zA-Z0-9-_]+/g, '-').replace(/^-|-$/g, '').toLowerCase() || 'deck';
     downloadText(`${safe}.outremonde.json`, JSON.stringify(payload, null, 2));
     setToast('Deck exporté');
@@ -592,7 +597,7 @@ function DeckBuilder({ onNavigate, openCard }: { onNavigate: (tab: AppTab) => vo
 
   return <div className="page-stack deck-builder-page">
     <section className="deck-builder-intro">
-      <div><span className="section-kicker">V0.1.20 · FORGE DE DECK</span><h2>Deck Builder</h2><p>Construisez vos listes avec la base injectée : 40 cartes exactement, 3 exemplaires maximum par carte, sauvegarde automatique locale et export/import.</p></div>
+      <div><span className="section-kicker">V0.1.21 · FORGE DE DECK</span><h2>Deck Builder</h2><p>Construisez vos listes avec la base injectée : 40 cartes exactement, 3 exemplaires maximum par carte, sauvegarde automatique locale et export/import.</p></div>
       <div className={`deck-validity ${valid ? 'valid' : ''}`}><strong>{total}<span>/40</span></strong><small>{valid ? 'Deck valide' : activeDeck ? `${40 - total} carte${40 - total > 1 ? 's' : ''} restante${40 - total > 1 ? 's' : ''}` : 'Aucun deck'}</small></div>
     </section>
 
@@ -626,15 +631,15 @@ function DeckBuilder({ onNavigate, openCard }: { onNavigate: (tab: AppTab) => vo
               <div className="deck-pool-tools"><div className="search-field"><Icon name="search" size={17} /><input value={query} onChange={e => setQuery(e.target.value)} placeholder="Rechercher une carte…" />{query && <button onClick={() => setQuery('')}><Icon name="close" size={14} /></button>}</div><select value={affinity} onChange={e => setAffinity(e.target.value as typeof affinity)}>{affinities.map(value => <option key={value}>{value}</option>)}</select><select value={type} onChange={e => setType(e.target.value as typeof type)}>{types.map(value => <option key={value}>{value}</option>)}</select></div>
               <div className="deck-pool-list">
                 {filteredCards.map(card => { const qty = quantities.get(card.id) ?? 0; const addDisabled = qty >= 3 || total >= 40; return <div key={card.id} className={`deck-pool-card ${affinityClass(card.affinity)} ${qty ? 'included' : ''}`}>
-                  <button className="deck-card-info" onClick={() => openCard(card)}><AffinitySigil affinity={card.affinity} compact /><span><small>{cardReference(card)} · {card.rarity}</small><b>{card.name}</b><em>{card.type}</em></span><span className="deck-cost">{card.cost}<small>Flux</small></span></button>
-                  <div className="quantity-control"><button disabled={qty === 0} onClick={() => changeQuantity(card.id, -1)}>−</button><strong>{qty}<span>/3</span></strong><button disabled={addDisabled} onClick={() => changeQuantity(card.id, 1)}>＋</button></div>
+                  <button type="button" className="deck-card-info" onClick={() => openCard(card)}><AffinitySigil affinity={card.affinity} compact /><span><small>{cardReference(card)} · {card.rarity}</small><b>{card.name}</b><em>{card.type}</em></span><span className="deck-cost">{card.cost}<small>Flux</small></span></button>
+                  <div className="quantity-control"><button type="button" aria-label={`Retirer ${card.name}`} disabled={qty === 0} onClick={() => changeQuantity(card.id, -1)}>−</button><strong>{qty}<span>/3</span></strong><button type="button" className="deck-add-card" aria-label={`Ajouter ${card.name}`} disabled={addDisabled} onClick={() => changeQuantity(card.id, 1)}>{qty === 0 ? 'Ajouter' : '＋'}</button></div>
                 </div>; })}
               </div>
             </section>
 
             <section className="deck-current-list">
               <div className="deck-section-head"><div><span>LISTE ACTIVE</span><h3>{activeDeck.name || 'Deck sans nom'}</h3></div><small>{activeDeck.items.length} cartes uniques</small></div>
-              {deckCards.length ? <div className="deck-selected-cards">{deckCards.slice().sort((a,b) => a.card.cost - b.card.cost || a.card.name.localeCompare(b.card.name, 'fr')).map(({ card, quantity }) => <div key={card.id} className={`deck-selected-row ${affinityClass(card.affinity)}`}><button onClick={() => openCard(card)}><AffinitySigil affinity={card.affinity} compact /><span><b>{card.name}</b><small>{card.cost} Flux · {card.type}</small></span></button><div><button onClick={() => changeQuantity(card.id, -1)}>−</button><strong>{quantity}</strong><button disabled={quantity >= 3 || total >= 40} onClick={() => changeQuantity(card.id, 1)}>＋</button></div></div>)}</div> : <div className="deck-list-empty large"><span className="empty-rune">∅</span><b>Liste vide</b><small>Ajoutez des cartes depuis la collection.</small></div>}
+              {deckCards.length ? <div className="deck-selected-cards">{deckCards.slice().sort((a,b) => a.card.cost - b.card.cost || a.card.name.localeCompare(b.card.name, 'fr')).map(({ card, quantity }) => <div key={card.id} className={`deck-selected-row ${affinityClass(card.affinity)}`}><button onClick={() => openCard(card)}><AffinitySigil affinity={card.affinity} compact /><span><b>{card.name}</b><small>{card.cost} Flux · {card.type}</small></span></button><div><button type="button" onClick={() => changeQuantity(card.id, -1)}>−</button><strong>{quantity}</strong><button type="button" disabled={quantity >= 3 || total >= 40} onClick={() => changeQuantity(card.id, 1)}>＋</button></div></div>)}</div> : <div className="deck-list-empty large"><span className="empty-rune">∅</span><b>Liste vide</b><small>Ajoutez des cartes depuis la collection.</small></div>}
             </section>
           </div>
 
@@ -696,7 +701,7 @@ function RulesPage() {
   }, [filtered]);
 
   return <div className="page-stack rules-page">
-    <section className="rules-intro"><div><span className="section-kicker">RÉFÉRENCE DE JEU</span><h2>Règles du Core Set V1</h2><p>Texte de règles conservé depuis la V0.1.17. Le Deck Builder V0.1.20 ne change aucune mécanique.</p></div><span className="rule-count"><b>{rules.length}</b><small>entrées</small></span></section>
+    <section className="rules-intro"><div><span className="section-kicker">RÉFÉRENCE DE JEU</span><h2>Règles du Core Set V1</h2><p>Texte de règles conservé depuis la V0.1.17. Le Deck Builder V0.1.21 ne change aucune mécanique.</p></div><span className="rule-count"><b>{rules.length}</b><small>entrées</small></span></section>
     <div className="rules-search surface"><Icon name="search" size={18} /><input value={query} onChange={e => setQuery(e.target.value)} placeholder="Rechercher : Impact, blocage, Flux, Intuition…" />{query && <button onClick={() => setQuery('')}><Icon name="close" size={15} /></button>}</div>
     <div className="rules-groups">
       {groups.map(([group, entries]) => <section key={group} className="rule-group"><div className="rule-group-title"><span>{group}</span><small>{entries.length}</small></div><div className="rule-accordion">{entries.map(([title, body]) => <button key={title} className={openRule === title ? 'open' : ''} onClick={() => setOpenRule(openRule === title ? null : title)}><span className="rule-heading"><b>{title}</b><Icon name="chevron" size={16} /></span>{openRule === title && <p>{body}</p>}</button>)}</div></section>)}

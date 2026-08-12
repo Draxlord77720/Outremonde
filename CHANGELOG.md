@@ -212,3 +212,8 @@
 - Règles de référence rapide.
 - Préparation Android avec Capacitor.
 - Workflow GitHub Actions pour produire un APK debug.
+
+## V0.1.21 — Deck Builder Hotfix
+- Correction du contrôle d’ajout/retrait de cartes : la quantité est maintenant calculée directement depuis l’état courant du deck afin d’éviter tout état obsolète sur navigateur et WebView Android.
+- Bouton **Ajouter** explicite lorsqu’une carte est absente du deck, avec cibles tactiles agrandies sur mobile.
+- Aucun changement de carte, de règle ou d’équilibrage.
